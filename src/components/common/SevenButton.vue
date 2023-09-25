@@ -23,6 +23,9 @@ button {
   font-weight: Bold;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
+  height: 36px;
+  text-align: center;
+  align-items: center;
 }
 
 button:hover {
