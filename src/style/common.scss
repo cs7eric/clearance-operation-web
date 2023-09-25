@@ -1,0 +1,30 @@
+// Reset all elements
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Remove default list styles
+ul, ol {
+  list-style: none;
+}
+
+// Remove default link styles
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Remove default table styles
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Remove default image styles
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
