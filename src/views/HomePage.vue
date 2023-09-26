@@ -1,9 +1,41 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
 
-const currentDate = ref(new Date())
+const text = ref('有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？')
+const isExpanded = ref(false)
 
+const truncatedText = computed(() => {
+  return text.value.length > 130 ? text.value.slice(0, 130) + '...' : text
+})
+
+const expandText = () => {
+  isExpanded.value = true
+}
+
+const mainFunction = ref(null);
+const recentCard = ref(null);
+const positionValue = ref('relative');
+const topValue = ref('auto');
+
+const handleScroll = () => {
+  const recentCardBottomPosition = recentCard.value.getBoundingClientRect().bottom;
+  if (recentCardBottomPosition <= window.innerHeight) {
+    positionValue.value = 'sticky';
+    topValue.value = `${window.innerHeight - mainFunction.value.offsetHeight}px`;
+  } else {
+    positionValue.value = 'relative';
+    topValue.value = 'auto';
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
@@ -11,29 +43,104 @@ const currentDate = ref(new Date())
     <div class="home-main">
       <div class="main-article main-item">
         <el-card v-for="o in 5" :key="o" class="article-card">
-          <template #header>
-            <div class="card-header">
-              <span>文章标题</span>
-              <el-button class="button" type="primary" plain>查看</el-button>
-            </div>
-          </template>
           <div class="card-main">
-            <div class="image card-item">
-              <img src="@/assets/logo-co.png" alt=""/>
+            <div class="article-status">
+              <p>cccs7 回答了问题 · 7小时前</p>
+            </div>
+            <div class="article-title">
+              <h3>遇到电信诈骗首先应该做什么?</h3>
+            </div>
+            <div class="article-content">
+              <div class="content-image">
+                <img src="@/assets/avatar.jpg" alt="">
+              </div>
+              <div class="content-text" :class="{ expanded: isExpanded }">
+                <span v-if="isExpanded">{{ text }}</span>
+                <span v-else>
+                  {{ truncatedText }}
+                  <button class="button-expand" v-if="!isExpanded" @click="expandText">阅读全文
+                  <svg t="1695710793620" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="1175" width="200" height="200">
+                    <path
+                        d="M948.6 891.2L800.4 743.1c25.3-30.8 45.9-64.8 61.5-101.7 21.6-51.2 32.6-105.5 32.6-161.5s-11-110.4-32.6-161.5C841 269 811.1 224.6 773 186.5s-82.5-68-131.9-88.9C589.9 75.9 535.6 65 479.6 65S369.2 75.8 318 97.5c-49.4 20.9-93.8 50.8-131.9 88.9-38.1 38.1-68 82.5-88.9 131.9-21.7 51.2-32.6 105.5-32.6 161.5s11 110.4 32.6 161.5c20.9 49.4 50.8 93.8 88.9 131.9 38.1 38.1 82.5 68 131.9 88.9 51.2 21.7 105.5 32.6 161.5 32.6s110.4-11 161.6-32.6c37.3-15.8 71.8-36.7 102.8-62.5l148 148c7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7c15.7-15.4 15.7-40.8 0.1-56.4z m-469-76.3c-184.7 0-335-150.3-335-335s150.3-335 335-335 335 150.3 335 335c0 89.5-34.8 173.6-98.1 236.8-63.3 63.3-147.4 98.2-236.9 98.2z"
+                        p-id="1176" fill="#315d9a"></path>
+                    <path
+                        d="M638.7 439.9H519.6V320.7c0-22.1-17.9-40-40-40s-40 17.9-40 40v119.2H320.4c-22.1 0-40 17.9-40 40s17.9 40 40 40h119.2V639c0 22.1 17.9 40 40 40s40-17.9 40-40V519.9h119.2c22.1 0 40-17.9 40-40-0.1-22.2-17.9-40-40.1-40z"
+                        p-id="1177" fill="#315d9a"></path>
+                  </svg>
+                </button>
+                </span>
+              </div>
             </div>
 
-            <div class="card-item" style="padding: 14px">
-              <span>Yummy hamburger</span>
-              <div class="bottom">
-                <time class="time">{{ currentDate }}</time>
-                <el-button text class="button">Operating</el-button>
+            <div class="article-function">
+              <div class="function-agree">
+                <button class="button-agree">
+                  <svg t="1695715744270" class="icon" viewBox="0 0 1035 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
+                    <path
+                        d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
+                        fill="#056ce5" p-id="1167"></path>
+                  </svg>
+                  <span> 赞同 7</span>
+                </button>
+                <button class="button-disagree">
+                  <svg t="1695715744270" class="icon" viewBox="0 0 1035 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
+                    <path
+                        d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
+                        fill="#056ce5" p-id="1167"></path>
+                  </svg>
+
+                </button>
+              </div>
+              <div class="function-other">
+                <div class="item">
+                  <svg t="1695717332810" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="979" width="200" height="200">
+                    <path
+                        d="M768 128a160 160 0 0 1 160 160v384A160 160 0 0 1 768 832h-114.816l-73.28 73.344a96 96 0 0 1-128.512 6.592l-7.296-6.592L370.752 832H256a160 160 0 0 1-159.68-149.504L96 672v-384A160 160 0 0 1 256 128z m-96 384h-320a32 32 0 0 0 0 64h320a32 32 0 0 0 0-64z m-128-192h-192a32 32 0 0 0 0 64h192a32 32 0 0 0 0-64z"
+                        fill="#76839b" p-id="980"></path>
+                  </svg>
+                  <span>评论</span>
+                </div>
+                <div class="item">
+                  <svg t="1695717984106" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="7787" width="200" height="200">
+                    <path
+                        d="M622.272 290.56L428.8 428.288A192 192 0 0 1 439.68 568.32l231.488 116.032a128 128 0 1 1-28.416 57.344L410.88 625.472a192 192 0 1 1-19.2-249.344L584.768 238.72a128 128 0 1 1 37.504 51.84z"
+                        fill="#666666" p-id="7788"></path>
+                  </svg>
+                  <span>分享</span>
+                </div>
+                <div class="item">
+                  <svg t="1695718192867" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="2212" width="200" height="200">
+                    <path
+                        d="M720.398507 959.573333c73.045333 31.317333 136.96-15.317333 129.706666-94.293333l-20.650666-226.218667 174.634666-199.722666c38.144-43.648 19.2-102.229333-37.418666-115.114667l-258.474667-58.794667-135.68-228.010666c-29.738667-49.877333-91.306667-49.92-121.045333 0L315.74784 265.429333 57.273173 324.224C0.953173 337.066667-18.33216 395.648 19.854507 439.338667l174.634666 199.722666-24.021333 264.405334c-5.248 57.770667 44.544 94.037333 97.877333 71.125333l243.626667-104.533333 208.426667 89.472z"
+                        fill="#808ba0" p-id="2213"></path>
+                  </svg>
+                  <span>收藏</span>
+                </div>
+                <div class="item">
+                  <svg t="1695718063639" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                       xmlns="http://www.w3.org/2000/svg" p-id="9766" width="200" height="200">
+                    <path
+                        d="M171.6 866.2H852c22.5 0 40.8 18.3 40.8 40.8 0 22.5-18.3 40.8-40.8 40.8H171.6c-22.5 0-40.8-18.3-40.8-40.8 0-22.5 18.3-40.8 40.8-40.8z m340.2-598.8c150.6 0 272.6 122 272.6 272.6v217.3c0 30-24.3 54.4-54.4 54.4H294c-30 0-54.4-24.3-54.4-54.4V539.6c0.4-150.2 122.1-271.9 272.2-272.2zM389.4 512.3c-22.5 0-40.8 18.3-40.8 40.8v136.1c0 22.5 18.3 40.8 40.8 40.8 22.5 0 40.8-18.3 40.8-40.8V553.1c0-22.5-18.3-40.8-40.8-40.8zM511.8 76.9c23.9-3.5 44.4 17 40.9 40.9v81.6c3.3 23.8-17.1 44.2-40.9 40.7-23.8 3.4-44.2-16.9-40.9-40.7v-81.6C467.5 94 488 73.5 511.8 76.9z m-299.3 80.2c18.9-14.9 46.8-7.4 55.8 14.9l40.7 70.7c14.9 18.9 7.4 46.8-14.9 55.8-18.9 14.9-46.8 7.4-55.6-14.9l-40.9-70.7c-15-18.9-7.5-46.8 14.9-55.8z m598.7 0c22.3 9 29.8 36.9 14.9 55.8l-40.9 70.7c-8.9 22.3-36.8 29.8-55.6 14.9-22.3-9-29.8-36.8-15.1-55.8l41.7-70.7c9.1-21.7 36.2-29.1 55-14.9z"
+                        fill="#666666" p-id="9767"></path>
+                  </svg>
+                  <span>举报</span>
+                </div>
+                <div class="item">
+
+                </div>
               </div>
             </div>
           </div>
 
         </el-card>
       </div>
-      <div class="main-function main-item">
+      <div class="main-function main-item" :style="{ position: positionValue, top: topValue }" ref="mainFunction">
         <el-card class="box-card">
           <template #header>
             <div class="function-header">
@@ -125,9 +232,9 @@ const currentDate = ref(new Date())
               <div>
                 <span>
                   <svg t="1695705855736" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                           xmlns="http://www.w3.org/2000/svg" p-id="1175" width="200" height="200"><path
-                    d="M513 515.2c-60.1 0-116.5-23.4-159-65.9s-65.9-98.9-65.9-159c0-60.1 23.4-116.5 65.9-159s99-65.8 159-65.8c60.1 0 116.5 23.4 159 65.9s65.9 98.9 65.9 159c0 60.1-23.4 116.5-65.9 159s-98.9 65.8-159 65.8z m0-369.7c-79.9 0-144.9 65-144.9 144.9s65 144.9 144.9 144.9 144.9-65 144.9-144.9-65-144.9-144.9-144.9zM920.9 958.2H104c-11.8 0-22.9-5.2-30.5-14.1-7.6-9-10.9-20.8-8.9-32.4 16.5-99.1 70.7-189.9 152.6-255.6 40.3-32.3 85.8-57.5 135.3-74.9 51.1-18 104.9-27.1 160-27.1s108.9 9.1 160 27.1c49.5 17.4 95 42.6 135.3 74.9 81.9 65.7 136.1 156.4 152.6 255.6 1.9 11.6-1.3 23.5-8.9 32.4-7.7 9-18.8 14.1-30.6 14.1z m-766-80H870c-46.8-142-192.3-244.1-357.5-244.1-165.3 0-310.9 102.1-357.6 244.1z"
-                    p-id="1176"></path></svg>
+                       xmlns="http://www.w3.org/2000/svg" p-id="1175" width="200" height="200"><path
+                      d="M513 515.2c-60.1 0-116.5-23.4-159-65.9s-65.9-98.9-65.9-159c0-60.1 23.4-116.5 65.9-159s99-65.8 159-65.8c60.1 0 116.5 23.4 159 65.9s65.9 98.9 65.9 159c0 60.1-23.4 116.5-65.9 159s-98.9 65.8-159 65.8z m0-369.7c-79.9 0-144.9 65-144.9 144.9s65 144.9 144.9 144.9 144.9-65 144.9-144.9-65-144.9-144.9-144.9zM920.9 958.2H104c-11.8 0-22.9-5.2-30.5-14.1-7.6-9-10.9-20.8-8.9-32.4 16.5-99.1 70.7-189.9 152.6-255.6 40.3-32.3 85.8-57.5 135.3-74.9 51.1-18 104.9-27.1 160-27.1s108.9 9.1 160 27.1c49.5 17.4 95 42.6 135.3 74.9 81.9 65.7 136.1 156.4 152.6 255.6 1.9 11.6-1.3 23.5-8.9 32.4-7.7 9-18.8 14.1-30.6 14.1z m-766-80H870c-46.8-142-192.3-244.1-357.5-244.1-165.3 0-310.9 102.1-357.6 244.1z"
+                      p-id="1176"></path></svg>
                   推荐关注
                 </span>
               </div>
@@ -277,6 +384,27 @@ const currentDate = ref(new Date())
           </div>
 
         </el-card>
+        <el-card class="recent-card" ref="recentCard">
+          <template #header>
+            <div class="recent-header">
+              <svg t="1695721337703" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                   xmlns="http://www.w3.org/2000/svg" p-id="2304" width="200" height="200">
+                <path
+                    d="M938.666667 896H85.333333c-46.933333 0-85.333333-38.4-85.333333-85.333333V213.333333c0-46.933333 38.4-85.333333 85.333333-85.333333h853.333334c46.933333 0 85.333333 38.4 85.333333 85.333333v597.333334c0 46.933333-38.4 85.333333-85.333333 85.333333z m-196.266667-460.8V640h51.2v-204.8h81.066667V384h-213.333334v51.2h81.066667zM204.8 384H149.333333v256h51.2v-106.666667h106.666667V640h51.2V384H307.2v93.866667H200.533333L204.8 384z m243.2 0c-25.6 0-42.666667 17.066667-42.666667 42.666667v170.666666c0 25.6 17.066667 42.666667 42.666667 42.666667h128c25.6 0 42.666667-17.066667 42.666667-42.666667v-170.666666c0-25.6-17.066667-42.666667-42.666667-42.666667h-128z m106.666667 204.8h-85.333334c-4.266667 0-8.533333-4.266667-8.533333-8.533333v-128c0-4.266667 4.266667-8.533333 8.533333-8.533334h85.333334c4.266667 0 8.533333 4.266667 8.533333 8.533334v128s-4.266667 8.533333-8.533333 8.533333z"
+                    p-id="2305" fill="#444444"></path>
+              </svg>
+              近期热点事件
+            </div>
+          </template>
+          <div class="recent-list">
+            <div class="recent-child" v-for="(o, index) in 7" :key="o">
+              <span class="index" :class="{ 'top-three': index < 3, 'after-three': index >= 3 }">
+                {{ index + 1 }}
+              </span>
+              电信诈骗事件... ...
+            </div>
+          </div>
+        </el-card>
       </div>
     </div>
   </div>
@@ -294,29 +422,156 @@ const currentDate = ref(new Date())
 
       .article-card {
         width: 800px;
-        margin-bottom: 10px;
+        margin-bottom: 4px;
 
-
-        .card-header {
+        .article-function {
           display: flex;
-          height: 10px;
-          justify-content: space-between;
-          align-items: center;
+          margin-top: 15px;
 
-          & > span {
-            font-weight: 700;
+          .function-agree {
+
+            .button-disagree {
+
+              margin-left: 10px;
+              width: 40px;
+              height: 40px;
+              border-radius: 4px;
+              background: #dce6f2;
+              color: #056ce5;
+
+              .icon {
+                max-width: 12px;
+                height: auto;
+                transform: rotate(180deg);
+              }
+            }
+
+            .button-agree {
+
+              width: 100px;
+              height: 40px;
+              border-radius: 4px;
+              background: #dce6f2;
+              color: #056ce5;
+
+              .icon {
+                max-width: 12px;
+                height: auto;
+              }
+            }
+          }
+
+          .function-other {
+
+            display: flex;
+            margin-left: 40px;
+
+            .item {
+              display: flex;
+              justify-content: center; /* 水平居中 */
+              align-items: center;
+              margin-left: 20px;
+              height: 100%;
+              transition: transform 0.3s ease;
+              cursor: pointer;
+
+              &:hover {
+                transform: scale(1.15);
+              }
+            }
+
+            .icon {
+              max-width: 25px;
+              height: auto;
+              margin-right: 6px;
+            }
           }
         }
 
-        .image {
-          width: 100px;
-          height: 100px;
+        .article-status {
+          & > p {
+            color: #8590a6;
+            font-size: 12px;
+          }
+        }
+
+        .article-title {
+
+          & > h3 {
+            margin-top: 5px;
+            color: #121212;
+          }
+        }
+
+        .article-content {
+          display: flex;
+          margin-top: 10px;
+
+          .content-text {
+            flex: 1;
+            margin-left: 20px;
+
+            .button-expand {
+              color: #175199;
+            }
+
+            .icon {
+              max-width: 20px;
+              height: auto;
+            }
+          }
+
+          .content-image img {
+
+            margin-right: 10px;
+            height: 120px;
+            width: 220px;
+            border-radius: 7px;
+            object-fit: cover;
+
+          }
         }
       }
     }
 
-
     .main-function {
+      position: sticky;
+      height: 1080px;
+      bottom: 0;
+
+      .recent-card {
+        .recent-header {
+          .icon {
+            max-width: 16px;
+            height: auto;
+          }
+        }
+
+        .recent-list {
+          .recent-child {
+            margin-top: 5px;
+            height: 38px;
+            line-height: 30px;
+            border-bottom: 1px solid #e6e6e6;
+
+            .index {
+              margin-right: 8px;
+              font-style: italic;
+            }
+
+            .top-three {
+              color: #f26d5f;
+              font-weight: bold;
+              font-size: 18px;
+            }
+
+            /* 4 以后的样式 */
+            .after-three {
+              color: #ff8200;
+            }
+          }
+        }
+      }
 
       .box-card {
         margin-bottom: 10px;
@@ -430,7 +685,6 @@ const currentDate = ref(new Date())
       height: auto;
     }
   }
-
 
 
   .recommend-list {
