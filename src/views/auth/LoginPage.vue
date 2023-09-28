@@ -1,12 +1,44 @@
 <script setup>
 import {ref} from 'vue'
 import LogoItem from '@/components/common/LogoItem.vue'
+import axios from 'axios'
 
+const formRef = ref(null)
 const loginForm = ref({
   email: '',
-  password: '',
   code: ''
 })
+
+const rules = {
+  email: [
+    {required: true, message: '邮箱地址不能为空', trigger: 'blur'},
+    {pattern: /^\S+@\S+\.\S+$/, message: '请输入有效的邮箱地址', trigger: 'blur'}
+  ]
+}
+
+const isSending = ref(false)
+const countdown = ref(0)
+
+// 发送邮箱验证码
+const sendVerificationCode = async () => {
+  const valid = await formRef.value.validateField('email')
+  if (!valid) return
+  isSending.value = true
+  countdown.value = 60
+
+  // 调用发送验证码的API
+  await axios.post('/api/sendVerificationCode', {
+    email: loginForm.value.email
+  });
+
+  const timer = setInterval(() => {
+    countdown.value--
+    if (countdown.value <= 0) {
+      clearInterval(timer)
+      isSending.value = false
+    }
+  }, 1000)
+}
 </script>
 
 <template>
@@ -20,15 +52,18 @@ const loginForm = ref({
           </div>
         </div>
         <div class="login-form">
-          <el-form ref="form" :model="loginForm" label-position="left">
-            <el-form-item>
+          <el-form ref="formRef" :model="loginForm" :rules="rules" label-position="left">
+            <el-form-item prop="email">
               <el-input class="login-input" v-model="loginForm.email" placeholder="请输入邮箱"></el-input>
             </el-form-item>
             <div class="code">
               <el-form-item>
                 <el-input class="login-input" v-model="loginForm.code" placeholder="验证码">
                   <template #append>
-                    <el-button @click="getVerificationCode">获取验证码</el-button>
+                    <el-button :disabled="isSending || countdown > 0" @click="sendVerificationCode">
+                      <span v-if="countdown > 0">{{ countdown }}秒后重新发送</span>
+                      <span v-else>获取验证码</span>
+                    </el-button>
                   </template>
                 </el-input>
               </el-form-item>
