@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layout/MainLayout.vue'
 import HomePage from '@/views/HomePage.vue'
+import {useUserStore} from '@/stores'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -41,5 +42,18 @@ const router = createRouter({
     }
   ]
 })
+
+// 全局前置路由守卫
+// router.beforeEach((to, from, next) => {
+//   const userStore = useUserStore()
+//   const requiresAuth = ['']
+//   if (requiresAuth && !userStore.isLoggedIn) {
+//     next('/login');
+//   } else if (to.path === '/login' && userStore.isLoggedIn) {
+//     next('/home');
+//   } else {
+//     next();
+//   }
+// })
 
 export default router

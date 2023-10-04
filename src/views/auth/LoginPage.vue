@@ -1,7 +1,10 @@
 <script setup>
 import {ref} from 'vue'
 import LogoItem from '@/components/common/LogoItem.vue'
-import axios from 'axios'
+import {sendCodeService} from '@/api/code'
+import {userLoginService} from '@/api/user'
+import router from '@/router'
+import {useUserStore} from '@/stores'
 
 const formRef = ref(null)
 const loginForm = ref({
@@ -27,9 +30,7 @@ const sendVerificationCode = async () => {
   countdown.value = 60
 
   // 调用发送验证码的API
-  await axios.post('/api/sendVerificationCode', {
-    email: loginForm.value.email
-  });
+  await sendCodeService(loginForm.value.email)
 
   const timer = setInterval(() => {
     countdown.value--
@@ -38,6 +39,24 @@ const sendVerificationCode = async () => {
       isSending.value = false
     }
   }, 1000)
+}
+
+const verify = async () => {
+  const res = await userLoginService(
+    {
+      email: loginForm.value.email,
+      code: loginForm.value.code
+    }
+  )
+
+  const userStore = useUserStore()
+  const {data: {token, user}} = res
+
+  console.log(user)
+  userStore.setUser(user)
+  userStore.setJWT(token)
+
+  router.push('/home')
 }
 </script>
 
@@ -70,7 +89,7 @@ const sendVerificationCode = async () => {
             </div>
           </el-form>
           <div class="login-button">
-            <button class="login">登录 / 注册</button>
+            <button class="login" @click="verify">登录 / 注册</button>
           </div>
           <div class="login-uap">
             <span>账号密码登录</span>
