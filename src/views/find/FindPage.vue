@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+<loader-item></loader-item>
 </template>
 
 <style scoped>

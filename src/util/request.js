@@ -1,17 +1,20 @@
 import axios from 'axios'
-import { useUserStore } from '@/stores'
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+import {useUserStore} from '@/stores/modules/user'
+import {useLoaderStore} from '@/stores/modules/loader'
 
 const baseURL = 'http://localhost:8089/'
 
 const instance = axios.create({
   baseURL,
-  headers: { 'Content-Type': 'application/json' }
+  headers: {'Content-Type': 'application/json'}
 })
 
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
+    const loaderStore = useLoaderStore()
+    loaderStore.show()
     const userStore = useUserStore()
     if (userStore.jwt) {
       config.headers.Authorization = userStore.jwt
@@ -26,6 +29,8 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   (res) => {
+    const loaderStore = useLoaderStore()
+    loaderStore.hide()
     if (res.data.success) {
       // 处理成功响应
       ElMessage.success(res.data.message || '操作成功')
@@ -44,4 +49,4 @@ instance.interceptors.response.use(
 )
 
 export default instance
-export { baseURL }
+export {baseURL}

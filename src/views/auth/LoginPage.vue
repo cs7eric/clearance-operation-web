@@ -1,10 +1,15 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import LogoItem from '@/components/common/LogoItem.vue'
 import {sendCodeService} from '@/api/code'
 import {userLoginService} from '@/api/user'
 import router from '@/router'
-import {useUserStore} from '@/stores'
+import {useUserStore} from '@/stores/modules/user'
+import {useLoaderStore} from '@/stores/modules/loader'
+
+
+const loaderStore = useLoaderStore()
+const isLoadingComputed = computed(() => loaderStore.isLoading)
 
 const formRef = ref(null)
 const loginForm = ref({
@@ -114,6 +119,8 @@ const verify = async () => {
 
     </div>
   </div>
+  <loader-item v-if="isLoadingComputed"></loader-item>
+
 </template>
 
 <style scoped>

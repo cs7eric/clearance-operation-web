@@ -1,7 +1,7 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 
-export const useUserStore = defineStore('co-user', () => {
+export const useUserStore = defineStore('co-modules', () => {
 
     const user = ref({
       user: {
