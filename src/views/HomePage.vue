@@ -535,7 +535,6 @@ onBeforeUnmount(() => {
     }
 
     .main-function {
-      position: sticky;
       height: 1080px;
       bottom: 0;
 

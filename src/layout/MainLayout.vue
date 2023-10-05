@@ -93,6 +93,8 @@ body {
 .co-index-container {
 
   .co-header {
+    position: fixed;
+    top: 0;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center; /* 水平居中 */
@@ -102,6 +104,7 @@ body {
     height: 60px;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
 
     .avatar {
       width: auto;
@@ -154,7 +157,7 @@ body {
   .co-main {
     display: flex;
     justify-content: center; /* 水平居中 */
-    margin-top: 10px;
+    margin-top: 70px;
   }
 }
 
