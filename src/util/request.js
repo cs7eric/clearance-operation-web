@@ -33,11 +33,10 @@ instance.interceptors.response.use(
     loaderStore.hide()
     if (res.data.success) {
       // 处理成功响应
-      ElMessage.success(res.data.message || '操作成功')
       return res.data // 返回响应数据部分
     } else {
       // 处理失败响应
-      ElMessage.error(res.data.message || '操作失败')
+      ElMessage.error(res.data.message || '网络异常')
       return Promise.reject(res.data)
     }
   },

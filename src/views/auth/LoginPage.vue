@@ -6,35 +6,43 @@ import {userLoginService} from '@/api/user'
 import router from '@/router'
 import {useUserStore} from '@/stores/modules/user'
 import {useLoaderStore} from '@/stores/modules/loader'
+import {ElMessage, ElNotification} from 'element-plus'
 
-
+// Stores
 const loaderStore = useLoaderStore()
-const isLoadingComputed = computed(() => loaderStore.isLoading)
+const userStore = useUserStore()
 
+// Computed properties
+const isLoadingComputed = computed(() => loaderStore.isLoading)
+const isFormComplete = computed(() => loginForm.value.email && loginForm.value.code)
+
+// Refs
 const formRef = ref(null)
 const loginForm = ref({
   email: '',
   code: ''
 })
+const isSending = ref(false)
+const countdown = ref(0)
 
+// Validation rules
 const rules = {
   email: [
     {required: true, message: '邮箱地址不能为空', trigger: 'blur'},
     {pattern: /^\S+@\S+\.\S+$/, message: '请输入有效的邮箱地址', trigger: 'blur'}
-  ]
+  ],
+  code: [{required: true, message: '验证码不能为空', trigger: 'blur'}]
 }
 
-const isSending = ref(false)
-const countdown = ref(0)
-
-// 发送邮箱验证码
+// Methods
+// 发送验证码
 const sendVerificationCode = async () => {
   const valid = await formRef.value.validateField('email')
   if (!valid) return
+
   isSending.value = true
   countdown.value = 60
 
-  // 调用发送验证码的API
   await sendCodeService(loginForm.value.email)
 
   const timer = setInterval(() => {
@@ -46,24 +54,36 @@ const sendVerificationCode = async () => {
   }, 1000)
 }
 
+// 登录、注册
 const verify = async () => {
-  const res = await userLoginService(
-    {
-      email: loginForm.value.email,
-      code: loginForm.value.code
-    }
-  )
+  const valid = await formRef.value.validate()
+  if (!valid) {
+    console.log("校验错误")
+    ElMessage.error("邮箱或验证码不能为空")
+  }
+  console.log("校验错误")
 
-  const userStore = useUserStore()
+
+  const res = await userLoginService({
+    email: loginForm.value.email,
+    code: loginForm.value.code
+  })
+
   const {data: {token, user}} = res
 
-  console.log(user)
+  // console.log(user)
   userStore.setUser(user)
   userStore.setJWT(token)
 
-  router.push('/home')
+
+  await router.push('/home')
+  ElNotification({
+    type: 'success',
+    message: '登录成功',
+  })
 }
 </script>
+
 
 <template>
   <div class="container">
@@ -81,7 +101,7 @@ const verify = async () => {
               <el-input class="login-input" v-model="loginForm.email" placeholder="请输入邮箱"></el-input>
             </el-form-item>
             <div class="code">
-              <el-form-item>
+              <el-form-item prop="code">
                 <el-input class="login-input" v-model="loginForm.code" placeholder="验证码">
                   <template #append>
                     <el-button :disabled="isSending || countdown > 0" @click="sendVerificationCode">
@@ -94,7 +114,7 @@ const verify = async () => {
             </div>
           </el-form>
           <div class="login-button">
-            <button class="login" @click="verify">登录 / 注册</button>
+            <button class="login" @click="verify" :disabled="!isFormComplete">登录 / 注册</button>
           </div>
           <div class="login-uap">
             <span>账号密码登录</span>
