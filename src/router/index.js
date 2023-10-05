@@ -38,6 +38,26 @@ const router = createRouter({
     {
       path: '/topic',
       component: () => import('@/views/specialtopic/TopicPage.vue')
+    },
+    {
+      path: '/user',
+      component: () => import('@/layout/MainLayout.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('@/layout/UserLayout.vue'),
+          children: [
+            {
+              path: 'index',
+              component: () => import('@/views/user/IndexPage.vue')
+            },
+            {
+              path: 'info',
+              component: () => import('@/views/user/InfoPage.vue')
+            }
+          ]
+        }
+      ]
     }
   ]
 })
