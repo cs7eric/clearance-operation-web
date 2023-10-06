@@ -39,6 +39,7 @@ const router = createRouter({
       path: '/topic',
       component: () => import('@/views/specialtopic/TopicPage.vue')
     },
+    // 用户信息路由
     {
       path: '/user',
       component: () => import('@/layout/MainLayout.vue'),
@@ -46,6 +47,7 @@ const router = createRouter({
         {
           path: '',
           component: () => import('@/layout/UserLayout.vue'),
+          redirect: '/user/index',
           children: [
             {
               path: 'index',

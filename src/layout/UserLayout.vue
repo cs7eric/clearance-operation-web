@@ -51,7 +51,6 @@
   <div class="scrollable">
     <div class="content">
       <router-view></router-view>
-
     </div>
   </div>
 </template>
@@ -129,7 +128,6 @@
 .content {
   margin-right: 200px;
   width: 1000px; /* 或者适应你的内容宽度 */
-  background-color: #f0f0f0;
 }
 
 </style>

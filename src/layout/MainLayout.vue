@@ -99,7 +99,7 @@ body {
     flex-wrap: nowrap;
     justify-content: center; /* 水平居中 */
     align-items: center;
-    padding: 0 2%;
+    padding: 0 3%;
     width: 100%;
     height: 60px;
     background: #fff;
@@ -157,7 +157,7 @@ body {
   .co-main {
     display: flex;
     justify-content: center; /* 水平居中 */
-    margin-top: 70px;
+    margin-top: 88px;
   }
 }
 
