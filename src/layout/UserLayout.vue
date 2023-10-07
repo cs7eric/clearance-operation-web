@@ -6,17 +6,26 @@
   <div class="fixed">
     <div class="left-menu">
       <div class="menu-item">
-        <div class="item-container">
-          <div class="icon"><img src="@/assets/icon/user_user.svg"></div>
-          <div class="title">首页</div>
-        </div>
+        <router-link to="/user/index">
+          <div class="item-container">
+            <div class="icon"><img src="@/assets/icon/user_user.svg"></div>
+            <div class="title">首页</div>
+          </div>
+        </router-link>
+
 
       </div>
       <div class="menu-item">
-        <div class="item-container">
-          <div class="icon"><img src="@/assets/icon/user_info.svg"></div>
-          <div class="title">个人信息</div>
-        </div>
+        <router-link to="/user/info">
+          <div class="item-container">
+
+            <div class="icon"><img src="@/assets/icon/user_info.svg"></div>
+            <div class="title">个人信息</div>
+
+
+          </div>
+
+        </router-link>
 
       </div>
       <div class="menu-item">
@@ -90,7 +99,7 @@
         height: 36px;
         line-height: 36px;
         font-size: 12px;
-        color:  #000;
+        color: #000;
 
         &:hover {
           border-radius: 0 25px 25px 0;
