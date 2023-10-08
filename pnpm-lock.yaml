@@ -8,6 +8,9 @@ dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
     version: 2.1.0(vue@3.3.4)
+  '@jsdawn/vue3-tinymce':
+    specifier: ^2.0.4
+    version: 2.0.4(vue@3.3.4)
   axios:
     specifier: ^1.5.1
     version: 1.5.1
@@ -380,6 +383,16 @@ packages:
 
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
+
+  /@jsdawn/vue3-tinymce@2.0.4(vue@3.3.4):
+    resolution: {integrity: sha512-2s9RdeivIIrJQ4pDbS8DgpnL2Nmiojzjuj1AQKWERd891JULSlJbf8HAxY8OIVXIrQYh9vBvPG4orwFxswZCjw==}
+    engines: {node: '>14.0.0'}
+    peerDependencies:
+      vue: ^3.2.6
+    dependencies:
+      vue: 3.3.4
+      vue-router: 4.2.4(vue@3.3.4)
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
