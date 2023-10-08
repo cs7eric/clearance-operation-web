@@ -14,7 +14,6 @@ const router = createRouter({
           component: HomePage
         }
       ]
-
     },
     {
       path: '/login',
@@ -60,6 +59,10 @@ const router = createRouter({
           ]
         }
       ]
+    },
+    {
+      path: '/editor',
+      component: import('@/views/EditorPage.vue')
     }
   ]
 })

@@ -1,6 +1,7 @@
 <script setup>
-import {ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
+import router from '@/router'
 
 const text = ref('有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？')
 const isExpanded = ref(false)
@@ -13,29 +14,39 @@ const expandText = () => {
   isExpanded.value = true
 }
 
-const mainFunction = ref(null);
-const recentCard = ref(null);
-const positionValue = ref('relative');
-const topValue = ref('auto');
+const mainFunction = ref(null)
+const recentCard = ref(null)
+const positionValue = ref('relative')
+const topValue = ref('auto')
+
 
 const handleScroll = () => {
-  const recentCardBottomPosition = recentCard.value.getBoundingClientRect().bottom;
+  const recentCardBottomPosition = recentCard.value.getBoundingClientRect().bottom
   if (recentCardBottomPosition <= window.innerHeight) {
-    positionValue.value = 'sticky';
-    topValue.value = `${window.innerHeight - mainFunction.value.offsetHeight}px`;
+    positionValue.value = 'sticky'
+    topValue.value = `${window.innerHeight - mainFunction.value.offsetHeight}px`
   } else {
-    positionValue.value = 'relative';
-    topValue.value = 'auto';
+    positionValue.value = 'relative'
+    topValue.value = 'auto'
   }
-};
+}
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
+  window.addEventListener('scroll', handleScroll)
+})
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// 跳转到 文章创作
+const toEditor = () => {
+
+  router.push('/editor')
+
+
+}
+
 </script>
 
 <template>
@@ -222,7 +233,9 @@ onBeforeUnmount(() => {
           </div>
           <div class="write-button">
             <div class="button">
-              <button>进入创作中心 ></button>
+              <router-link to="/editor" target="_blank">
+                <button> 进入创作中心 ></button>
+              </router-link>
             </div>
           </div>
         </el-card>
@@ -565,6 +578,7 @@ onBeforeUnmount(() => {
             }
 
             /* 4 以后的样式 */
+
             .after-three {
               color: #ff8200;
             }
