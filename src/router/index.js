@@ -62,7 +62,7 @@ const router = createRouter({
     },
     {
       path: '/editor',
-      component: import('@/views/EditorPage.vue')
+      component: import('@/views/editor/EditorPage.vue')
     }
   ]
 })

@@ -1,24 +1,32 @@
 <script setup>
-import {ref, computed, onMounted, onBeforeUnmount} from 'vue'
+import {ref, onMounted, onBeforeUnmount} from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
 import router from '@/router'
+import {articleGetAllService} from '@/api/article'
+import {formatRelativeTime} from '@/util/time'
 
-const text = ref('有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？有几个疑问其实我不太懂，要是有业内人士看到，还望赐教：+86开头的电话号码，是不是只有国内运营商能发放？某个城市区号开头的电话号码，是不是只有运营商在当地的分公司可以发放？国内所有的电话号码，包括虚拟号码，是不是都必须经过实名认证或者主体认证（比如公司或者机构）？')
-const isExpanded = ref(false)
+const articleList = ref([])
 
-const truncatedText = computed(() => {
-  return text.value.length > 130 ? text.value.slice(0, 130) + '...' : text
-})
+const getArticles = async () => {
+  const res = await articleGetAllService()
+  console.log(res)
+  articleList.value = res.data
+}
+
+getArticles()
 
 const expandText = () => {
-  isExpanded.value = true
+  router.push('/articles/{id}')
+}
+
+const truncatedText = (text) => {
+  return text.length > 130 ? text.slice(0, 130) + '...' : text
 }
 
 const mainFunction = ref(null)
 const recentCard = ref(null)
 const positionValue = ref('relative')
 const topValue = ref('auto')
-
 
 const handleScroll = () => {
   const recentCardBottomPosition = recentCard.value.getBoundingClientRect().bottom
@@ -39,13 +47,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-// 跳转到 文章创作
-const toEditor = () => {
-
-  router.push('/editor')
-
-
-}
 
 </script>
 
@@ -53,34 +54,21 @@ const toEditor = () => {
   <div class="home-container">
     <div class="home-main">
       <div class="main-article main-item">
-        <el-card v-for="o in 5" :key="o" class="article-card">
+        <el-card v-for="article in articleList" :key="article.id" class="article-card">
           <div class="card-main">
             <div class="article-status">
-              <p>cccs7 回答了问题 · 7小时前</p>
+              <p> {{ article.author }} 回答了问题 · {{ formatRelativeTime(article.publishTime) }}</p>
             </div>
             <div class="article-title">
-              <h3>遇到电信诈骗首先应该做什么?</h3>
+              <h3>{{ article.title }}</h3>
             </div>
             <div class="article-content">
               <div class="content-image">
                 <img src="@/assets/avatar.jpg" alt="">
               </div>
-              <div class="content-text" :class="{ expanded: isExpanded }">
-                <span v-if="isExpanded">{{ text }}</span>
-                <span v-else>
-                  {{ truncatedText }}
-                  <button class="button-expand" v-if="!isExpanded" @click="expandText">阅读全文
-                  <svg t="1695710793620" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                       xmlns="http://www.w3.org/2000/svg" p-id="1175" width="200" height="200">
-                    <path
-                        d="M948.6 891.2L800.4 743.1c25.3-30.8 45.9-64.8 61.5-101.7 21.6-51.2 32.6-105.5 32.6-161.5s-11-110.4-32.6-161.5C841 269 811.1 224.6 773 186.5s-82.5-68-131.9-88.9C589.9 75.9 535.6 65 479.6 65S369.2 75.8 318 97.5c-49.4 20.9-93.8 50.8-131.9 88.9-38.1 38.1-68 82.5-88.9 131.9-21.7 51.2-32.6 105.5-32.6 161.5s11 110.4 32.6 161.5c20.9 49.4 50.8 93.8 88.9 131.9 38.1 38.1 82.5 68 131.9 88.9 51.2 21.7 105.5 32.6 161.5 32.6s110.4-11 161.6-32.6c37.3-15.8 71.8-36.7 102.8-62.5l148 148c7.8 7.8 18 11.7 28.3 11.7s20.5-3.9 28.3-11.7c15.7-15.4 15.7-40.8 0.1-56.4z m-469-76.3c-184.7 0-335-150.3-335-335s150.3-335 335-335 335 150.3 335 335c0 89.5-34.8 173.6-98.1 236.8-63.3 63.3-147.4 98.2-236.9 98.2z"
-                        p-id="1176" fill="#315d9a"></path>
-                    <path
-                        d="M638.7 439.9H519.6V320.7c0-22.1-17.9-40-40-40s-40 17.9-40 40v119.2H320.4c-22.1 0-40 17.9-40 40s17.9 40 40 40h119.2V639c0 22.1 17.9 40 40 40s40-17.9 40-40V519.9h119.2c22.1 0 40-17.9 40-40-0.1-22.2-17.9-40-40.1-40z"
-                        p-id="1177" fill="#315d9a"></path>
-                  </svg>
-                </button>
-                </span>
+              <div class="content-text">
+                <span>{{ truncatedText(article.content) }}</span>
+
               </div>
             </div>
 
@@ -93,7 +81,7 @@ const toEditor = () => {
                         d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
                         fill="#056ce5" p-id="1167"></path>
                   </svg>
-                  <span> 赞同 7</span>
+                  <span> 赞同  {{ article.likes }}</span>
                 </button>
                 <button class="button-disagree">
                   <svg t="1695715744270" class="icon" viewBox="0 0 1035 1024" version="1.1"
@@ -511,6 +499,8 @@ const toEditor = () => {
         .article-title {
 
           & > h3 {
+            font-size: 18px;
+            font-weight: 700;
             margin-top: 5px;
             color: #121212;
           }

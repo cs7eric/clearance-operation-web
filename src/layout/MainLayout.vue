@@ -5,6 +5,7 @@ import SevenButton from '@/components/common/SevenButton.vue'
 import {watch} from 'vue'
 import {useRoute} from 'vue-router'
 import {useUserStore} from '@/stores'
+import router from '@/router'
 
 const selected = ref('首页')
 
@@ -32,6 +33,7 @@ watch(() => route.path, newPath => {
   immediate: true
 })
 const selectItem = (item) => {
+  router.push('/')
   console.log('点击成功')
   selected.value = item
 }

@@ -39,7 +39,7 @@ const publishArticle = () => {
     <div class="write-header-section">
       <div class="header-container">
         <div class="header-logo">
-          <img class="logo" src="@/assets/logo.svg" alt="">
+          <img class="logo" src="../../assets/logo.svg" alt="">
         </div>
         <div class="header-function">
           <div class="function-item">
@@ -53,7 +53,7 @@ const publishArticle = () => {
           </div>
           <div class="function-item">
             <div class="avatar">
-              <img src="@/assets/avatar.jpg" alt="头像">
+              <img src="../../assets/avatar.jpg" alt="头像">
             </div>
           </div>
         </div>
