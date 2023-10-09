@@ -1,9 +1,19 @@
 <script setup>
-// 保留原样
+import {ref} from 'vue'
+
+const isVisible = ref(false)
+const show = () => {
+  isVisible.value = true
+}
+
+const hide = () => {
+  isVisible.value = false
+}
+defineExpose({show, hide})
 </script>
 
 <template>
-  <div class="loader-wrapper">
+  <div class="loader-wrapper" v-if="isVisible">
     <div class="loader">
       <svg role="img" class="logo" viewBox="-1 0 26 25" fill="currentColor"
            xmlns="http://www.w3.org/2000/svg">

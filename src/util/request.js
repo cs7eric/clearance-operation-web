@@ -2,9 +2,9 @@ import axios from 'axios'
 import {ElMessage} from 'element-plus'
 import {useUserStore} from '@/stores/modules/user'
 import {useLoaderStore} from '@/stores/modules/loader'
+import {hideLoader, showLoader} from '@/plugins/loadingPlugin'
 
 const baseURL = 'http://localhost:8089/'
-
 const instance = axios.create({
   baseURL,
   headers: {'Content-Type': 'application/json'}
@@ -13,6 +13,7 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
+    showLoader()
     const loaderStore = useLoaderStore()
     loaderStore.show()
     const userStore = useUserStore()
@@ -28,7 +29,9 @@ instance.interceptors.request.use(
 
 // 响应拦截器
 instance.interceptors.response.use(
+
   (res) => {
+    hideLoader()
     const loaderStore = useLoaderStore()
     loaderStore.hide()
     if (res.data.success) {
