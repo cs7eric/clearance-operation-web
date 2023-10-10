@@ -44,6 +44,8 @@ instance.interceptors.response.use(
     }
   },
   (error) => {
+    hideLoader()
+
     // 处理网络错误等
     ElMessage.error(error.message || '网络错误')
     return Promise.reject(error)

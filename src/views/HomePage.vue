@@ -3,7 +3,8 @@ import {ref, onMounted, onBeforeUnmount} from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
 import {articleGetAllService} from '@/api/article'
 import {formatRelativeTime} from '@/util/time'
-import ArticlePage from '@/views/article/ArticlePage.vue'
+import ArticlePage from '@/components/article/ArticlePage.vue'
+import {parseHTMLContent} from '@/util/format'
 
 const articleList = ref([])
 const selectedArticle = ref(null)
@@ -20,8 +21,16 @@ const expandContent = (articleId) => {
   selectedArticle.value = articleId
 }
 
+// 折叠时文本显示处理
 const truncatedText = (text) => {
-  return text.length > 130 ? text.slice(0, 130) + '...' : text
+
+  const doc = parseHTMLContent(text)
+  return doc.length > 140 ? doc.slice(0, 140) + '...' : doc
+}
+
+// 判断当前文章是否展开
+const isExpand = (text) => {
+  return text.length >= 140
 }
 
 const mainFunction = ref(null)
@@ -68,8 +77,8 @@ onBeforeUnmount(() => {
                 <img src="@/assets/avatar.jpg" alt="">
               </div>
               <div class="content-text">
-                <span>{{ truncatedText(article.content) }}</span>
-                <button class="button-expand" @click="expandContent(article.id)">查看全文</button>
+                <div class="content-text-container" v-html="parseHTMLContent(truncatedText(article.content))"></div>
+                <button class="button-expand" @click="expandContent(article.id)" v-if="isExpand(article.content)">查看全文</button>
 
               </div>
             </div>
@@ -516,10 +525,17 @@ onBeforeUnmount(() => {
           margin-top: 10px;
 
           .content-text {
+            display: inline-block;
             flex: 1;
             margin-left: 20px;
 
+            .content-text-container {
+              display: inline-block;
+              align-items: center;
+            }
+
             .button-expand {
+              display: inline-block;
               color: #175199;
             }
 
@@ -527,6 +543,8 @@ onBeforeUnmount(() => {
               max-width: 20px;
               height: auto;
             }
+
+
           }
 
           .content-image img {

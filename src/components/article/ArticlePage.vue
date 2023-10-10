@@ -7,8 +7,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="article-content-container" >
-    {{ content}}
+  <div class="article-content-container" v-html="content">
   </div>
 </template>
 

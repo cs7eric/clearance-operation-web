@@ -2,6 +2,9 @@
 import {reactive, ref} from 'vue'
 import Vue3Tinymce from '@jsdawn/vue3-tinymce'
 import {default_setting, juejin_setting} from '@/components/tinymce/tinymce.settings'
+import {articleCreateService} from '@/api/article'
+import {ElNotification} from 'element-plus'
+import {useUserStore} from '@/stores'
 
 // 引入tinymce 设置
 import('@/components/tinymce/tinymce.settings')
@@ -19,17 +22,35 @@ const state = reactive({
 const articleData = ref({
   title: '',
   content: '',
-  publication_date: '',
-  last_modified_date: '',
+  publishTime: '',
   author: '',
-
+  authorId: '',
+  tags: [],
+  categories: []
 })
 
 
+const userStore = useUserStore()
+
+const user = userStore.user
+console.log(user)
 
 // 发布文章
-const publishArticle = () => {
-
+const publishArticle = async () => {
+  articleData.value.authorId = user.id
+  articleData.value.author = user.username
+  const res = await articleCreateService(articleData.value)
+  if (res.success) {
+    ElNotification({
+      message: '文章发布成功',
+      type: 'success'
+    })
+  } else {
+    ElNotification({
+      message: '文章发布失败，请重试',
+      type: 'warning'
+    })
+  }
 }
 
 </script>

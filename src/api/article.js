@@ -4,3 +4,7 @@ import instance from '@/util/request'
 export const articleGetAllService = async () => {
   return await instance.get('/articles/all')
 }
+
+export const articleCreateService = async (articleData) => {
+  return await instance.post('/articles/create', articleData)
+}

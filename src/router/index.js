@@ -69,7 +69,7 @@ const router = createRouter({
         {
           // 文章详情页
           path: '',
-          component: import('@/views/article/ArticlePage.vue')
+          component: import('@/components/article/ArticlePage.vue')
         },
       ]
     },
