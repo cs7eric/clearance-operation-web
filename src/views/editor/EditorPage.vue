@@ -12,7 +12,7 @@ juejin_setting.height = 800
 
 const state = reactive({
   content: '',
-  // editor 配置项
+  // article 配置项
   setting: juejin_setting
 })
 

@@ -1,11 +1,12 @@
 <script setup>
 import {ref, onMounted, onBeforeUnmount} from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
-import router from '@/router'
 import {articleGetAllService} from '@/api/article'
 import {formatRelativeTime} from '@/util/time'
+import ArticlePage from '@/views/article/ArticlePage.vue'
 
 const articleList = ref([])
+const selectedArticle = ref(null)
 
 const getArticles = async () => {
   const res = await articleGetAllService()
@@ -15,8 +16,8 @@ const getArticles = async () => {
 
 getArticles()
 
-const expandText = () => {
-  router.push('/articles/{id}')
+const expandContent = (articleId) => {
+  selectedArticle.value = articleId
 }
 
 const truncatedText = (text) => {
@@ -62,14 +63,18 @@ onBeforeUnmount(() => {
             <div class="article-title">
               <h3>{{ article.title }}</h3>
             </div>
-            <div class="article-content">
+            <div class="article-content" v-if="selectedArticle !== article.id">
               <div class="content-image">
                 <img src="@/assets/avatar.jpg" alt="">
               </div>
               <div class="content-text">
                 <span>{{ truncatedText(article.content) }}</span>
+                <button class="button-expand" @click="expandContent(article.id)">查看全文</button>
 
               </div>
+            </div>
+            <div class="article-content" v-else>
+              <article-page :content="article.content"></article-page>
             </div>
 
             <div class="article-function">

@@ -7,7 +7,7 @@ import {default_setting} from '@/components/tinymce/tinymce.settings'
 import('@/components/tinymce/tinymce.settings')
 const state = reactive({
   content: '',
-  // editor 配置项
+  // article 配置项
   setting: default_setting
 })
 

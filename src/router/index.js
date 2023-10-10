@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layout/MainLayout.vue'
 import HomePage from '@/views/HomePage.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -21,7 +22,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          component: () =>  import('@/views/auth/LoginPage.vue'),
+          component: () => import('@/views/auth/LoginPage.vue'),
           name: 'login'
         }
       ]
@@ -60,9 +61,22 @@ const router = createRouter({
         }
       ]
     },
+    // 文章相关路由
+    {
+      path: '/article',
+      component: import('@/layout/MainLayout.vue'),
+      children: [
+        {
+          // 文章详情页
+          path: '',
+          component: import('@/views/article/ArticlePage.vue')
+        },
+      ]
+    },
+    //富文本编辑器 - editor
     {
       path: '/editor',
-      component: import('@/views/editor/EditorPage.vue')
+      component: import('@/views/editor/EditorPage.vue'),
     }
   ]
 })
