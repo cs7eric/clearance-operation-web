@@ -67,9 +67,9 @@ const router = createRouter({
       component: import('@/layout/MainLayout.vue'),
       children: [
         {
-          // 文章详情页
+          // 文章首页
           path: '',
-          component: import('@/components/article/ArticlePage.vue')
+          component: import('@/views/article/ArticlePage.vue')
         },
       ]
     },

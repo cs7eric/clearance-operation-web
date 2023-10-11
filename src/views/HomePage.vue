@@ -3,7 +3,7 @@ import {ref, onMounted, onBeforeUnmount} from 'vue'
 import {Promotion} from '@element-plus/icons-vue'
 import {articleGetAllService} from '@/api/article'
 import {formatRelativeTime} from '@/util/time'
-import ArticlePage from '@/components/article/ArticlePage.vue'
+import ArticlePage from '@/components/article/ArticleItem.vue'
 import {parseHTMLContent} from '@/util/format'
 
 const articleList = ref([])
@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
             </div>
             <div class="article-content" v-if="selectedArticle !== article.id">
               <div class="content-image">
-                <img src="@/assets/avatar.jpg" alt="">
+                <img :src="article.cover" v-if="article.cover !== null" alt="">
               </div>
               <div class="content-text">
                 <div class="content-text-container" v-html="parseHTMLContent(truncatedText(article.content))"></div>
@@ -527,7 +527,10 @@ onBeforeUnmount(() => {
           .content-text {
             display: inline-block;
             flex: 1;
-            margin-left: 20px;
+
+            &:first-child {
+              margin-right: 20px;
+            }
 
             .content-text-container {
               display: inline-block;

@@ -165,7 +165,7 @@ const publishArticle = async () => {
       .title-section {
         .title {
           height: 80px;
-          width: 300px;
+          width: 750px;
           font-size: 36px;
           font-weight: 700;
           caret-color: #86909c;

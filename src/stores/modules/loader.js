@@ -5,12 +5,10 @@ export const useLoaderStore = defineStore('co-loader', () => {
     const isLoading = ref(false)
 
     const show = () => {
-      console.log("显示loader")
       isLoading.value = true
     }
 
     const hide = () => {
-      console.log("隐藏loader")
       isLoading.value = false
     }
 
