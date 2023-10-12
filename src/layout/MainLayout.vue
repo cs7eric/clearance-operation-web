@@ -44,6 +44,8 @@ const logout = () => {
   location.reload()
   router.push('/login')
 }
+
+
 </script>
 
 <template>
