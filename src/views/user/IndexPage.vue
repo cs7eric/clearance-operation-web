@@ -1,9 +1,11 @@
 <script setup>
 import {useUserStore} from '@/stores'
+import {ref} from 'vue'
 
+
+const userInfo = ref({})
 const userStore = useUserStore()
-
-const user = userStore.user
+userInfo.value = userStore.userInfo
 
 </script>
 
@@ -11,8 +13,8 @@ const user = userStore.user
   <div class="index-container">
     <div class="content-item">
       <div class="info-container">
-        <img class="avatar info-item" src="@/assets/avatar.jpg" alt="头像">
-        <h3 class="welcome info-item">欢迎使用, {{ user.username }}</h3>
+        <img class="avatar info-item" :src="userInfo.user.avatar" alt="头像">
+        <h3 class="welcome info-item">欢迎使用, {{ userInfo.username }}</h3>
         <div class="info-item">
           <p>管理自己的信息、隐私和安全，让 co 服务更好地满足您的需求。</p>
           <p class="detail">了解详情</p>

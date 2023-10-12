@@ -69,14 +69,13 @@ const verify = async () => {
     code: loginForm.value.code
   })
 
-  const {data: {token, user}} = res
+  const {data: {token, userInfo}} = res
 
-  // console.log(user)
-  userStore.setUser(user)
+  userStore.setUser(userInfo)
   userStore.setJWT(token)
 
-
   await router.push('/home')
+  location.reload()
   ElNotification({
     type: 'success',
     message: '登录成功',

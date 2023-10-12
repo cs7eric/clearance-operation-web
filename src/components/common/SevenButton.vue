@@ -5,7 +5,7 @@
 <template>
   <div class="seven-button">
     <button>
-      <span class="text">ask</span>
+      <span class="text">go</span>
     </button>
   </div>
 </template>

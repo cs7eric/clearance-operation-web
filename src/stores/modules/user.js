@@ -1,40 +1,14 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
 
-export const useUserStore = defineStore('co-modules', () => {
+export const useUserStore = defineStore('co-user', () => {
 
-    const user = ref({
-      user: {
-        createBy: '',
-        createTime: '',
-        updateBy: '',
-        updateTime: '',
-        delFlag: '',
-        version: '',
-        id: '',
-        username: '',
-        nickName: '',
-        password: '',
-        email: '',
-        phonenumber: '',
-        sex: '',
-        avatar: '',
-        userType: ''
-      },
-      permissions: '',
-      authorities: '',
-      enabled: '',
-      password: '',
-      username: '',
-      accountNonExpired: '',
-      accountNonLocked: '',
-      credentialsNonExpired: ''
-    })
+    const userInfo = ref({})
     const setUser = (newUser) => {
-      user.value = newUser
+      userInfo.value = newUser
     }
-    const removeUser = (user) => {
-      user.value = ''
+    const removeUser = () => {
+      userInfo.value = ''
     }
     const jwt = ref('')
     const setJWT = (newJWT) => {
@@ -45,10 +19,15 @@ export const useUserStore = defineStore('co-modules', () => {
       jwt.value = ''
     }
 
+    const userExist = () => {
+      return userInfo.value !== ''
+    }
+
     return {
-      user,
+      userInfo,
       setUser,
       removeUser,
+      userExist,
       jwt,
       setJWT,
       removeJWT

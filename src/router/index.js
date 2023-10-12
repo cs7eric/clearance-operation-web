@@ -13,39 +13,22 @@ const router = createRouter({
         {
           path: '/home',
           component: HomePage
-        }
-      ]
-    },
-    {
-      path: '/login',
-      component: () => import('@/layout/MainLayout.vue'),
-      children: [
+        },
         {
-          path: '',
-          component: () => import('@/views/auth/LoginPage.vue'),
-          name: 'login'
-        }
-      ]
-    },
-    {
-      path: '/issues',
-      component: () => import('@/views/issue/IssuePage.vue')
-    },
-    {
-      path: '/find',
-      component: () => import('@/views/find/FindPage.vue')
-    },
-    {
-      path: '/topic',
-      component: () => import('@/views/specialtopic/TopicPage.vue')
-    },
-    // 用户信息路由
-    {
-      path: '/user',
-      component: () => import('@/layout/MainLayout.vue'),
-      children: [
+          path: '/issues',
+          component: () => import('@/views/issue/IssuePage.vue')
+        },
         {
-          path: '',
+          path: '/find',
+          component: () => import('@/views/find/FindPage.vue')
+        },
+        {
+          path: '/topic',
+          component: () => import('@/views/specialtopic/TopicPage.vue')
+        },
+        //用户路由配置
+        {
+          path: '/user',
           component: () => import('@/layout/UserLayout.vue'),
           redirect: '/user/index',
           children: [
@@ -58,6 +41,17 @@ const router = createRouter({
               component: () => import('@/views/user/InfoPage.vue')
             }
           ]
+        }
+      ]
+    },
+    {
+      path: '/login',
+      component: () => import('@/layout/MainLayout.vue'),
+      children: [
+        {
+          path: '',
+          component: () => import('@/views/auth/LoginPage.vue'),
+          name: 'login'
         }
       ]
     },

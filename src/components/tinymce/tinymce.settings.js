@@ -11,7 +11,7 @@ export const juejin_setting = {
   content_style: 'body{font-size: 16px}',
   // 自定义 图片上传模式
   custom_images_upload: true,
-  images_upload_url: 'your_upload_api_url...',
+  images_upload_url: 'http://localhost:8089/common/upload',
   custom_images_upload_callback: (res) => res.url,
   custom_images_upload_param: { id: 'xxxx01', age: 18 },
 }

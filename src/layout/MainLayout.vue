@@ -9,10 +9,10 @@ import router from '@/router'
 
 const selected = ref('首页')
 
+const userInfo = ref({})
 const userStore = useUserStore()
-const {user} = userStore.user
-const {avatar} = user
-
+userInfo.value = userStore.userInfo
+const isUserExist = userStore.userExist()
 
 const route = useRoute()
 watch(() => route.path, newPath => {
@@ -33,9 +33,16 @@ watch(() => route.path, newPath => {
   immediate: true
 })
 const selectItem = (item) => {
-  router.push('/')
+  router.push(item)
   console.log('点击成功')
   selected.value = item
+}
+
+const logout = () => {
+  userStore.removeUser()
+  userStore.removeJWT()
+  location.reload()
+  router.push('/login')
 }
 </script>
 
@@ -45,13 +52,19 @@ const selectItem = (item) => {
       <div class="co-header-logo header-item">
         <img src="@/assets/logo.svg" class="logo" alt="logo">
       </div>
-      <div class="header-item index selected" :class="{ selected: selected.value === '/home' }"
+      <div class="header-item index selected"
+           :class="{ selected: selected.value === '/home' }"
            @click="selectItem('/home')">首页
       </div>
-      <div class="header-item index" :class="{ selected: selected.value === '/find' }" @click="selectItem('/find')">
+      <div class="header-item index"
+           :class="{ selected: selected.value === '/find' }"
+           @click="selectItem('/find')">
         发现
       </div>
-      <div class="header-item index" :class="{ selected: selected.value === '/ask' }" @click="selectItem('/ask')">问问
+      <div class="header-item index"
+           :class="{ selected: selected.value === '/ask' }"
+           @click="selectItem('/ask')">
+        问问
       </div>
       <div class="header-search header-item">
         <seven-search></seven-search>
@@ -59,7 +72,7 @@ const selectItem = (item) => {
       <div class="header-item">
         <seven-button></seven-button>
       </div>
-      <div class="header-function-login" v-if="user !== null">
+      <div class="header-function-login" v-if="isUserExist">
         <div class="header-item">
           <p>创作</p>
         </div>
@@ -70,12 +83,32 @@ const selectItem = (item) => {
           <p>消息</p>
         </div>
         <div class="header-item">
-          <img class="avatar" :src="avatar" alt="">
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              <img class="avatar" :src="userInfo.user.avatar" v-if="userInfo.user.avatar"  alt="">
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>
+                  <router-link to="/user">我的主页</router-link>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <router-link to="/user/info">个人信息</router-link>
+                </el-dropdown-item>
+                <el-dropdown-item disabled>Action 4</el-dropdown-item>
+                <el-dropdown-item divided @click="logout">退出</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
-      <div class="header-function-nologin" v-else>
-        <div class="header-item">登录</div>
-        <div class="header-item">注册</div>
+      <div class="header-function-nologin" v-if="!isUserExist">
+        <div class="header-item">
+          <router-link to="/login">登录</router-link>
+        </div>
+        <div class="header-item">
+          <router-link to="/login">注册</router-link>
+        </div>
       </div>
 
 

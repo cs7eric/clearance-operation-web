@@ -4,7 +4,9 @@ import instance from '@/util/request'
 export const userLoginService = async ({email, code}) => {
 
   try {
-    return await instance.post('/user/verify', {email, code})
+    const userData = await instance.post('/user/verify', {email, code})
+    console.log(userData)
+    return userData
   } catch (error) {
     console.error('Error during the API call:', error)
     throw error
