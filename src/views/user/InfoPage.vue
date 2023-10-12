@@ -1,5 +1,11 @@
 <script setup>
+import {ref} from 'vue'
+import {useUserStore} from '@/stores'
+import UploadItem from '@/components/UploadItem.vue'
 
+const userInfo = ref({})
+const userStore = useUserStore()
+userInfo.value = userStore.userInfo
 </script>
 
 <template>
@@ -44,24 +50,29 @@
           <div class="avatar-desc">
             <p>个人资料照片</p>
             <p>更换个人资料照片可帮助您个性化您的账号</p>
-            <img class="avatar" src="@/assets/avatar.jpg" alt="">
+
+            <upload-item
+                class="avatar-upload-section"
+                :avatar="userInfo.user.avatar"
+            ></upload-item>
+            
           </div>
         </div>
         <div class="data-list">
           <ul class="list">
             <li class="info-item">
               <p>用户名</p>
-              <p>cccs7@icloud.com</p>
+              <p>{{ userInfo.user.username }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="info-item">
               <p>昵称</p>
-              <p>cccs7</p>
+              <p>{{ userInfo.user.nickName }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="info-item">
               <p>性别</p>
-              <p>男</p>
+              <p>{{ userInfo.user.sex === '1' ? '男' : '女' }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="info-item">
@@ -82,12 +93,12 @@
           <ul class="contact-list">
             <li class="contact-item">
               <p>电子邮件</p>
-              <p>cccs7@icloud.com</p>
+              <p>{{ userInfo.user.email }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="contact-item">
               <p>手机号</p>
-              <p>1360 xxxx xxxx</p>
+              <p>{{ userInfo.user.phonenumber }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="contact-item more">
@@ -208,8 +219,29 @@
   </div>
 
 </template>
+<style>
+.el-upload--text{
+  width: 46px;
+  height: 46px;
+}
+</style>
 
 <style scoped>
+
+
+.avatar-uploader{
+  width: 78px;
+  height: 78px;
+  display: block;
+}
+
+
+.avatar-uploader .avatar {
+  width: 78px;
+  height: 78px;
+  display: block;
+}
+
 .user-container {
 
   .content-item {
@@ -339,7 +371,7 @@
           }
 
           .item {
-            &>p {
+            & > p {
               font-size: 12px;
               color: #444746;
             }
@@ -537,10 +569,21 @@
             line-height: 46px;
           }
 
+          .avatar-upload-section {
+            width:46px;
+
+          }
+
           .avatar {
             border-radius: 23px;
             max-width: 46px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+
+            &:hover {
+              transform: scale(1.25);
+            }
+
           }
 
         }

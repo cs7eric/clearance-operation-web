@@ -11,7 +11,6 @@ const props = defineProps(
 import {ref} from 'vue'
 import {ElMessage} from 'element-plus'
 import {Plus} from '@element-plus/icons-vue'
-import {fileUploadService} from '@/api/upload'
 
 const imageUrl = ref('')
 
@@ -20,7 +19,6 @@ const handleAvatarSuccess = function (response, uploadFile) {
 }
 
 const beforeAvatarUpload = function (rawFile) {
-  this.fileToUpload = rawFile
   if (rawFile.type !== 'image/jpeg') {
     ElMessage.error('Avatar picture must be JPG format!')
     return false

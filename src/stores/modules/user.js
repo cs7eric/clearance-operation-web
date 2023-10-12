@@ -10,6 +10,21 @@ export const useUserStore = defineStore('co-user', () => {
     const removeUser = () => {
       userInfo.value = ''
     }
+
+    const setAvatar = (newAvatar) => {
+      userInfo.value.user.avatar = newAvatar
+    }
+
+    const setNickname = (newNickname) => {
+      userInfo.value.user.nickName = newNickname
+    }
+    const setSex = (newSex) => {
+      userInfo.value.user.sex = newSex
+    }
+    const setPhonenum = (newPhonenum) => {
+      userInfo.value.user.phonenumber = newPhonenum
+    }
+
     const jwt = ref('')
     const setJWT = (newJWT) => {
       jwt.value = newJWT
@@ -27,6 +42,10 @@ export const useUserStore = defineStore('co-user', () => {
       userInfo,
       setUser,
       removeUser,
+      setAvatar,
+      setNickname,
+      setSex,
+      setPhonenum,
       userExist,
       jwt,
       setJWT,
