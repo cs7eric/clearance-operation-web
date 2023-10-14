@@ -12,7 +12,20 @@ const selected = ref('首页')
 const userInfo = ref({})
 const userStore = useUserStore()
 userInfo.value = userStore.userInfo
-const isUserExist = userStore.userExist()
+const isUserExist = ref(false)
+isUserExist.value = userStore.userExist()
+
+
+
+const avatar = ref('')
+if (isUserExist.value) {
+  console.log("------")
+  console.log(isUserExist.value)
+  console.log(userInfo.value.user.avatar)
+  avatar.value = userInfo.value.user.avatar
+  console.log(userInfo.value.user.avatar)
+}
+
 
 const route = useRoute()
 watch(() => route.path, newPath => {
@@ -87,7 +100,8 @@ const logout = () => {
         <div class="header-item">
           <el-dropdown>
             <span class="el-dropdown-link">
-              <img class="avatar" :src="userInfo.user.avatar" v-if="userInfo.user.avatar"  alt="">
+              <img class="avatar" :src="avatar" v-if="avatar"  alt="">
+              <img src="" alt="" v-else>
             </span>
             <template #dropdown>
               <el-dropdown-menu>

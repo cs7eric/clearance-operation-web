@@ -29,16 +29,15 @@ const articleData = ref({
   categories: []
 })
 
-
 const userStore = useUserStore()
+const userInfo = ref({})
 
-const user = userStore.user
-console.log(user)
+userInfo.value = userStore.userInfo
 
 // 发布文章
 const publishArticle = async () => {
-  articleData.value.authorId = user.id
-  articleData.value.author = user.username
+  articleData.value.authorId = userInfo.value.user.id
+  articleData.value.author = userInfo.value.user.username
   const res = await articleCreateService(articleData.value)
   if (res.success) {
     ElNotification({
@@ -169,6 +168,7 @@ const publishArticle = async () => {
           font-size: 36px;
           font-weight: 700;
           caret-color: #86909c;
+
           &::placeholder {
             color: #86909c;
           }

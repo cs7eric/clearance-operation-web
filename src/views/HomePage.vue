@@ -5,6 +5,7 @@ import {articleGetAllService} from '@/api/article'
 import {formatRelativeTime} from '@/util/time'
 import ArticlePage from '@/components/article/ArticleItem.vue'
 import {parseHTMLContent} from '@/util/format'
+import CommentItem from '@/components/article/CommentItem.vue'
 
 const articleList = ref([])
 const selectedArticle = ref(null)
@@ -57,6 +58,11 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
+const expandCommentKey = ref(false)
+
+const expandComment = (() => {
+  expandCommentKey.value = true
+})
 
 </script>
 
@@ -78,14 +84,15 @@ onBeforeUnmount(() => {
               </div>
               <div class="content-text">
                 <div class="content-text-container" v-html="parseHTMLContent(truncatedText(article.content))"></div>
-                <button class="button-expand" @click="expandContent(article.id)" v-if="isExpand(article.content)">查看全文</button>
+                <button class="button-expand" @click="expandContent(article.id)" v-if="isExpand(article.content)">
+                  查看全文
+                </button>
 
               </div>
             </div>
             <div class="article-content" v-else>
               <article-page :content="article.content"></article-page>
             </div>
-
             <div class="article-function">
               <div class="function-agree">
                 <button class="button-agree">
@@ -109,45 +116,31 @@ onBeforeUnmount(() => {
               </div>
               <div class="function-other">
                 <div class="item">
-                  <svg t="1695717332810" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                       xmlns="http://www.w3.org/2000/svg" p-id="979" width="200" height="200">
-                    <path
-                        d="M768 128a160 160 0 0 1 160 160v384A160 160 0 0 1 768 832h-114.816l-73.28 73.344a96 96 0 0 1-128.512 6.592l-7.296-6.592L370.752 832H256a160 160 0 0 1-159.68-149.504L96 672v-384A160 160 0 0 1 256 128z m-96 384h-320a32 32 0 0 0 0 64h320a32 32 0 0 0 0-64z m-128-192h-192a32 32 0 0 0 0 64h192a32 32 0 0 0 0-64z"
-                        fill="#76839b" p-id="980"></path>
-                  </svg>
-                  <span>评论</span>
+                  <img class="icon" src="@/assets/icon/article_comment.svg" alt="">
+                  <button class="comment-button" @click="expandComment()">
+                    评论
+                  </button>
                 </div>
                 <div class="item">
-                  <svg t="1695717984106" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                       xmlns="http://www.w3.org/2000/svg" p-id="7787" width="200" height="200">
-                    <path
-                        d="M622.272 290.56L428.8 428.288A192 192 0 0 1 439.68 568.32l231.488 116.032a128 128 0 1 1-28.416 57.344L410.88 625.472a192 192 0 1 1-19.2-249.344L584.768 238.72a128 128 0 1 1 37.504 51.84z"
-                        fill="#666666" p-id="7788"></path>
-                  </svg>
+                  <img class="icon" src="@/assets/icon/article_share.svg" alt="">
                   <span>分享</span>
                 </div>
                 <div class="item">
-                  <svg t="1695718192867" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                       xmlns="http://www.w3.org/2000/svg" p-id="2212" width="200" height="200">
-                    <path
-                        d="M720.398507 959.573333c73.045333 31.317333 136.96-15.317333 129.706666-94.293333l-20.650666-226.218667 174.634666-199.722666c38.144-43.648 19.2-102.229333-37.418666-115.114667l-258.474667-58.794667-135.68-228.010666c-29.738667-49.877333-91.306667-49.92-121.045333 0L315.74784 265.429333 57.273173 324.224C0.953173 337.066667-18.33216 395.648 19.854507 439.338667l174.634666 199.722666-24.021333 264.405334c-5.248 57.770667 44.544 94.037333 97.877333 71.125333l243.626667-104.533333 208.426667 89.472z"
-                        fill="#808ba0" p-id="2213"></path>
-                  </svg>
+                  <img class="icon" src="@/assets/icon/article_star.svg" alt="">
                   <span>收藏</span>
                 </div>
                 <div class="item">
-                  <svg t="1695718063639" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                       xmlns="http://www.w3.org/2000/svg" p-id="9766" width="200" height="200">
-                    <path
-                        d="M171.6 866.2H852c22.5 0 40.8 18.3 40.8 40.8 0 22.5-18.3 40.8-40.8 40.8H171.6c-22.5 0-40.8-18.3-40.8-40.8 0-22.5 18.3-40.8 40.8-40.8z m340.2-598.8c150.6 0 272.6 122 272.6 272.6v217.3c0 30-24.3 54.4-54.4 54.4H294c-30 0-54.4-24.3-54.4-54.4V539.6c0.4-150.2 122.1-271.9 272.2-272.2zM389.4 512.3c-22.5 0-40.8 18.3-40.8 40.8v136.1c0 22.5 18.3 40.8 40.8 40.8 22.5 0 40.8-18.3 40.8-40.8V553.1c0-22.5-18.3-40.8-40.8-40.8zM511.8 76.9c23.9-3.5 44.4 17 40.9 40.9v81.6c3.3 23.8-17.1 44.2-40.9 40.7-23.8 3.4-44.2-16.9-40.9-40.7v-81.6C467.5 94 488 73.5 511.8 76.9z m-299.3 80.2c18.9-14.9 46.8-7.4 55.8 14.9l40.7 70.7c14.9 18.9 7.4 46.8-14.9 55.8-18.9 14.9-46.8 7.4-55.6-14.9l-40.9-70.7c-15-18.9-7.5-46.8 14.9-55.8z m598.7 0c22.3 9 29.8 36.9 14.9 55.8l-40.9 70.7c-8.9 22.3-36.8 29.8-55.6 14.9-22.3-9-29.8-36.8-15.1-55.8l41.7-70.7c9.1-21.7 36.2-29.1 55-14.9z"
-                        fill="#666666" p-id="9767"></path>
-                  </svg>
+                  <img class="icon" src="@/assets/icon/article_report.svg" alt="">
                   <span>举报</span>
                 </div>
                 <div class="item">
 
                 </div>
               </div>
+            </div>
+            <div class="article-comment" v-if="expandCommentKey">
+              comment
+              <comment-item :articleId="article.id"></comment-item>
             </div>
           </div>
 
@@ -493,13 +486,16 @@ onBeforeUnmount(() => {
               &:hover {
                 transform: scale(1.15);
               }
+
+              & > .icon {
+                max-width: 25px;
+                height: auto;
+                margin-right: 6px;
+                  fill: #8493a5;
+              }
             }
 
-            .icon {
-              max-width: 25px;
-              height: auto;
-              margin-right: 6px;
-            }
+
           }
         }
 

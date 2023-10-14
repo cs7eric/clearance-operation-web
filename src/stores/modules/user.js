@@ -8,7 +8,7 @@ export const useUserStore = defineStore('co-user', () => {
       userInfo.value = newUser
     }
     const removeUser = () => {
-      userInfo.value = ''
+      localStorage.removeItem('co-user')
     }
 
     const setAvatar = (newAvatar) => {
@@ -35,7 +35,7 @@ export const useUserStore = defineStore('co-user', () => {
     }
 
     const userExist = () => {
-      return userInfo.value !== ''
+      return localStorage.getItem('co-user') !== null
     }
 
     return {

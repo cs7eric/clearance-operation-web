@@ -72,7 +72,7 @@ userInfo.value = userStore.userInfo
             </li>
             <li class="info-item">
               <p>性别</p>
-              <p>{{ userInfo.user.sex === '1' ? '男' : '女' }}</p>
+              <p>{{ userInfo.user.sex === null ? '私密' : userInfo.user.sex === '1' ? '男' : '女'  }}</p>
               <img class="icon" src="@/assets/icon/arrow_right.svg" alt="">
             </li>
             <li class="info-item">
