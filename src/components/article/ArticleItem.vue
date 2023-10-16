@@ -3,7 +3,7 @@
 import {parseHTMLContent} from '@/util/format'
 import {formatRelativeTime} from '@/util/time'
 import {ref} from 'vue'
-import CommentItem from '@/components/comment/CommentDisplay.vue'
+import CommentDisplay from '@/components/comment/CommentDisplay.vue'
 
 defineProps({
   article: Object
@@ -30,6 +30,9 @@ const isExpand = (text) => {
 const expandComment = (() => {
   expandCommentKey.value = !expandCommentKey.value
 })
+
+
+
 
 
 </script>
@@ -112,7 +115,7 @@ const expandComment = (() => {
          @click="expandComment"
          ref="commentRef"
     >
-      <comment-item :articleId="article.id"></comment-item>
+      <comment-display :article="article"></comment-display>
     </div>
 
 

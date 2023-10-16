@@ -2,16 +2,50 @@
 import {ref} from 'vue'
 import {useUserStore} from '@/stores'
 import CommentItem from '@/components/comment/CommentItem.vue'
+import {commentCreateService, commentGet1stCommentService} from '@/api/comment'
+import {ElNotification} from 'element-plus'
 
+const commentList = ref([])
 const userStore = useUserStore()
 const userInfo = ref()
 userInfo.value = userStore.userInfo
 
+const commentContent =  ref('')
+
+const props = defineProps({
+  article: Object
+})
+
 
 const handleInsideClick = (event) => {
   event.stopPropagation(); // 阻止点击事件的传播
-  // 你可以在这里添加其他的处理逻辑，如果需要的话
 }
+
+const getAllComments = async () => {
+  const res = await commentGet1stCommentService(props.article.id)
+  commentList.value = res.data
+}
+
+const submitComment = async () => {
+
+  const articleId = props.article.id
+  const authorAvatar = userInfo.value.user.avatar
+  const userId = userInfo.value.user.id
+  const nickname = userInfo.value.user.nickname
+  const content = commentContent.value
+  await commentCreateService({userId, articleId, authorAvatar, nickname,  content})
+  commentContent.value = ''
+  ElNotification(
+    {
+      type: 'success',
+      message: '评论发表成功'
+    }
+
+  )
+
+}
+
+getAllComments()
 
 </script>
 
@@ -23,17 +57,25 @@ const handleInsideClick = (event) => {
       <img :src="userInfo.user.avatar" alt="">
     </div>
     <div class="comment-input">
-      <input type="text" placeholder="快来发表你的见解吧 !">
+      <input v-model="commentContent" type="text" placeholder="快来发表你的见解吧 !">
+      <el-button
+          v-model="commentContent"
+          class="submit-button"
+          type="primary"
+          @click="submitComment"
+      >发布</el-button>
     </div>
   </div>
   <div class="comment-content-section">
     <div class="comment-profile">
-      <h3>77 条评论</h3>
+      <h3>{{article.replyNum}} 条评论</h3>
     </div>
     <div class="comment-details">
       <comment-item
-          v-for="o in 5" :key="o"
           class="comment-item"
+          v-for="comment in commentList"
+          :key="comment.id"
+          :comment="comment"
       ></comment-item>
     </div>
   </div>
@@ -44,7 +86,6 @@ const handleInsideClick = (event) => {
 .comment-container {
 
   margin-top: 15px;
-  //border: 1px solid #000;
   .comment-function-section{
 
     display: flex;
@@ -61,14 +102,23 @@ const handleInsideClick = (event) => {
 
     .comment-input {
 
-      flex: 1;
+      display: flex;
+      align-items: center;
       margin-left: 10px;
+      border-radius: 4px;
+      width: 100%;
+      border: 1px solid #e6e6e6;
+
+      &>.submit-button {
+        margin-right: 8px;
+        height: 28px;
+      }
+
       &>input {
         padding-left: 10px;
         height: 40px;
         width: 100%;
-        border-radius: 4px;
-        border: 1px solid #e6e6e6;
+
 
         &::placeholder {
           color: #999999;

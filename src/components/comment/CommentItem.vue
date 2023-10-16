@@ -1,10 +1,25 @@
 <script setup>
 import {ref} from 'vue'
+import {formatRelativeTime} from '@/util/time'
+import {commentGetRepliesListService} from '@/api/comment'
 
 const replyKey = ref(false)
 
+const props = defineProps({
+  comment: Object
+})
+
+const getChildList = async (articleId, parentId) => {
+  return await commentGetRepliesListService(articleId, parentId)
+}
+
+const expandChildComments = async (articleId, parentId) => {
+  const res = await getChildList(articleId, parentId)
+  return res.data
+}
+
 const toReply = () => {
-  replyKey.value =  !replyKey.value
+  replyKey.value = !replyKey.value
 }
 </script>
 
@@ -12,20 +27,21 @@ const toReply = () => {
   <div class="comment-item-container">
     <div class="user-profile-section">
       <div class="user-avatar">
-        <img class="avatar" src="@/assets/default_avatar.jpg" alt="">
+        <img class="avatar" :src="comment.authorAvatar === null ? '/src/assets/avatar.jpg' : comment.authorAvatar"
+             alt="">
       </div>
       <div class="user-nickname">
-        <h5>cccs7</h5>
+        <h5>{{ comment.nickname }}</h5>
       </div>
     </div>
     <div class="comment-detail-section">
       <div class="detail">
         <p>
-          this is a test text for comment
+          {{ comment.content }}
         </p>
       </div>
       <div class="other">
-        <div class="date">06-11</div>
+        <div class="date">{{ formatRelativeTime(comment.createTime) }}</div>
         <div class="function">
           <div class="reply function-item" @click="toReply">
             <img class="icon" src="@/assets/icon/article_comment.svg" alt="">
@@ -37,15 +53,20 @@ const toReply = () => {
           </div>
         </div>
       </div>
+      <div class="expand-comments" @click="expandChildComments(comment.articleId, comment.parentId)"
+           v-if="comment.replyNum !== 0">
+        展开评论
+      </div>
       <div class="comment-input" v-if="replyKey">
         <input type="text" placeholder="表达你的观点吧 ！">
         <el-button type="primary" class="submit-button">发表</el-button>
       </div>
     </div>
+    <div class="comment-child-container">
+      <comment-item v-if="getChildList !== null"></comment-item>
+    </div>
   </div>
-  <div class="comment-child-container">
-<!--    <comment-item></comment-item>-->
-  </div>
+
 </template>
 
 <style scoped>
@@ -56,6 +77,7 @@ const toReply = () => {
     .user-avatar {
       & > .avatar {
         width: 24px;
+        border-radius: 3px;
       }
     }
 
@@ -94,7 +116,7 @@ const toReply = () => {
 
           .icon {
             margin-right: 5px;
-            width:14px;
+            width: 14px;
 
           }
         }
@@ -113,7 +135,7 @@ const toReply = () => {
       border-radius: 5px;
       border: 1px solid #e6e6e6;
 
-      &>input {
+      & > input {
         padding-left: 10px;
         height: 34px;
         width: 100%;
@@ -133,6 +155,7 @@ const toReply = () => {
 
   }
 }
+
 .comment-child-container {
   margin: 10px 0;
   padding-left: 34px;
