@@ -11,6 +11,6 @@ export const commentGet1stCommentService = async (articleId) => {
 }
 
 // 发表评论
-export const commentCreateService = async (comment) => {
-  await instance.post('/comments/create', comment)
+export const commentCreateService = async (commentDto) => {
+  await instance.post('/comments/create', commentDto)
 }

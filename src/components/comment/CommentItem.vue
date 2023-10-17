@@ -1,21 +1,49 @@
 <script setup>
 import {ref} from 'vue'
 import {formatRelativeTime} from '@/util/time'
-import {commentGetRepliesListService} from '@/api/comment'
+import {commentCreateService, commentGetRepliesListService} from '@/api/comment'
+import {ElNotification} from 'element-plus'
+import {useUserStore} from '@/stores'
 
 const replyKey = ref(false)
-
+const expandRepliesKey = ref(false)
 const props = defineProps({
   comment: Object
 })
 
-const getChildList = async (articleId, parentId) => {
-  return await commentGetRepliesListService(articleId, parentId)
+const repliesList = ref([])
+const repliesContent = ref('')
+
+const userStore = useUserStore()
+const userInfo = ref()
+userInfo.value = userStore.userInfo
+
+const getChildList = async (articleId, commentId) => {
+  return await commentGetRepliesListService(articleId, commentId)
 }
 
 const expandChildComments = async (articleId, parentId) => {
   const res = await getChildList(articleId, parentId)
-  return res.data
+  repliesList.value = res.data
+  expandRepliesKey.value = !expandRepliesKey.value
+}
+
+const submitReplies = async (commentId) => {
+  const articleId = props.comment.articleId
+  const authorAvatar = userInfo.value.user.avatar
+  const userId = userInfo.value.user.id
+  const nickName = userInfo.value.user.nickName === null ? userInfo.value.user.username : userInfo.value.user.nickName
+  const content = repliesContent.value
+  const parentId =  commentId
+
+  await commentCreateService({userId, articleId, parentId,authorAvatar, nickName,  content})
+  repliesContent.value = ''
+  ElNotification(
+    {
+      type: 'success',
+      message: '回复成功'
+    }
+  )
 }
 
 const toReply = () => {
@@ -31,7 +59,7 @@ const toReply = () => {
              alt="">
       </div>
       <div class="user-nickname">
-        <h5>{{ comment.nickname }}</h5>
+        <h5>{{ comment.nickName === null ? '测试用户' : comment.nickName}}</h5>
       </div>
     </div>
     <div class="comment-detail-section">
@@ -53,17 +81,21 @@ const toReply = () => {
           </div>
         </div>
       </div>
-      <div class="expand-comments" @click="expandChildComments(comment.articleId, comment.parentId)"
-           v-if="comment.replyNum !== 0">
-        展开评论
+      <div class="expand-comments"
+           @click="expandChildComments(comment.id, comment.articleId)"
+           v-if="comment.replyNum > 0">
+        <p>{{expandRepliesKey === false ? '展开评论' : '收起评论'}}</p>
       </div>
       <div class="comment-input" v-if="replyKey">
-        <input type="text" placeholder="表达你的观点吧 ！">
-        <el-button type="primary" class="submit-button">发表</el-button>
+        <input type="text" v-model="repliesContent" placeholder="表达你的观点吧 ！">
+        <el-button type="primary" @click="submitReplies(comment.id)" class="submit-button">发表</el-button>
       </div>
     </div>
-    <div class="comment-child-container">
-      <comment-item v-if="getChildList !== null"></comment-item>
+    <div class="comment-child-container" v-if="expandRepliesKey">
+      <comment-item
+          v-for="replies in repliesList"
+          :key="replies.id"
+          :comment="replies"></comment-item>
     </div>
   </div>
 
@@ -124,6 +156,15 @@ const toReply = () => {
         .like {
           margin-left: 15px;
         }
+      }
+    }
+    .expand-comments {
+
+      cursor: pointer;
+      
+      &>p {
+        font-size: 12px;
+        color: #0066ff;
       }
     }
 

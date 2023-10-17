@@ -31,9 +31,10 @@ const submitComment = async () => {
   const articleId = props.article.id
   const authorAvatar = userInfo.value.user.avatar
   const userId = userInfo.value.user.id
-  const nickname = userInfo.value.user.nickname
+  const nickName = userInfo.value.user.nickName === null ? userInfo.value.user.username : userInfo.value.user.nickName
   const content = commentContent.value
-  await commentCreateService({userId, articleId, authorAvatar, nickname,  content})
+
+  await commentCreateService({userId, articleId, authorAvatar, nickName,  content})
   commentContent.value = ''
   ElNotification(
     {
