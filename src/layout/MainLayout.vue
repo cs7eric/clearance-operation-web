@@ -19,11 +19,7 @@ isUserExist.value = userStore.userExist()
 
 const avatar = ref('')
 if (isUserExist.value) {
-  console.log("------")
-  console.log(isUserExist.value)
-  console.log(userInfo.value.user.avatar)
   avatar.value = userInfo.value.user.avatar
-  console.log(userInfo.value.user.avatar)
 }
 
 
@@ -78,7 +74,7 @@ const logout = () => {
       </div>
       <div class="header-item index"
            :class="{ selected: selected.value === '/ask' }"
-           @click="selectItem('/ask')">
+           @click="selectItem('/issues')">
         问问
       </div>
       <div class="header-search header-item">
@@ -138,7 +134,6 @@ const logout = () => {
 
 <style scoped>
 body {
-  background: #f6f6f6;
 }
 
 .co-index-container {

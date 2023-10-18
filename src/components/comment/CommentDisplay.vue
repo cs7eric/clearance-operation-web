@@ -41,8 +41,9 @@ const submitComment = async () => {
       type: 'success',
       message: '评论发表成功'
     }
-
   )
+
+  await getAllComments()
 
 }
 
