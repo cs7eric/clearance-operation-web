@@ -125,12 +125,15 @@ const state = reactive({
         </div>
       </div>
       <div class="prompt-section prompt">
-        <div class="prompt-title">写一个好标题</div>
+        <div class="prompt-title">Adding tags</div>
         <div class="prompt-detail">
           <p>
-            Your title should summarize the problem.
+            Tags help ensure that your question will get attention from the right people.
+
+            Tag things in more than one way so people can find them more easily. Add tags for product lines, projects, teams, and the specific technologies or languages used.
+
+            Learn more about tagging
           </p>
-          <p>You might find that you have a better idea of your title after writing out the rest of the question.</p>
         </div>
       </div>
     </div>

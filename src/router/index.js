@@ -16,7 +16,20 @@ const router = createRouter({
         },
         {
           path: '/issues',
-          component: () => import('@/views/issue/IssuePage.vue')
+          children: [
+            {
+              path: '/issues',
+              component: () => import('@/views/issue/IssuesPage.vue')
+            },
+            {
+              path: '/issues/ask',
+              component: () => import('@/views/issue/AskIssue.vue')
+            },
+            {
+              path: '/issues/profile',
+              component: () => import('@/views/issue/IssueProfile.vue')
+            }
+          ]
         },
         {
           path: '/find',

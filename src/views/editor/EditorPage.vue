@@ -26,7 +26,8 @@ const articleData = ref({
   author: '',
   authorId: '',
   tags: [],
-  categories: []
+  categories: [],
+  articleType: ''
 })
 
 const userStore = useUserStore()
@@ -38,6 +39,7 @@ userInfo.value = userStore.userInfo
 const publishArticle = async () => {
   articleData.value.authorId = userInfo.value.user.id
   articleData.value.author = userInfo.value.user.username
+  articleData.value.articleType = "article"
   const res = await articleCreateService(articleData.value)
   if (res.success) {
     ElNotification({
