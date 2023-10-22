@@ -1,7 +1,9 @@
 <script setup>
-import {reactive} from 'vue'
+import {reactive, ref} from 'vue'
 import Vue3Tinymce from '@jsdawn/vue3-tinymce'
 import {juejin_setting} from '@/components/tinymce/tinymce.settings'
+import {useUserStore} from '@/stores'
+import {issuePostService} from '@/api/issue'
 
 import('@/components/tinymce/tinymce.settings')
 
@@ -13,6 +15,49 @@ const state = reactive({
   // article 配置项
   setting: juejin_setting
 })
+const options = [
+  {
+    value: '电信诈骗',
+    label: '电信诈骗',
+  },
+  {
+    value: '跨境诈骗',
+    label: '跨境诈骗',
+  },
+  {
+    value: '情景再现',
+    label: '情景再现',
+  },
+]
+
+const issueData = ref({
+  title: '',
+  authorId: '',
+  detailContent: '',
+  expectContent: '',
+  tags: []
+})
+
+const userInfo = ref()
+const userStore = useUserStore()
+userInfo.value = userStore.userInfo
+
+// 发布问题
+const postIssue = () => {
+
+  const postData = {
+    title: issueData.value.title,
+    authorId: issueData.value.authorId,
+    detailContent: issueData.value.detailContent,
+    expectContent: issueData.value.expectContent,
+    tags: issueData.value.tags
+  }
+  console.log(issueData.value)
+  issuePostService(postData)
+
+}
+
+
 </script>
 
 <template>
@@ -43,8 +88,10 @@ const state = reactive({
         <h3 class="title-item">标题</h3>
         <p class="title-item">具体一点，想象一下你正在向另一个人问问题。 </p>
         <div class="title">
-          <input class="title-input" type="text"
-                 placeholder="例子: 当我遇到电信诈骗，我该怎么做才能使风险最小化">
+          <input
+              class="title-input" type="text"
+              v-model="issueData.title"
+              placeholder="例子: 当我遇到电信诈骗，我该怎么做才能使风险最小化">
         </div>
         <div class="next ">
           <button class="next-button">Next</button>
@@ -67,7 +114,7 @@ const state = reactive({
           <p>Introduce the problem and expand on what you put in the Minimum 20 characters</p>
         </div>
         <div class="detail-section">
-          <vue3-tinymce :setting="state.setting"></vue3-tinymce>
+          <vue3-tinymce v-model="issueData.detailContent" :setting="state.setting"></vue3-tinymce>
         </div>
       </div>
       <div class="issue-prompt-section">
@@ -87,10 +134,11 @@ const state = reactive({
       <div class="issue-expect-section issues-item">
         <div class="title-section">
           <h3>What did you try and what were you expecting?</h3>
-          <p>Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20 characters.</p>
+          <p>Describe what you tried, what you expected to happen, and what actually resulted. Minimum 20
+            characters.</p>
         </div>
         <div class="expect-section">
-          <vue3-tinymce :setting="state.setting"></vue3-tinymce>
+          <vue3-tinymce v-model="issueData.expectContent" :setting="state.setting"></vue3-tinymce>
         </div>
       </div>
       <div class="issue-prompt-section">
@@ -117,8 +165,25 @@ const state = reactive({
         <p class="tags-item">
           最多添加5个标签来描述您的问题。开始键入以查看建议。</p>
         <div class="tags">
-          <input class="tags-input" type="text"
-                 placeholder="例子: 电信诈骗、境外诈骗">
+          <el-select
+              class="tag-section-item el-select-section tags-input"
+              v-model="issueData.tags"
+              autocomplete="true"
+              multiple
+              multiple-limit="3"
+              filterable
+              allow-create
+              default-first-option
+              :reserve-keyword="false"
+              placeholder="例子: 电信诈骗、境外诈骗"
+          >
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
         </div>
         <div class="next ">
           <button class="next-button">Next</button>
@@ -130,7 +195,8 @@ const state = reactive({
           <p>
             Tags help ensure that your question will get attention from the right people.
 
-            Tag things in more than one way so people can find them more easily. Add tags for product lines, projects, teams, and the specific technologies or languages used.
+            Tag things in more than one way so people can find them more easily. Add tags for product lines, projects,
+            teams, and the specific technologies or languages used.
 
             Learn more about tagging
           </p>
@@ -138,10 +204,9 @@ const state = reactive({
       </div>
     </div>
     <div class="function-section">
-      <button class="submit-button function-item">Post your question</button>
+      <button @click="postIssue" class="submit-button function-item">Post your question</button>
       <button class="discard-button function-item">Discard draft</button>
     </div>
-
 
 
   </div>
@@ -288,7 +353,7 @@ const state = reactive({
   .issue-expect-container {
     display: flex;
 
-    .issue-expect-section{
+    .issue-expect-section {
 
       .title-section {
         & > h3 {
@@ -301,7 +366,7 @@ const state = reactive({
         }
       }
 
-      .expect-section{
+      .expect-section {
         margin-top: 10px;
       }
     }
@@ -328,12 +393,12 @@ const state = reactive({
         align-items: center;
         margin-top: 8px;
         padding-left: 8px;
-        height: 36px;
-        line-height: 36px;
+        height: 40px;
+        line-height: 40px;
         border-radius: 6px;
-        border: 1px solid #e6e6e6;
 
         .tags-input {
+          margin-left: -11px;
           width: 100%;
 
           &::placeholder {
@@ -361,7 +426,7 @@ const state = reactive({
 
   }
 
-  .function-section{
+  .function-section {
     margin-bottom: 20px;
 
 
@@ -369,15 +434,15 @@ const state = reactive({
       color: #fff;
       background: #81c7fc;
     }
-    
+
     .discard-button {
       color: #c22e32;
-      
+
       &:hover {
         background: #fdf2f2;
       }
     }
-    
+
     .function-item {
       padding: 8px;
       margin-right: 10px;
