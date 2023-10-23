@@ -1,4 +1,29 @@
 <script setup>
+import {parseHTMLContent} from '@/util/format'
+import {useRoute} from 'vue-router'
+import {ref} from 'vue'
+import ArticleItem from '@/components/article/ArticleItem.vue'
+import {articleGetIssueAnswerService} from '@/api/article'
+
+const props = defineProps({
+  issue: Object
+})
+const route = useRoute()
+// eslint-disable-next-line vue/no-setup-props-destructure
+
+const answerList = ref([])
+
+
+const getAnswers = async () => {
+  const res = await articleGetIssueAnswerService(route.params.id)
+  console.log(res)
+  answerList.value = res.data
+}
+
+getAnswers()
+
+
+
 
 </script>
 
@@ -6,26 +31,28 @@
   <div class="issue-container">
     <div class="issue-top-section issue-div">
       <div class="issue-tags">
-        <el-tag class="tag-item" size="large" round>Tag 1</el-tag>
-        <el-tag class="tag-item" size="large" round>Tag 1</el-tag>
+        <el-tag
+            v-for="tag in props.issue.tags" :key="tag"
+            class="tag-item" size="large" round>{{ tag }}
+        </el-tag>
       </div>
       <div class="issue-data">
         <div class="focus-data-section top-item">
           <h5>关注者</h5>
-          <p>777</p>
+          <p>{{ props.issue.focusNum }}</p>
         </div>
         <div class="reply-data-section top-item">
           <h5>回复数</h5>
-          <p>111</p>
+          <p>{{ props.issue.replyNum }}</p>
         </div>
       </div>
     </div>
     <div class="issue-info-section issue-div">
       <div class="issue-title">
-        <h3>遇到电信诈骗应该怎么办</h3>
+        <h3>{{ props.issue.title }}</h3>
       </div>
       <div class="issue-content">
-        <p>这是一段测试文本</p>
+        <p>{{ parseHTMLContent(props.issue.detailContent) }}</p>
       </div>
     </div>
     <div class="issue-function-section issue-div">
@@ -49,7 +76,12 @@
   <div class="reply-main-container reply-container-bg">
     <div class="reply-content-section reply-item-common">
       <div class="reply-top-section">
-        <h3>1111 个回答</h3>
+        <h3>{{ props.issue.replyNum }} 个回答</h3>
+      </div>
+      <div class="reply-list-container">
+          <article-item :article="article"
+                        v-for="article in answerList"
+                        :key="article.id" class="article-card"></article-item>
       </div>
     </div>
     <div class="reply-other-section ">
@@ -72,6 +104,14 @@
 </template>
 
 <style scoped>
+.article-card{
+  padding: 10px;
+  border-bottom: 1px solid #e6e6e6;
+  &:last-child {
+    border-bottom: none;
+  }
+
+}
 .issue-div {
   padding-bottom: 12px;
 }
@@ -84,7 +124,8 @@
   }
 
 }
-.reply-container-bg{
+
+.reply-container-bg {
   background: #f5f5f5;
 }
 
@@ -154,9 +195,11 @@
   .reply-content-section {
 
     width: 55vw;
+
     .reply-top-section {
 
-      &> h3 {
+      & > h3 {
+        padding: 10px;
         font-size: 16px;
         font-weight: 700;
       }
@@ -166,11 +209,12 @@
 
   .reply-other-section {
     width: 15vw;
+
     .relative-issues-section {
       margin-left: 10px;
 
-      .relative-title{
-        &>h3{
+      .relative-title {
+        & > h3 {
           font-size: 15px;
           font-weight: 700;
         }
@@ -180,4 +224,4 @@
 
 }
 
-</style >
+</style>

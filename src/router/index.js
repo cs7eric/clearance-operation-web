@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layout/MainLayout.vue'
 import HomePage from '@/views/HomePage.vue'
+import {useIssueStore} from '@/stores'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,8 +27,19 @@ const router = createRouter({
               component: () => import('@/views/issue/AskIssue.vue')
             },
             {
-              path: '/issues/profile',
-              component: () => import('@/views/issue/IssueProfile.vue')
+              path: '/issues/profile/:id',
+              name: 'IssueProfile',
+              props: true,
+              component: () => import('@/views/issue/IssueProfile.vue'),
+              beforeEnter: async (to, form, next) => {
+                const issueStore = useIssueStore()
+                try {
+                  await issueStore.fetchIssueData(to.params.id)
+                  next()
+                } catch (error) {
+                  console.log(error)
+                }
+              }
             }
           ]
         },

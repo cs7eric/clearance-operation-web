@@ -12,3 +12,9 @@ export const issueGetAllService = async () => {
 }
 
 
+//查询单个问题数据
+export const issueGetService = async (id) => {
+  return await instance.get(`/issues/${id}`)
+}
+
+

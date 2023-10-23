@@ -14,3 +14,9 @@ export const articleCreateService = async (articleData) => {
 export const articleGetCountService = async (articleId) => {
   return await instance.get('/articles/count', articleId)
 }
+
+
+//获取该问题下的文章列表
+export const articleGetIssueAnswerService = async (issueId) => {
+  return await instance.get(`/articles/answers/${issueId}`)
+}
