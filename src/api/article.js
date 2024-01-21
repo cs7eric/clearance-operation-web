@@ -1,8 +1,8 @@
 import instance from '@/util/request'
 
 // 获取全部文章信息
-export const articleGetAllService = async () => {
-  return await instance.get('/articles/all')
+export const articleGetAllService = async (articleDTO) => {
+  return await instance.post('/articles/all', articleDTO)
 }
 
 // 发布文章

@@ -4,6 +4,7 @@ import {useRoute} from 'vue-router'
 import {ref} from 'vue'
 import ArticleItem from '@/components/article/ArticleItem.vue'
 import {articleGetIssueAnswerService} from '@/api/article'
+import router from '@/router'
 
 const props = defineProps({
   issue: Object
@@ -19,6 +20,11 @@ const getAnswers = async () => {
   console.log(res)
   answerList.value = res.data
 }
+
+const answerIssue = (issueId) => {
+  router.push(`/editor/${issueId}`)
+}
+
 
 getAnswers()
 
@@ -57,7 +63,9 @@ getAnswers()
     </div>
     <div class="issue-function-section issue-div">
       <el-button type="primary">关注问题</el-button>
-      <el-button type="primary" plain color="#056de8">写回答</el-button>
+      <el-button
+          @click="answerIssue(route.params.id)"
+          type="primary" plain color="#056de8">写回答</el-button>
       <el-button plain>邀请回答</el-button>
       <button class="function-item">
         <img class="icon" src="@/assets/icon/article_likes.svg" alt="">
@@ -73,7 +81,7 @@ getAnswers()
       </button>
     </div>
   </div>
-  <div class="reply-main-container reply-container-bg">
+  <div class="reply-main-container reply-container-bg" v-if="props.issue.replyNum < 0">
     <div class="reply-content-section reply-item-common">
       <div class="reply-top-section">
         <h3>{{ props.issue.replyNum }} 个回答</h3>
@@ -104,6 +112,11 @@ getAnswers()
 </template>
 
 <style scoped>
+
+.reply-container-bg {
+  height: 100%;
+}
+
 .article-card{
   padding: 10px;
   border-bottom: 1px solid #e6e6e6;
@@ -194,7 +207,7 @@ getAnswers()
 
   .reply-content-section {
 
-    width: 55vw;
+    width: 50vw;
 
     .reply-top-section {
 

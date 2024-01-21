@@ -4,17 +4,28 @@ import {Promotion} from '@element-plus/icons-vue'
 import {articleGetAllService} from '@/api/article'
 
 import ArticleItem from '@/components/article/ArticleItem.vue'
+import {useUserStore} from '@/stores'
 
 const articleList = ref([])
 
 
 const getArticles = async () => {
-  const res = await articleGetAllService()
+  const articleDTO = ref()
+  const userInfo = ref()
+  const userStore = useUserStore()
+  console.log(userStore.userInfo)
+  userInfo.value = userStore.userInfo
+  console.log(userInfo.value.user.id)
+  articleDTO.value = userInfo.value.user
+  console.log(articleDTO.value)
+  const res = await articleGetAllService(articleDTO)
   console.log(res)
   articleList.value = res.data
 }
 
 getArticles()
+
+
 </script>
 
 <template>

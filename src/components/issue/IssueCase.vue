@@ -1,10 +1,13 @@
 <script setup>
 import {formatRelativeTime} from '@/util/time'
+import router from '@/router'
 
 const props = defineProps({
   issue: Object
 })
-
+const answerIssue = (issueId) => {
+  router.push(`/editor/${issueId}`)
+}
 
 </script>
 
@@ -20,7 +23,7 @@ const props = defineProps({
         {{ formatRelativeTime(props.issue.createTime) }}的提问</p>
     </div>
     <div class="case-right">
-      <el-button type="primary">
+      <el-button @click="answerIssue(props.issue.id)" type="primary">
         写回答
       </el-button>
     </div>

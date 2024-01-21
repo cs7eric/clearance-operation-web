@@ -92,10 +92,18 @@ const router = createRouter({
         },
       ]
     },
+
     //富文本编辑器 - editor
     {
       path: '/editor',
       component: import('@/views/editor/EditorPage.vue'),
+      children: [
+        {
+          path: `/editor/:issueId?`,
+          props: true,
+          component: import('@/views/editor/EditorPage.vue')
+        }
+      ]
     }
   ]
 })

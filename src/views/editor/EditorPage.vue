@@ -5,6 +5,7 @@ import {default_setting, juejin_setting} from '@/components/tinymce/tinymce.sett
 import {articleCreateService} from '@/api/article'
 import {ElNotification} from 'element-plus'
 import {useUserStore} from '@/stores'
+import {useRoute} from 'vue-router'
 
 // 引入tinymce 设置
 import('@/components/tinymce/tinymce.settings')
@@ -27,19 +28,31 @@ const articleData = ref({
   authorId: '',
   tags: [],
   categories: [],
-  articleType: ''
+  articleType: '',
+  issueId: ''
 })
 
 const userStore = useUserStore()
 const userInfo = ref({})
+const route = useRoute()
 
 userInfo.value = userStore.userInfo
+const issueId = route.params.issueId
 
 // 发布文章
 const publishArticle = async () => {
+
+
+
   articleData.value.authorId = userInfo.value.user.id
   articleData.value.author = userInfo.value.user.username
   articleData.value.articleType = "article"
+  if (issueId.length >= 0) {
+    articleData.value.issueId = issueId
+    articleData.value.articleType = "answer"
+
+  }
+
   const res = await articleCreateService(articleData.value)
   if (res.success) {
     ElNotification({
