@@ -64,6 +64,10 @@ const router = createRouter({
             {
               path: 'info',
               component: () => import('@/views/user/InfoPage.vue')
+            },
+            {
+              path: 'like',
+              component: () => import('@/views/user/LikeCollectPage.vue')
             }
           ]
         }

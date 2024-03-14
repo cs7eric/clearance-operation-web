@@ -19,4 +19,6 @@ export const articleGetCountService = async (articleId) => {
 //获取该问题下的文章列表
 export const articleGetIssueAnswerService = async (issueId) => {
   return await instance.get(`/articles/answers/${issueId}`)
+
 }
+

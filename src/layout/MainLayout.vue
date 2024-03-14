@@ -35,8 +35,6 @@ watch(() => route.path, newPath => {
     case '/ask':
       selected.value = '/ask'
       break
-    default:
-      selected.value = '/home'
   }
 }, {
   immediate: true
