@@ -55,8 +55,28 @@ const likeArticle = async (articleId) => {
         })
       }
     })
+}
 
+//举报文章
+const reportArticle = () => {
+  ElMessage({
+    message: '举报已提交',
+    type: 'success'
+  })
+}
 
+//收藏文章
+const collectArticle = async (articleId) => {
+  const userId = userInfo.value.user.id
+  await userActionService('collect', userId, articleId)
+    .then(response => {
+      if (response.code !== 200) {
+        ElMessage({
+          message: 'error',
+          type: 'error'
+        }) 
+      }
+    })
 }
 
 
@@ -122,11 +142,11 @@ const likeArticle = async (articleId) => {
           <img class="icon" src="@/assets/icon/article_share.svg" alt="">
           <span>分享</span>
         </div>
-        <div class="item">
+        <div class="item" @click="collectArticle(article.id)">
           <img class="icon" src="@/assets/icon/article_star.svg" alt="">
           <span>收藏</span>
         </div>
-        <div class="item">
+        <div class="item" @click="reportArticle()">
           <img class="icon" src="@/assets/icon/article_report.svg" alt="">
           <span>举报</span>
         </div>

@@ -108,6 +108,11 @@ const router = createRouter({
           component: import('@/views/editor/EditorPage.vue')
         }
       ]
+    },
+    {
+      //引导页路由
+      path: '/guide',
+      component: import('@/views/guide/GuidePage.vue')
     }
   ]
 })
