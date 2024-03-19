@@ -29,10 +29,13 @@
 
       </div>
       <div class="menu-item">
-        <div class="item-container">
-          <div class="icon"><img src="@/assets/icon/user_star.svg"></div>
-          <div class="title">点赞和收藏</div>
-        </div>
+        <router-link to="/user/like">
+          <div class="item-container">
+            <div class="icon"><img src="@/assets/icon/user_star.svg"></div>
+            <div class="title">点赞和收藏</div>
+          </div>
+        </router-link>
+
 
       </div>
       <div class="menu-item">

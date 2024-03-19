@@ -24,7 +24,7 @@ getIssues()
           <div class="write-button">
             <h3 class="content-title">在生活中遇到了关于诈骗的问题吗？</h3>
             <div class="button">
-              <router-link to="/editor" target="_blank">
+              <router-link to="/issues/ask" target="_blank">
                 <button> 向大家提出疑问吧!</button>
               </router-link>
             </div>

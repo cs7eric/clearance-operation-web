@@ -4,10 +4,19 @@ import {parseHTMLContent} from '@/util/format'
 import {formatRelativeTime} from '@/util/time'
 import {ref} from 'vue'
 import CommentDisplay from '@/components/comment/CommentDisplay.vue'
+import {userActionService} from '@/api/user'
+import {useUserStore} from '@/stores'
+import {ElMessage} from 'element-plus'
 
 defineProps({
   article: Object
 })
+
+const isLiked = ref(false)
+
+const userInfo = ref({})
+const userStore = useUserStore()
+userInfo.value = userStore.userInfo
 
 const expandCommentKey = ref(false)
 const selectedArticle = ref(null)
@@ -31,8 +40,44 @@ const expandComment = (() => {
   expandCommentKey.value = !expandCommentKey.value
 })
 
+// 点赞文章
+const likeArticle = async (articleId) => {
 
+  const userId = userInfo.value.user.id
+  await userActionService('like', userId, articleId)
+    .then(response => {
+      if (response.code === 200) {
+        isLiked.value = !isLiked.value
+      } else {
+        ElMessage({
+          message: 'error',
+          type: 'error'
+        })
+      }
+    })
+}
 
+//举报文章
+const reportArticle = () => {
+  ElMessage({
+    message: '举报已提交',
+    type: 'success'
+  })
+}
+
+//收藏文章
+const collectArticle = async (articleId) => {
+  const userId = userInfo.value.user.id
+  await userActionService('collect', userId, articleId)
+    .then(response => {
+      if (response.code !== 200) {
+        ElMessage({
+          message: 'error',
+          type: 'error'
+        }) 
+      }
+    })
+}
 
 
 </script>
@@ -67,8 +112,8 @@ const expandComment = (() => {
 
     <div class="article-function">
       <div class="function-agree">
-        <button class="button-agree">
-          <svg t="1695715744270" class="icon" viewBox="0 0 1035 1024" version="1.1"
+        <button :class="{'is-liked': isLiked}" class="button-agree" @click="likeArticle(article.id)">
+          <svg t="1695715744270" :class="{'liked-icon': isLiked}" class="icon" viewBox="0 0 1035 1024" version="1.1"
                xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
             <path
                 d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
@@ -77,7 +122,7 @@ const expandComment = (() => {
           <span> 赞同  {{ article.likes }}</span>
         </button>
         <button class="button-disagree">
-          <svg t="1695715744270" class="icon" viewBox="0 0 1035 1024" version="1.1"
+          <svg t="1695715744270" :class="{'liked-icon': isLiked}" class="icon" viewBox="0 0 1035 1024" version="1.1"
                xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
             <path
                 d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
@@ -97,11 +142,11 @@ const expandComment = (() => {
           <img class="icon" src="@/assets/icon/article_share.svg" alt="">
           <span>分享</span>
         </div>
-        <div class="item">
+        <div class="item" @click="collectArticle(article.id)">
           <img class="icon" src="@/assets/icon/article_star.svg" alt="">
           <span>收藏</span>
         </div>
-        <div class="item">
+        <div class="item" @click="reportArticle()">
           <img class="icon" src="@/assets/icon/article_report.svg" alt="">
           <span>举报</span>
         </div>
@@ -130,6 +175,9 @@ const expandComment = (() => {
 }
 
 .card-main-container {
+
+  margin: 10px 10px 0 0;
+
   .article-function {
     display: flex;
     margin-top: 15px;
@@ -256,5 +304,23 @@ const expandComment = (() => {
   }
 }
 
+.article-card {
+  border-radius: 7px;
+  background: #ffffff;
+  box-shadow: 2px 2px 4px #e9e9e9,
+  -2px -2px 4px #ffffff;
+}
+
+
+.is-liked {
+  color: #fff !important;
+  background: #1772f6 !important;
+}
+
+.liked-icon {
+  & path {
+    fill: #fff !important;
+  }
+}
 
 </style>

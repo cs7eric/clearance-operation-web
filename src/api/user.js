@@ -1,5 +1,5 @@
 import instance from '@/util/request'
-import {ElNotification} from 'element-plus'
+import {ElMessage, ElNotification} from 'element-plus'
 
 // 用户注册、登录
 export const userLoginService = async ({email, code}) => {
@@ -21,4 +21,20 @@ export const userUpdateService = async (user) => {
     type: 'success',
     message: '更新成功'
   })
+}
+
+// 用户点赞、收藏行为
+export  const userActionService = async (actionType, userId, articleId) => {
+  const res = await instance.post('/articles/action', {
+    userActionType: actionType,
+    userId: userId,
+    articleId: articleId
+  })
+  ElMessage({
+    message: "success",
+    type: 'success'
+  })
+
+  return res
+
 }

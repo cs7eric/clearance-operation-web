@@ -50,6 +50,7 @@ getAnswers()
         <div class="reply-data-section top-item">
           <h5>回复数</h5>
           <p>{{ props.issue.replyNum }}</p>
+
         </div>
       </div>
     </div>
@@ -81,7 +82,7 @@ getAnswers()
       </button>
     </div>
   </div>
-  <div class="reply-main-container reply-container-bg" v-if="props.issue.replyNum < 0">
+  <div class="reply-main-container reply-container-bg" v-if="props.issue.replyNum > 0">
     <div class="reply-content-section reply-item-common">
       <div class="reply-top-section">
         <h3>{{ props.issue.replyNum }} 个回答</h3>

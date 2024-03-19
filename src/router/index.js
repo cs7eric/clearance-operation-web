@@ -64,6 +64,10 @@ const router = createRouter({
             {
               path: 'info',
               component: () => import('@/views/user/InfoPage.vue')
+            },
+            {
+              path: 'like',
+              component: () => import('@/views/user/LikeCollectPage.vue')
             }
           ]
         }
@@ -104,6 +108,11 @@ const router = createRouter({
           component: import('@/views/editor/EditorPage.vue')
         }
       ]
+    },
+    {
+      //引导页路由
+      path: '/guide',
+      component: import('@/views/guide/GuidePage.vue')
     }
   ]
 })
