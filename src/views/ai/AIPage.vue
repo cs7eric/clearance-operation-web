@@ -4,30 +4,33 @@ import CookieInput from '@/components/input/CookieInput.vue'
 
 
 const  placeholderText = ref('开始提问吧！')
-const cookieInputValue = ref('')
+const modelValue = ref('')
 
+const askQuestion = () => {
+  console.log(modelValue.value)
+}
 
 </script>
 
 <template>
 
-  
+
   <div class="ai-page ai-page-container">
     <h3 class="title">
       What knowledge begins
     </h3>
-    <cookie-input v-model="cookieInputValue"
+    <cookie-input v-model="modelValue"
                   :placeholderText="placeholderText"
+                  @keyup.enter="askQuestion"
                   class="ai-input"
     ></cookie-input>
-{{cookieInputValue}}
     <span class="tips">请一次性将您的问题描述清楚，按回车键进行提问</span>
   </div>
 </template>
 
 <style scoped>
 .ai-page {
-  margin-top: 100px;
+  margin-top: 160px;
 }
 
 .ai-page-container {

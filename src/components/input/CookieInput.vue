@@ -5,15 +5,6 @@ const props = defineProps({
   modelValue: String
 })
 
-// const emit = defineEmits(['askQuestion'])
-
-// const askQuestion = () => {
-//   emit('askQuestion')
-// }
-//
-// const askAI = () => {
-//   askQuestion()
-// }
 </script>
 
 <template>
@@ -21,7 +12,7 @@ const props = defineProps({
     <textarea
         type="text" required
         :value="modelValue"
-        @textarea="$emit('update:modelValue', $event.target.value)"
+        @input="$emit('update:modelValue', $event.target.value)"
         onkeydown="if (event.keyCode === 13) event.preventDefault();"
     />
     <span>{{props.placeholderText}}</span>
@@ -36,8 +27,8 @@ const props = defineProps({
 }
 
 .formField textarea {
-  width: 800px;
-  height: 170px;
+  width: 700px;
+  height: 130px;
   padding: 10px 20px;
   outline: none;
   overflow:hidden;
