@@ -230,7 +230,6 @@ const postIssue = () => {
     }
 
     .profile-bg {
-
       max-width: 500px;
     }
   }
