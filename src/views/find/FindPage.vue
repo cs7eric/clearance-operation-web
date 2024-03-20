@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from "vue";
 import {ElScrollbar} from "element-plus";
-import {ArrowDown, Delete, Edit} from "@element-plus/icons-vue";
+import {ArrowDown} from "@element-plus/icons-vue";
 import {Search, Tools, RefreshLeft} from '@element-plus/icons-vue';
 
 const input2 = ref('')
@@ -112,72 +112,7 @@ const onCurrentChange = (current) => {
 					<!--			分类名词-->
 					<div class="flex-relative" :style="{overflow: isExpanded ? 'visible' : 'hidden'}">
 						<div ref="sectionList" class="section-list">
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">深度优先搜索策略</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">深度优先搜索策略</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">深度优先搜索策略</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">深度优先搜索策略</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">深度优先搜索策略</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
-							<div class="find-display">
-								<a href="#">
-									<span class="display-value">肃清行动</span>
-									<span class="display-tags">1777</span>
-								</a>
-							</div>
+							
 							<div class="find-display">
 								<a href="#">
 									<span class="display-value">肃清行动</span>
@@ -361,24 +296,6 @@ const onCurrentChange = (current) => {
 							</template>
 						</el-table-column>
 						<el-table-column label="状态" prop="state"></el-table-column>
-<!--						<el-table-column label="操作">
-							<template #default="{ row }">
-								<el-button
-										:icon="Edit"
-										circle
-										plain
-										type="primary"
-										@click="onEditArticle(row)"
-								></el-button>
-								<el-button
-										:icon="Delete"
-										circle
-										plain
-										type="danger"
-										@click="onDeleteArticle(row)"
-								></el-button>
-							</template>
-						</el-table-column>-->
 					</el-table>
 					
 					<!-- 文章分页 -->
