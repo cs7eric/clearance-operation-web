@@ -113,7 +113,18 @@ const router = createRouter({
       //引导页路由
       path: '/guide',
       component: import('@/views/guide/GuidePage.vue')
-    }
+    },
+    {
+      path: '/ai',
+      component: import('@/layout/MainLayout.vue'),
+      children: [
+        {
+          // AI 首页
+          path: '',
+          component: import('@/views/ai/AIPage.vue')
+        },
+      ]
+    },
   ]
 })
 
