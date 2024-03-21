@@ -3,13 +3,14 @@ import {ref} from 'vue'
 import {ElScrollbar} from 'element-plus'
 import {ArrowDown} from '@element-plus/icons-vue'
 import {Search, Tools, RefreshLeft} from '@element-plus/icons-vue'
-import {formatTime} from 'element-plus/es/components/countdown/src/utils'
+import ListItem from "@/components/list/ListItem.vue";
 
 const input2 = ref('')
 
 const isExpanded = ref(false)
 const sectionList = ref()
 const selectedItem = ref()
+
 const articleList = ref([
   {
     title: 'sss',
@@ -23,8 +24,16 @@ const articleList = ref([
     time: '2023.12.23',
     state: 'open'
   },
+])
 
-])  // 文章列表
+const list = ref({
+  title: '案例',
+  category: '分类',
+  time: '时间',
+  state: '状态'
+})
+
+// 文章列表
 const total = ref(0)  // 文章总数
 const loading = ref(false) // loading效果
 
@@ -158,7 +167,6 @@ const onCurrentChange = (current) => {
                 </a>
               </div>
 
-
             </div>
 
             <div class="close-display" v-if="isExpanded">
@@ -290,20 +298,7 @@ const onCurrentChange = (current) => {
           </div>
           <!--						查询结果-->
           <!-- 表格区域 -->
-          <el-table :data="articleList" style="width: 100%; margin: 20px 0 20px 0" v-loading="loading">
-            <el-table-column prop="title" label="案例" width="200">
-<!--              <template #default="{ row }">-->
-<!--                <el-link type="primary" :underline="false">{{ row.title }}</el-link>-->
-<!--              </template>-->
-            </el-table-column>
-            <el-table-column prop="category" label="分类" ></el-table-column>
-            <el-table-column label="时间" prop="time">
-<!--              <template #default="{ row }">-->
-<!--                {{ formatTime(row.pub_date) }}-->
-<!--              </template>-->
-            </el-table-column>
-            <el-table-column label="状态" prop="state"></el-table-column>
-          </el-table>
+          <List-Item :data="articleList" :list="list"></List-Item>
 
           <!-- 文章分页 -->
           <el-pagination
