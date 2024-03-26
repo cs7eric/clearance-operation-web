@@ -5,6 +5,7 @@ import {CloseBold, Search} from "@element-plus/icons-vue";
 import {ref} from "vue";
 import ListItem from "@/components/list/ListItem.vue";
 import UserResult from "@/views/search/UserResult.vue";
+import DiscussItem from "@/views/search/DiscussItem.vue";
 // import UserResult from "@/views/search/UserResult.vue";
 
 const activeName = ref('first'); //默认选中第一个标签
@@ -63,8 +64,11 @@ const list = ref({
 								<user-result></user-result>
 							</div>
 						</el-tab-pane>
-						<el-tab-pane label="讨论" name="fourth">Task</el-tab-pane>
-						<el-tab-pane label="书籍" name="fifth">书籍</el-tab-pane>
+						<el-tab-pane label="讨论" name="fourth">
+							<div class="discuss-result">
+								<discuss-item></discuss-item>
+							</div>
+						</el-tab-pane>
 					</el-tabs>
 				</div>
 			</div>
