@@ -11,7 +11,6 @@ const isExpanded = ref(false)
 const sectionList = ref()
 const selectedItem = ref()
 
-//TODO : 分类数据，需要接口
 const articleList = ref([
   {
     title: 'sss',
@@ -27,7 +26,6 @@ const articleList = ref([
   },
 ])
 
-// 分类标题，自己写或者接口
 const list = ref({
   title: '案例',
   category: '分类',

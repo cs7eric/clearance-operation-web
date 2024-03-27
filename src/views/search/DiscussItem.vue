@@ -82,8 +82,9 @@ const discussData = ref([
 		height: 184px;
 		margin: 0 0 10px;
 		padding: 16px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-		
+		border: 1px solid #d0d7de;
+		border-radius: 8px;
+
 		.discuss-top {
 			display: flex;
 			height: 24px;

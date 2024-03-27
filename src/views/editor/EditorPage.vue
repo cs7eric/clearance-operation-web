@@ -46,11 +46,11 @@ const publishArticle = async () => {
 
   articleData.value.authorId = userInfo.value.user.id
   articleData.value.author = userInfo.value.user.username
-  articleData.value.articleType = "article"
   if (issueId.length >= 0) {
     articleData.value.issueId = issueId
     articleData.value.articleType = "answer"
-
+  } else {
+    articleData.value.articleType = "article"
   }
 
   const res = await articleCreateService(articleData.value)

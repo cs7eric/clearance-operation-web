@@ -2,8 +2,7 @@
 import {ref} from 'vue'
 import CookieInput from '@/components/input/CookieInput.vue'
 
-
-const  placeholderText = ref('开始提问吧！')
+const placeholderText = ref('开始提问吧！')
 const modelValue = ref('')
 
 const askQuestion = () => {
@@ -19,23 +18,27 @@ const askQuestion = () => {
     <h3 class="title">
       What knowledge begins
     </h3>
-    <cookie-input v-model="modelValue"
-                  :placeholderText="placeholderText"
-                  @keyup.enter="askQuestion"
-                  class="ai-input"
-    ></cookie-input>
-    <span class="tips">请一次性将您的问题描述清楚，按回车键进行提问</span>
+    <div class="ai-input-section">
+      <cookie-input v-model="modelValue"
+                    :placeholderText="placeholderText"
+                    @keyup.enter="askQuestion"
+                    class="ai-input"
+      ></cookie-input>
+      <span class="tips">请一次性将您的问题描述清楚，按回车键进行提问</span></div>
+
   </div>
 </template>
 
 <style scoped>
 .ai-page {
-  margin-top: 160px;
+  margin-top: 60px;
 }
 
 .ai-page-container {
   display: flex;
+  align-items: center;
   flex-direction: column;
+  width: 880px;
 }
 
 .title {

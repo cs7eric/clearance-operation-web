@@ -51,6 +51,38 @@ const router = createRouter({
           path: '/topic',
           component: () => import('@/views/specialtopic/TopicPage.vue')
         },
+        {
+          // 搜索结果页路由
+          path: '/search',
+          component: import('@/layout/ResultLayout.vue'),
+          redirect: '/search/user',
+          children: [
+            {
+              path: '/search/all',
+              component: import('@/views/search/SearchIndex.vue')
+            },
+            {
+              // 用户
+              path: '/search/user',
+              component: import('@/views/search/UserResult.vue')
+            },
+            {
+              //讨论
+              path: '/search/discuss',
+              component: import('@/views/search/DiscussItem.vue')
+            },
+            {
+              //ai
+              path: '/search/ai',
+              component: import('@/views/ai/AIPage.vue')
+            },
+            {
+              //诈骗信息库
+              path: '/search/fraud',
+              component: import('@/views/fraud/FraudCase.vue')
+            }
+          ]
+        },
         //用户路由配置
         {
           path: '/user',
@@ -126,16 +158,8 @@ const router = createRouter({
       ]
     },
     {
-      // 搜索结果页路由
-      path: '/search',
-      component: import('@/views/search/SearchPage.vue'),
-      children: [
-        {
-          // 用户
-          path: '/search/user',
-          component: import('@/views/search/UserResult.vue')
-        }
-      ]
+      path: '/test',
+      component: import('@/views/test/TestPage.vue'),
     }
   ]
 })
