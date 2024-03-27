@@ -125,6 +125,18 @@ const router = createRouter({
         },
       ]
     },
+    {
+      // 搜索结果页路由
+      path: '/search',
+      component: import('@/views/search/SearchPage.vue'),
+      children: [
+        {
+          // 用户
+          path: '/search/user',
+          component: import('@/views/search/UserResult.vue')
+        }
+      ]
+    }
   ]
 })
 
