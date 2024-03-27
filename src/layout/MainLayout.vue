@@ -64,11 +64,32 @@ const searchFunc = () => {
         <div class="co-header-logo header-item">
           <img src="@/assets/logo.svg" class="logo" alt="logo">
         </div>
+        <div class="header-search">
+          <el-input
+              v-model="searchValue"
+              style="width: 450px"
+              placeholder="等你来搜"
+              class="input-with-select el-input"
+          >
+            <template #prepend>
+              <el-select v-model="selectValue" placeholder="All" style="width: 72px;">
+                <el-option label="文章" value="article"/>
+                <el-option label="用户" value="user"/>
+                <el-option label="案例" value="fraud"/>
+                <el-option label="问题" value="issue"></el-option>
+              </el-select>
+            </template>
+            <template #append>
+              <el-button  @click="searchFunc" :icon="Search"/>
+            </template>
+          </el-input>
+        </div>
         <div class="header-item index selected"
              :class="{ selected: selected.value === '/home' }"
              @click="selectItem('/home')">
           <h3 class="header-title">cccs7</h3>
         </div>
+
         <div class="header-item index"
              :class="{ selected: selected.value === '/find' }"
              @click="selectItem('/find')">
@@ -79,46 +100,27 @@ const searchFunc = () => {
              :class="{ selected: selected.value === '/ask' }"
              @click="selectItem('/issues')">
           <h3 class="header-title">ask</h3>
+        </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/ai' }"
+             @click="selectItem('/ai')">
+          <h3 class="header-title">AI</h3>
+        </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/search' }"
+             @click="selectItem('/search')">
+          <h3 class="header-title">search</h3>
 
         </div>
+
 
       </div>
       <div class="header-center">
-        <div class="header-item index">
-          <el-input
-              v-model="searchValue"
-              style="width: 600px"
-              placeholder="等你来搜"
-              class="input-with-select el-input"
-          >
-            <template #prepend>
-              <el-select v-model="selectValue" placeholder="全站" style="width: 85px;">
-                <el-option label="文章" value="article"/>
-                <el-option label="用户" value="user"/>
-                <el-option label="诈骗案例" value="fraud"/>
-                <el-option label="问题" value="issue"></el-option>
-              </el-select>
-            </template>
-            <template #append>
-              <el-button  @click="searchFunc" :icon="Search"/>
-            </template>
-          </el-input>
-        </div>
 
       </div>
       <div class="header-right">
         <div class="header-function-login" v-if="isUserExist">
-          <div class="header-item index"
-               :class="{ selected: selected.value === '/ai' }"
-               @click="selectItem('/ai')">
-            <h3 class="header-title">AI</h3>
-          </div>
-          <div class="header-item index"
-               :class="{ selected: selected.value === '/search' }"
-               @click="selectItem('/search')">
-            <h3 class="header-title">search</h3>
 
-          </div>
           <div class="header-item">
             <el-dropdown>
             <span class="el-dropdown-link">
@@ -185,15 +187,17 @@ const searchFunc = () => {
     flex-wrap: nowrap;
     justify-content: space-between; /* 水平居中 */
     align-items: center;
-    padding: 0 15%;
+    padding: 0 10%;
     width: 100%;
     height: 60px;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 999;
 
-    .header-left {
+    .header-left , .header-center{
       display: flex;
+      align-items: center;
+      justify-content: center;
 
     }
     .avatar {
@@ -227,7 +231,7 @@ const searchFunc = () => {
 
       &.selected {
         font-weight: bold;
-        border-bottom: 2px solid blue;
+        //border-bottom: 2px solid blue;
         color: blue;
       }
 
@@ -269,7 +273,7 @@ const searchFunc = () => {
 
 .selected {
   font-weight: bold;
-  border-bottom: 2px solid blue;
+  //border-bottom: 2px solid blue;
   color: blue;
 }
 
@@ -277,5 +281,16 @@ const searchFunc = () => {
   font-size: 20px;
   font-weight: 700;
   font-family: "Luckiest Guy";
+}
+
+.header-search {
+  margin:0 10px;
+}
+
+.el-dropdown-link {
+  &:hover {
+    transition: all 0.3s;
+    transform: scale(1.1);
+  }
 }
 </style>

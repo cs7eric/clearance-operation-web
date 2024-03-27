@@ -75,7 +75,7 @@ function updateSlidePosition(e, slide, isHover = false) {
   display: flex;
   list-style: none;
   background: #f5f5f5;
-  box-shadow: 10px 20px 20px #00000033;
+  box-shadow: 5px 10px 10px #00000033;
   padding: 5px;
   margin: 40px 0;
 

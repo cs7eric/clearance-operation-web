@@ -39,17 +39,29 @@ import CookieNav from '@/components/nav/CookieNav.vue'
 
 .select-list {
   display: flex;
-  padding: 6px;
+  padding: 6px 6px 6px 0;
 
   &>li {
     padding: 5px;
     color: #8590a6;
     font-size: 12px;
-
+    cursor: pointer;
+    
+    &:hover {
+      transition: all 0.3s;
+      transform: scale(1.05);
+    }
+    
     &:first-child{
+      cursor: pointer;
       border-radius: 6px;
       color: #000000;
       background: #e6e6e6;
+
+      &:hover {
+        transition: all 0.3s;
+        transform: scale(1.2);
+      }
     }
   }
 }
