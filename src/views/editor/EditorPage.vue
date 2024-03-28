@@ -110,6 +110,8 @@ const publishArticle = async () => {
 
 <style scoped>
 .write-container {
+  padding-top: 88px;
+
   .write-header-section {
     display: flex;
     align-items: center;

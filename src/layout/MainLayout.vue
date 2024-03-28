@@ -245,7 +245,6 @@ const searchFunc = () => {
   .co-main {
     display: flex;
     justify-content: center; /* 水平居中 */
-    margin-top: 88px;
   }
 }
 

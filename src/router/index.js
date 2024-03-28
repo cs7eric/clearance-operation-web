@@ -128,7 +128,6 @@ const router = createRouter({
         },
       ]
     },
-
     //富文本编辑器 - editor
     {
       path: '/editor',
@@ -159,7 +158,13 @@ const router = createRouter({
     },
     {
       path: '/test',
-      component: import('@/views/test/TestPage.vue'),
+      component: import('@/layout/MainLayout.vue'),
+      children: [
+        {
+          path: '',
+          component: import('@/views/test/TestPage.vue')
+        }
+      ]
     }
   ]
 })

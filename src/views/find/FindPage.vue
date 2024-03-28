@@ -369,6 +369,10 @@ const onCurrentChange = (current) => {
 
 <style scoped>
 
+.find-container {
+  padding-top: 88px;
+}
+
 .el-carousel__item h3 {
   color: #475669;
   opacity: 0.75;

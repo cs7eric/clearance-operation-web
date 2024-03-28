@@ -157,6 +157,8 @@ const verify = async () => {
   justify-content: center;
   width: 100%;
   height: 500px;
+  padding-top: 88px;
+
 
 
   .frame-main {

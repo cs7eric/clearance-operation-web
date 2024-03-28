@@ -135,6 +135,8 @@ userInfo.value = userStore.userInfo
 <style scoped>
 .index-container {
 
+  padding-top: 88px;
+
   .content-item {
     display: flex;
     justify-content: center;

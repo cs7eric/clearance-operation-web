@@ -1,10 +1,10 @@
 <script setup>
 
-import CookieNav from '@/components/nav/CookieNav.vue'
+import UserHome from '@/views/user/UserHome.vue'
 </script>
 
 <template>
-<cookie-nav></cookie-nav>
+<user-home></user-home>
 </template>
 
 <style scoped>

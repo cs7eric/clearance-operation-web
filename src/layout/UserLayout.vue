@@ -69,6 +69,7 @@
 
 <style scoped>
 .fixed {
+  padding-top: 68px;
   position: fixed;
   left: 0;
   float: left;

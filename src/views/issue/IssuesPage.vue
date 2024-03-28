@@ -53,6 +53,10 @@ getIssues()
 
 <style scoped>
 
+.home-container {
+  padding-top: 88px;
+}
+
 .content-card {
   margin: 12px 0 0 0;
   padding: 18px;

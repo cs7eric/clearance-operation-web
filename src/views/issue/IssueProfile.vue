@@ -49,6 +49,7 @@ watch(() => route.params.id, async (newId) => {
 }
 
 .issue-item-container {
+  padding-top: 88px;
 }
 
 

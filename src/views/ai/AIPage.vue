@@ -39,6 +39,8 @@ const askQuestion = () => {
   align-items: center;
   flex-direction: column;
   width: 880px;
+  padding-top: 88px;
+
 }
 
 .title {

@@ -33,6 +33,10 @@ import CookieNav from '@/components/nav/CookieNav.vue'
 </template>
 
 <style scoped>
+
+.result-container {
+  padding-top: 88px;
+}
 .content-section {
   //border: 1px solid #3b4045;
 }

@@ -312,6 +312,8 @@ getArticles()
 
 .home-container {
 
+  padding-top: 88px;
+
   .home-main {
     display: flex;
     justify-content: center;
