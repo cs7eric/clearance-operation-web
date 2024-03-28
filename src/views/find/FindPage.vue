@@ -11,14 +11,16 @@ const isExpanded = ref(false)
 const sectionList = ref()
 const selectedItem = ref()
 
-const articleList = ref([
+const data = ref([
   {
+		id: 1,
     title: 'sss',
     category: '111',
     time: '2023.12.23',
     state: 'open'
   },
   {
+		id: 2,
     title: 'ss2323s',
     category: '111232',
     time: '2023.12.23',
@@ -26,12 +28,24 @@ const articleList = ref([
   },
 ])
 
-const list = ref({
-  title: '案例',
-  category: '分类',
-  time: '时间',
-  state: '状态'
-})
+const columns = ref([
+	{
+		label: '题目',
+		prop: 'title'
+	},
+	{
+		label: '分类',
+		prop: 'category'
+	},
+	{
+		label: '时间',
+		prop: 'time'
+	},
+	{
+		label: '状态',
+		prop: 'state'
+	}
+])
 
 // 文章列表
 const total = ref(0)  // 文章总数
@@ -298,7 +312,7 @@ const onCurrentChange = (current) => {
           </div>
           <!--						查询结果-->
           <!-- 表格区域 -->
-          <List-Item :data="articleList" :list="list"></List-Item>
+          <List-Item :data="data" :columns="columns"></List-Item>
 
           <!-- 文章分页 -->
           <el-pagination
@@ -562,6 +576,7 @@ const onCurrentChange = (current) => {
 .selection-formItem {
   display: flex;
   flex-wrap: wrap;
+	margin-bottom: 10px;
 }
 
 .find-formInput {
