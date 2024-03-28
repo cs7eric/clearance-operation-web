@@ -48,8 +48,8 @@ const logout = () => {
   router.push('/login')
 }
 
-const selectValue = ref("")
-const searchValue = ref("")
+const selectValue = ref('')
+const searchValue = ref('')
 const searchFunc = () => {
   console.log(searchValue.value)
 }
@@ -69,22 +69,7 @@ const searchFunc = () => {
              @click="selectItem('/home')">
           <h3 class="header-title">cccs7</h3>
         </div>
-        <div class="header-item index"
-             :class="{ selected: selected.value === '/find' }"
-             @click="selectItem('/find')">
-          <h3 class="header-title">Find</h3>
-
-        </div>
-        <div class="header-item index"
-             :class="{ selected: selected.value === '/ask' }"
-             @click="selectItem('/issues')">
-          <h3 class="header-title">ask</h3>
-
-        </div>
-
-      </div>
-      <div class="header-center">
-        <div class="header-item index">
+        <div class="header-item">
           <el-input
               v-model="searchValue"
               style="width: 600px"
@@ -100,25 +85,40 @@ const searchFunc = () => {
               </el-select>
             </template>
             <template #append>
-              <el-button  @click="searchFunc" :icon="Search"/>
+              <el-button @click="searchFunc" :icon="Search"/>
             </template>
           </el-input>
         </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/find' }"
+             @click="selectItem('/find')">
+          <h3 class="header-title">Find</h3>
 
+        </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/ask' }"
+             @click="selectItem('/issues')">
+          <h3 class="header-title">ask</h3>
+
+        </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/ai' }"
+             @click="selectItem('/ai')">
+          <h3 class="header-title">AI</h3>
+        </div>
+        <div class="header-item index"
+             :class="{ selected: selected.value === '/search' }"
+             @click="selectItem('/search')">
+          <h3 class="header-title">search</h3>
+
+        </div>
+      </div>
+      <div class="header-center">
       </div>
       <div class="header-right">
-        <div class="header-function-login" v-if="isUserExist">
-          <div class="header-item index"
-               :class="{ selected: selected.value === '/ai' }"
-               @click="selectItem('/ai')">
-            <h3 class="header-title">AI</h3>
-          </div>
-          <div class="header-item index"
-               :class="{ selected: selected.value === '/search' }"
-               @click="selectItem('/search')">
-            <h3 class="header-title">search</h3>
 
-          </div>
+        <div class="header-function-login" v-if="isUserExist">
+
           <div class="header-item">
             <el-dropdown>
             <span class="el-dropdown-link">
@@ -150,8 +150,6 @@ const searchFunc = () => {
         </div>
       </div>
 
-
-
     </div>
     <div class="co-main">
       <router-view/>
@@ -163,7 +161,6 @@ const searchFunc = () => {
 <style scoped>
 
 
-
 /deep/ .el-input {
   --el-border-radius-base: 24px;
 }
@@ -171,6 +168,7 @@ const searchFunc = () => {
 /deep/ .el-input-group__append {
   width: 50px;
 }
+
 /deep/ .el-input__wrapper {
   background: #fff;
 }
@@ -185,7 +183,7 @@ const searchFunc = () => {
     flex-wrap: nowrap;
     justify-content: space-between; /* 水平居中 */
     align-items: center;
-    padding: 0 15%;
+    padding: 0 10%;
     width: 100%;
     height: 60px;
     background: #fff;
@@ -195,7 +193,17 @@ const searchFunc = () => {
     .header-left {
       display: flex;
 
+      &>.selected {
+        font-weight: 700;
+        color: #000;
+        font-size: 28px;
+      }
     }
+    
+    .header-center  {
+      display: flex;
+    }
+
     .avatar {
       width: auto;
       height: 34px;
@@ -212,24 +220,14 @@ const searchFunc = () => {
       display: flex;
       justify-content: center;
       text-align: center;
+      align-items: center;
       width: auto;
-      line-height: 40px;
       color: #8590a6;
       margin-left: 15px; /* 减少了padding */
       margin-right: 5px; /* 新增，确保两侧padding一致 */
 
 
-      &:hover {
-        color: #121212;
-        font-weight: 700;
-        cursor: pointer;
-      }
 
-      &.selected {
-        font-weight: bold;
-        border-bottom: 2px solid blue;
-        color: blue;
-      }
 
     }
 
@@ -269,13 +267,28 @@ const searchFunc = () => {
 
 .selected {
   font-weight: bold;
-  border-bottom: 2px solid blue;
-  color: blue;
+  font-size: 28px !important;
+  color: #b8b8b8;
 }
 
 .header-title {
-  font-size: 20px;
   font-weight: 700;
   font-family: "Luckiest Guy";
 }
+
+.header-right {
+  display: flex;
+}
+
+.index {
+  font-size: 20px;
+
+  &:hover {
+    transition: all 0.3s;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+
 </style>
