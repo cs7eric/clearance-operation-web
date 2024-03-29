@@ -67,7 +67,7 @@ const searchFunc = () => {
         <div class="header-item index selected"
              :class="{ selected: selected.value === '/home' }"
              @click="selectItem('/home')">
-          <h3 class="header-title">cccs7</h3>
+          <h3 class="header-title">cookies</h3>
         </div>
         <div class="header-item">
           <el-input

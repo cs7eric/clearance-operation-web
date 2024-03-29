@@ -1,5 +1,6 @@
 <script setup>
 
+import TabsNav from '@/components/nav/TabsNav.vue'
 </script>
 
 <template>
@@ -21,14 +22,34 @@
           <span class="nickname">@cccs7</span>
         </div>
         <div class="user-detail">
-          <p>Official Sony Interactive Entertainment account. Updates on PS5, PlayStation VR2, PlayStation Plus, PS4 and
-            more. Support:
-            @AskPlayStation</p>
+          <div class="introduction">
+            <p>Official Sony Interactive Entertainment account. Updates on PS5, PlayStation VR2, PlayStation Plus, PS4 and
+              more. Support:
+              @AskPlayStation</p>
+          </div>
+          <div class="other-detail">
+            <div class="detail-item">Zhengzhou</div>
+            <div class="detail-item">csq020611@gmail.com</div>
+            <div class="detail-item">3</div>
+          </div>
+          <div class="follow-data">
+            <div class="follow-item">
+              <p class="data">11</p>
+              <p class="desc">Following</p>
+            </div>
+            <div class="follow-item">
+              <p class="data">323</p>
+              <p class="desc">Followers</p>
+
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
-    <div class="user-func-section"></div>
+    <div class="user-func-section">
+      <tabs-nav></tabs-nav>
+    </div>
 
   </div>
 </template>
@@ -36,18 +57,21 @@
 <style scoped>
 .user-home-container {
 
-  display: flex;
   margin-top: 10px;
-  padding-top: 88px;
+  width: 880px;
   border-left: 1px solid #e6e6e6;
   border-right: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
 
 
   .user-info-section {
 
-    width: 760px;
 
-    padding: 10px;
+    padding: 88px 18px 10px;
+
 
     .info-top {
 
@@ -112,7 +136,39 @@
 
       .user-detail {
 
-        & > p {
+
+        .follow-data {
+          display: flex;
+          margin-top: 6px;
+          .follow-item {
+            display: flex;
+            padding-right: 10px;
+
+            .desc {
+              color: #85919a;
+
+            }
+
+            .data {
+              font-weight: 700;
+              padding-right: 2px;
+            }
+          }
+        }
+
+        .other-detail {
+          display: flex;
+          margin-top: 8px;
+
+          .detail-item{
+            padding-right: 8px;
+            font-size: 13px;
+            color: #85919a;
+
+          }
+        }
+
+         p {
           margin-top: 6px;
           color: #32363a;
           font-size: 13px;
@@ -120,6 +176,14 @@
         }
       }
     }
+  }
+
+  .user-func-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 18px 18px 0 18px;
   }
 }
 </style>

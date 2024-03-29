@@ -41,6 +41,10 @@ import CookieNav from '@/components/nav/CookieNav.vue'
   //border: 1px solid #3b4045;
 }
 
+.content-main-section{
+  width: 880px;
+}
+
 .select-list {
   display: flex;
   padding: 6px;

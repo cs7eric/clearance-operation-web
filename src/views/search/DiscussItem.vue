@@ -5,16 +5,24 @@ const discussData = ref([
 	{
 		id: '01',
 		avatar: 'https://typora8112.oss-cn-beijing.aliyuncs.com/byxl8112-pictures/01-question.png',
-		title: '如何更加优雅地使用 肃清行动 刷题 ?',
+		title: '反诈骗注意事项',
 		labels: ['诈骗', '诈骗信息案', '注意防范'],
-		content: '2024年即将来临，尽管秋招季基本过去，但编程的旅程永不止步。无论你是准备面试、提升技能，还是探索编\n' +
-				'\t\t\t\t\t\t\t程新境界，刷题都是踏上成功之路的不二法门。？何以刷题？从简单题开始，巩固基础；面向面试\n' +
-				'\t\t\t\t\t\t\t2024年即将来临，尽管秋招季基本过去，但编程的旅程永不止步。无论你是准备面试、提升技能，还是探索编\n' +
-				'\t\t\t\t\t\t\t程新境界，刷题都是踏上成功之路的不二法门。？何以',
-		likeNum: '5',
-		viewNum: '1.4k',
+		content: '2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...',
+		likeNum: '235',
+		viewNum: '1.5k',
 		commentNum: '24',
 		collectNum: '7'
+	},
+	{
+		id: '021',
+		avatar: 'https://typora8112.oss-cn-beijing.aliyuncs.com/byxl8112-pictures/01-question.png',
+		title: '如何更加防范诈骗 ?',
+		labels: ['诈骗', '诈骗信息案', '注意防范'],
+		content: '2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...',
+		likeNum: '5',
+		viewNum: '1.4k',
+		commentNum: '224',
+		collectNum: '27'
 	}
 ])
 
@@ -76,14 +84,21 @@ const discussData = ref([
 
 <style scoped>
 .discuss-container {
-	width: 880px;
-	
+
+	//border: 1px solid #d0d7de;
+	border-radius: 8px;
+
+
 	.discuss-card {
 		height: 184px;
-		margin: 0 0 10px;
-		padding: 16px;
-		border: 1px solid #d0d7de;
-		border-radius: 8px;
+		margin: 10px 10px 0 10px;
+		padding: 16px 16px 0 16px ;
+		border-bottom : 1px solid #d0d7de;
+
+		&:last-child {
+			border-bottom : none;
+
+		}
 
 		.discuss-top {
 			display: flex;
