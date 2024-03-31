@@ -5,13 +5,13 @@ import {useLoaderStore} from '@/stores/modules/loader'
 import {hideLoader, showLoader} from '@/plugins/loadingPlugin'
 
 const baseURL = 'http://localhost:8089/'
-const instance = axios.create({
+const request = axios.create({
   baseURL,
   headers: {'Content-Type': 'application/json'}
 })
 
 // 请求拦截器
-instance.interceptors.request.use(
+request.interceptors.request.use(
   (config) => {
     showLoader()
     const loaderStore = useLoaderStore()
@@ -28,7 +28,7 @@ instance.interceptors.request.use(
 )
 
 // 响应拦截器
-instance.interceptors.response.use(
+request.interceptors.response.use(
 
   (res) => {
     hideLoader()
@@ -52,5 +52,5 @@ instance.interceptors.response.use(
   }
 )
 
-export default instance
+export default request
 export {baseURL}

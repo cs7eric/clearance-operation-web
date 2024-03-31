@@ -1,42 +1,25 @@
 <script setup>
-import {ref} from "vue";
+import {defineProps} from 'vue'
+import {parseHTMLContent} from '@/util/format'
 
-const discussData = ref([
-	{
-		id: '01',
-		avatar: 'https://typora8112.oss-cn-beijing.aliyuncs.com/byxl8112-pictures/01-question.png',
-		title: '反诈骗注意事项',
-		labels: ['诈骗', '诈骗信息案', '注意防范'],
-		content: '2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...',
-		likeNum: '235',
-		viewNum: '1.5k',
-		commentNum: '24',
-		collectNum: '7'
-	},
-	{
-		id: '021',
-		avatar: 'https://typora8112.oss-cn-beijing.aliyuncs.com/byxl8112-pictures/01-question.png',
-		title: '如何更加防范诈骗 ?',
-		labels: ['诈骗', '诈骗信息案', '注意防范'],
-		content: '2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...2024年即将来临，诈骗事件越来越多...',
-		likeNum: '5',
-		viewNum: '1.4k',
-		commentNum: '224',
-		collectNum: '27'
+const props = defineProps({
+	list: {
+		required: true,
+		type: Array
 	}
-])
+})
+
+
+
 
 </script>
 
 <template>
-	<div class="discuss-container">
-		<div v-for="items in discussData" :key="items.id" class="discuss-card">
+	<div class="discuss-container" v-if="props.list !== null">
+		<div v-for="article in props.list" :key="article.id" class="discuss-card">
 			<div class="discuss-top">
-				<a class="top-avatar">
-					<img :src="items.avatar" alt="">
-				</a>
 				<a class="top-title" href="">
-					{{ items.title }}
+					{{ article.title }}
 				</a>
 				<span style="background-color: #d9e9ff; color: #0a95ff">置顶</span>
 				<span style="background-color: #ffecd1; color: #ffa119">官方</span>
@@ -44,12 +27,15 @@ const discussData = ref([
 			</div>
 			<div class="discuss-middle">
 				<div class="middle-label">
-					<span v-for="(item, index) in items.labels" :key="index">{{ item }}</span>
+					<span v-for="(item, index) in article.labels" :key="index">{{ item }}</span>
 				</div>
 				<div class="middle-content">
 					<a href="#">
 						<div class="detailed-content">
-							{{ items.content }}
+							<a class="top-avatar">
+								<img :src="article.avatar" alt="">
+							</a>
+							{{ parseHTMLContent(article.content) }}
 						</div>
 					</a>
 				</div>
@@ -58,19 +44,19 @@ const discussData = ref([
 				<div class="bottom-label">
 					<div class="label-like label-bottom">
 						<img src="@/assets/icon/search_like.svg" alt="" class="label-icon">
-						<span class="label-span">{{ items.likeNum }}</span>
+						<span class="label-span">{{ article.likeNum }}</span>
 					</div>
 					<a class="label-bottom" href="#">
 						<img src="@/assets/icon/search_eyes.svg" alt="" class="label-icon">
-						<span class="label-span">{{ items.viewNum }}</span>
+						<span class="label-span">{{ article.viewNum }}</span>
 					</a>
 					<button class="label-bottom">
 						<img src="@/assets/icon/search_talk.svg" alt="" class="label-icon">
-						<span class="label-span">{{ items.commentNum }}</span>
+						<span class="label-span">{{ article.commentNum }}</span>
 					</button>
 					<button class="label-bottom">
 						<img src="@/assets/icon/search_collect.svg" alt="" class="label-icon">
-						<span class="label-span">{{ items.collectNum }}</span>
+						<span class="label-span">{{ article.collectNum }}</span>
 					</button>
 					<button class="label-bottom">
 						<img src="@/assets/icon/search_share.svg" alt="" class="label-icon">
@@ -79,19 +65,20 @@ const discussData = ref([
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 </template>
 
 <style scoped>
 .discuss-container {
 
-	//border: 1px solid #d0d7de;
+	width: 100%;
 	border-radius: 8px;
 
 
 	.discuss-card {
 		height: 184px;
-		margin: 10px 10px 0 10px;
 		padding: 16px 16px 0 16px ;
 		border-bottom : 1px solid #d0d7de;
 

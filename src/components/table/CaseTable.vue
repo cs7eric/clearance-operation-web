@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue'
-import {casesGetPageCases} from '@/api/api/fraudCaseController'
+import {pageUsingPost} from '@/api/api/fraudCaseController'
 import {ArrowDown, RefreshLeft, Search, Tools} from '@element-plus/icons-vue'
 
 const pageRequestDTO = ref ({
@@ -12,7 +12,7 @@ const caseList  = ref ([])
 
 const getCases = async () => {
 
-  const res = await casesGetPageCases(pageRequestDTO.value)
+  const res = await pageUsingPost(pageRequestDTO.value)
   caseList.value = res.data.records
   total.value = res.data.total
 }
@@ -137,7 +137,7 @@ getCases()
     </div>
     <div class="table-section">
 
-      <el-table :data="caseList" style="width: 100%">
+      <el-table :data="caseList" style="width: 100%" v-if="caseList !== null">
         <el-table-column fixed prop="title" label="标题" />
         <el-table-column show-overflow-tooltip prop="description" label="描述" />
         <el-table-column prop="type" label="标签" />
@@ -155,6 +155,9 @@ getCases()
           </template>
         </el-table-column>
       </el-table>
+      <div class="empty-table" v-else>
+        <empty-item></empty-item>
+      </div>
     </div>
   </div>
 

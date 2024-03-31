@@ -1,19 +1,35 @@
 <script setup>
 import {ref} from 'vue'
 import {ElScrollbar} from 'element-plus'
-import {ArrowDown} from '@element-plus/icons-vue'
-import {Search, Tools, RefreshLeft} from '@element-plus/icons-vue'
-import CaseTable from '@/components/CaseTable.vue'
-
-const input2 = ref('')
+import CaseTable from '@/components/table/CaseTable.vue'
+import {getListUsingGet} from '@/api/api/labelController'
 
 const isExpanded = ref(false)
 const sectionList = ref()
 const selectedItem = ref()
 
-// 文章列表
-const total = ref(0)  // 文章总数
-const loading = ref(false) // loading效果
+
+const categoryList = ref([])
+const tagList = ref ([])
+
+const getLabels = async (type) => {
+
+  const res = await getListUsingGet({
+    type: type
+  })
+
+  if (type === 'Category') {
+    categoryList.value = res.data
+  } else {
+    tagList.value = res.data
+  }
+}
+
+
+
+getLabels('Tag')
+getLabels('Category')
+
 
 // 展开和收起
 const changeIsExpanded = () => {
@@ -78,10 +94,10 @@ const selectItem = (item) => {
       分类专区
       <div class="label-area">
         <div class="flex-relative" :style="{overflow: isExpanded ? 'visible' : 'hidden'}">
-          <div ref="sectionList" class="section-list">
-            <div class="find-display">
+          <div ref="sectionList" class="section-list" >
+            <div class="find-display" v-for="category in categoryList" :key="category.id">
               <a href="#">
-                <span class="display-value">肃清行动</span>
+                <span class="display-value">{{ category.categoryName }}</span>
                 <span class="display-tags">1777</span>
               </a>
             </div>
@@ -104,11 +120,11 @@ const selectItem = (item) => {
       <div class="category-area">
         <el-scrollbar>
           <div class="scrollbar-flex-content">
-            <p v-for="item in 1" :key="item" class="scrollbar-demo-item">
+            <p v-for="item in tagList" :key="item.id" class="scrollbar-demo-item">
               <a href="#" @click="selectItem(item)">
                 <div :class="{ 'find-specific': true, 'selected': selectedItem === item }">
                   <img src="@/assets/icon/find-title.svg" alt="">
-                  电信诈骗
+                  {{item.tagName}}
                 </div>
               </a>
             </p>
@@ -178,7 +194,7 @@ const selectItem = (item) => {
 }
 
 .find-item {
-  width: 100%;
+  width: 65vw;
   position: relative;
   margin-top: 20px;
 }
@@ -195,14 +211,19 @@ const selectItem = (item) => {
 .flex-relative {
   display: flex;
   position: relative;
+  flex-wrap: wrap; /* 允许子元素换行 */
+
 }
 
 .section-list {
   display: flex;
   flex-wrap: wrap;
   max-height: 30px;
+  max-width: 65vw;
   position: relative;
   margin: 10px 0;
+
+
 }
 
 
@@ -315,6 +336,7 @@ const selectItem = (item) => {
 
 .scrollbar-flex-content {
   display: flex;
+  max-width: 100px;
 }
 
 .scrollbar-demo-item {

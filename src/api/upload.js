@@ -1,8 +1,8 @@
-import instance from '@/util/request'
+import request from '@/util/request'
 
 export const fileUploadService = async (file) => {
 
   const formData = new FormData()
   formData.append('file', file)
-  return await instance.post('/common/upload', formData)
+  return await request.post('/common/upload', formData)
 }

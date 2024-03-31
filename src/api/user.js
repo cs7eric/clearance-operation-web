@@ -1,11 +1,11 @@
-import instance from '@/util/request'
+import request from '@/util/request'
 import {ElMessage, ElNotification} from 'element-plus'
 
 // 用户注册、登录
 export const userLoginService = async ({email, code}) => {
 
   try {
-    const userData = await instance.post('/user/verify', {email, code})
+    const userData = await request.post('/user/verify', {email, code})
     console.log(userData)
     return userData
   } catch (error) {
@@ -16,7 +16,7 @@ export const userLoginService = async ({email, code}) => {
 
 
 export const userUpdateService = async (user) => {
-  await instance.put('/user/update', user)
+  await request.put('/user/update', user)
   ElNotification({
     type: 'success',
     message: '更新成功'
@@ -25,7 +25,7 @@ export const userUpdateService = async (user) => {
 
 // 用户点赞、收藏行为
 export  const userActionService = async (actionType, userId, articleId) => {
-  const res = await instance.post('/articles/action', {
+  const res = await request.post('/articles/action', {
     userActionType: actionType,
     userId: userId,
     articleId: articleId

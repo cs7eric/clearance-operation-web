@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 
-import CaseTable from "../../components/CaseTable.vue";
+import CaseTable from "../../components/table/CaseTable.vue";
 </script>
 
 <template>

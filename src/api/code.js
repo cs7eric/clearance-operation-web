@@ -1,8 +1,8 @@
-import instance from '@/util/request'
+import request from '@/util/request'
 
 //邮箱验证码服务
 export const sendCodeService = (email) => {
-  return instance.post('/common/sendCode', null, {
+  return request.post('/common/sendCode', null, {
     params: {
       email: email
     }
