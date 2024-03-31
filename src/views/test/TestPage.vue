@@ -1,20 +1,19 @@
-<script setup>
+<script lang="ts" setup>
 
-import UserHome from '@/views/user/UserHome.vue'
+
+import CaseTable from "../../components/CaseTable.vue";
 </script>
 
 <template>
 
   <div class="test-container">
-<!--    <tabs-nav></tabs-nav>-->
-
-    <user-home></user-home>
+    <case-table></case-table>
   </div>
 </template>
 
 <style scoped>
 
 .test-container {
-  //padding-top: 100px;
+padding-top: 100px;
 }
 </style>

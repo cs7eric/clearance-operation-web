@@ -3,49 +3,13 @@ import {ref} from 'vue'
 import {ElScrollbar} from 'element-plus'
 import {ArrowDown} from '@element-plus/icons-vue'
 import {Search, Tools, RefreshLeft} from '@element-plus/icons-vue'
-import ListItem from "@/components/list/ListItem.vue";
+import CaseTable from '@/components/CaseTable.vue'
 
 const input2 = ref('')
 
 const isExpanded = ref(false)
 const sectionList = ref()
 const selectedItem = ref()
-
-const data = ref([
-  {
-		id: 1,
-    title: 'sss',
-    category: '111',
-    time: '2023.12.23',
-    state: 'open'
-  },
-  {
-		id: 2,
-    title: 'ss2323s',
-    category: '111232',
-    time: '2023.12.23',
-    state: 'open'
-  },
-])
-
-const columns = ref([
-	{
-		label: '题目',
-		prop: 'title'
-	},
-	{
-		label: '分类',
-		prop: 'category'
-	},
-	{
-		label: '时间',
-		prop: 'time'
-	},
-	{
-		label: '状态',
-		prop: 'state'
-	}
-])
 
 // 文章列表
 const total = ref(0)  // 文章总数
@@ -66,35 +30,6 @@ const selectItem = (item) => {
   selectedItem.value = item
 }
 
-// 分页
-const params = ref({
-  pagenum: 1, // 现在在第几页
-  pagesize: 5, // 每页显示几条数据
-  cate_id: '',
-  state: ''
-})
-
-// 调用接口：获取基本信息
-const getArticleList = async () => {
-  loading.value = true
-  // const res = await articleGetList(params.value); // 调用接口，获取列表信息
-  // articleList.value = res.data.data;
-  // total.value = res.data.total;
-  loading.value = false //加载完页面关闭loading
-}
-
-getArticleList() // 渲染页面
-
-// 文章分页
-const onSizeChange = (size) => {
-  params.value.pagenum = 1
-  params.value.pagesize = size
-  getArticleList()
-}
-const onCurrentChange = (current) => {
-  params.value.pagenum = current
-  getArticleList()
-}
 
 </script>
 
@@ -139,228 +74,56 @@ const onCurrentChange = (current) => {
 
 
     </div>
-    <div>
-
-    </div>
-    <div>
-      <div class="category-section float-left">
-        <div class="category-section find-item">
-          分类专区
-          <!--			分类名词-->
-          <div class="flex-relative" :style="{overflow: isExpanded ? 'visible' : 'hidden'}">
-            <div ref="sectionList" class="section-list">
-              <div class="find-display">
-                <a href="#">
-                  <span class="display-value">肃清行动</span>
-                  <span class="display-tags">1777</span>
-                </a>
-              </div>
-
-              <div class="find-display">
-                <a href="#">
-                  <span class="display-value">肃清行动</span>
-                  <span class="display-tags">1777</span>
-                </a>
-              </div>
-              <div class="find-display">
-                <a href="#">
-                  <span class="display-value">深度优先搜索策略</span>
-                  <span class="display-tags">1777</span>
-                </a>
-              </div>
-              <div class="find-display">
-                <a href="#">
-                  <span class="display-value">肃清行动</span>
-                  <span class="display-tags">1777</span>
-                </a>
-              </div>
-              <div class="find-display">
-                <a href="#">
-                  <span class="display-value">肃清行动</span>
-                  <span class="display-tags">1777</span>
-                </a>
-              </div>
-
+    <div class="category-section find-item">
+      分类专区
+      <div class="label-area">
+        <div class="flex-relative" :style="{overflow: isExpanded ? 'visible' : 'hidden'}">
+          <div ref="sectionList" class="section-list">
+            <div class="find-display">
+              <a href="#">
+                <span class="display-value">肃清行动</span>
+                <span class="display-tags">1777</span>
+              </a>
             </div>
+          </div>
 
-            <div class="close-display" v-if="isExpanded">
+          <div class="close-display" v-if="isExpanded">
               <span @click="changeIsExpanded" class="close-content">
                 <span class="close">收起</span>
                 <img class="close-svg" src="../../assets/icon/close_content.svg" alt="">
               </span>
-            </div>
-            <div class="more-content" v-if="!isExpanded">
+          </div>
+          <div class="more-content" v-if="!isExpanded">
               <span @click="changeIsExpanded" class="open-content">
                 <span class="content">展开</span>
                 <img class="more-svg" src="../../assets/icon/more_content.svg" alt="">
               </span>
-            </div>
-
           </div>
-
-          <el-scrollbar>
-            <div class="scrollbar-flex-content">
-              <p v-for="item in 1" :key="item" class="scrollbar-demo-item">
-                <a href="#" @click="selectItem(item)">
-                  <div :class="{ 'find-specific': true, 'selected': selectedItem === item }">
-                    <img src="@/assets/icon/find-title.svg" alt="">
-                    电信诈骗
-                  </div>
-                </a>
-              </p>
-            </div>
-          </el-scrollbar>
         </div>
-
-        <!--				题单查询分类-->
-        <div class="category-section">
-          <div class="mb-3 selection-formItem">
-            <el-dropdown trigger="click" style="margin-right: 15px">
-              <el-button type="info" plain>
-                题单
-                <el-icon class="el-icon--right">
-                  <Arrow-down/>
-                </el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item>Action 4</el-dropdown-item>
-                  <el-dropdown-item>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-
-            <el-dropdown trigger="click" style="margin-right: 20px">
-              <el-button type="info" plain>
-                题单
-                <el-icon class="el-icon--right">
-                  <Arrow-down/>
-                </el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item>Action 4</el-dropdown-item>
-                  <el-dropdown-item>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <el-dropdown trigger="click" style="margin-right: 20px">
-              <el-button type="info" plain>
-                题单
-                <el-icon class="el-icon--right">
-                  <Arrow-down/>
-                </el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item>Action 4</el-dropdown-item>
-                  <el-dropdown-item>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <el-dropdown trigger="click" style="margin-right: 20px">
-              <el-button type="info" plain>
-                题单
-                <el-icon class="el-icon--right">
-                  <Arrow-down/>
-                </el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item>Action 4</el-dropdown-item>
-                  <el-dropdown-item>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-
-            <div class="find-formInput">
-              <el-input
-                  v-model="input2"
-                  style="width: 240px"
-                  placeholder="搜索题目、编号或内容"
-                  :prefix-icon="Search"
-              />
-            </div>
-
-            <el-dropdown trigger="click" style="margin-left: 20px">
-              <el-button type="info" plain>
-                <el-icon size="15">
-                  <Tools/>
-                </el-icon>
-              </el-button>
-            </el-dropdown>
-
-            <button class="selected-random">
-					<span>
-						<el-icon class="random-icon" size="18px"><RefreshLeft/></el-icon>
-					</span>
-              <span>随机一案</span>
-            </button>
-
+      </div>
+      <div class="category-area">
+        <el-scrollbar>
+          <div class="scrollbar-flex-content">
+            <p v-for="item in 1" :key="item" class="scrollbar-demo-item">
+              <a href="#" @click="selectItem(item)">
+                <div :class="{ 'find-specific': true, 'selected': selectedItem === item }">
+                  <img src="@/assets/icon/find-title.svg" alt="">
+                  电信诈骗
+                </div>
+              </a>
+            </p>
           </div>
-          <!--						查询结果-->
-          <!-- 表格区域 -->
-          <List-Item :data="data" :columns="columns"></List-Item>
-
-          <!-- 文章分页 -->
-          <el-pagination
-              v-model:current-page="params.pagenum"
-              v-model:page-size="params.pagesize"
-              :page-sizes="[2, 3, 5, 10]"
-              :background="true"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="total"
-              @size-change="onSizeChange"
-              @current-change="onCurrentChange"
-              style="margin-top: 20px; justify-content: flex-end"
-          />
-        </div>
-
+        </el-scrollbar>
 
       </div>
-      <div class="float-left float-select">
-        <div class="common-bank question-bank">热点诈骗分类</div>
-        <div class="common-bank">
-          <div class="find-formInput">
-            <el-input
-                v-model="input2"
-                style="width: 240px"
-                placeholder="搜索题目、编号或内容"
-                :prefix-icon="Search"
-            />
-          </div>
-        </div>
-        <div class="sidebar-tags">
-          <a href="#" class="sidebar-mrb">
-						<span class="sidebar-sp">
-							<span class="sidebar-sp1">阿里云</span>
-							<span class="sidebar-sp2">188</span>
-						</span>
-          </a>
-          <a href="#" class="sidebar-mrb">
-						<span class="sidebar-sp">
-							<span class="sidebar-sp1">阿里fdas云</span>
-							<span class="sidebar-sp2">1588</span>
-						</span>
-          </a>
-          <a href="#" class="sidebar-mrb">
-						<span class="sidebar-sp">
-							<span class="sidebar-sp1">阿rew里云</span>
-							<span class="sidebar-sp2">188</span>
-						</span>
-          </a>
+
+      <!--				题单查询分类-->
+      <div class="category-section">
+        <!--						查询结果-->
+        <!-- 表格区域 -->
+        <div class="cases-section">
+          <case-table></case-table>
+
         </div>
       </div>
     </div>
@@ -379,14 +142,6 @@ const onCurrentChange = (current) => {
   line-height: 200px;
   margin: 0;
   text-align: center;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
 }
 
 .carousel-section {
@@ -423,6 +178,7 @@ const onCurrentChange = (current) => {
 }
 
 .find-item {
+  width: 100%;
   position: relative;
   margin-top: 20px;
 }
@@ -433,8 +189,7 @@ const onCurrentChange = (current) => {
 }
 
 .category-section {
-  width: 880px;
-  margin: 30px 0 20px 0;
+//width: 880px; margin: 30px 0 20px 0;
 }
 
 .flex-relative {
@@ -498,7 +253,7 @@ const onCurrentChange = (current) => {
   margin-right: 5px;
 }
 
-.find-item .open-content img.more-svg , img.close-svg{
+.find-item .open-content img.more-svg, img.close-svg {
   position: relative;
   top: 5px;
   max-height: 11px;
@@ -571,92 +326,6 @@ const onCurrentChange = (current) => {
   margin: 10px;
   text-align: center;
   border-radius: 4px;
-}
-
-.mb-3 .el-icon--right {
-  padding-left: 3px;
-}
-
-.selection-formItem {
-  display: flex;
-  flex-wrap: wrap;
-	margin-bottom: 10px;
-}
-
-.find-formInput {
-  display: flex;
-}
-
-.selected-random {
-  margin-left: 30px;
-  align-items: center;
-  color: #4cd17b;
-}
-
-.random-icon {
-  margin-right: 7px;
-  vertical-align: middle;
-}
-
-.float-left {
-  float: left;
-}
-
-.common-bank {
-  margin: 10px 0 10px 10px
-}
-
-.float-select {
-  border: 1px solid #e6e6e6;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  width: 270px;
-  height: 415px;
-  margin: 32px 0 0 20px;
-  color: #7b7d7b;
-  overflow: hidden;
-}
-
-.float-select .sidebar-tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 15px;
-  vertical-align: middle;
-}
-
-.sidebar-tags .sidebar-mrb {
-  margin-bottom: 14px;
-  margin-right: 15px;
-  border: 1px solid #f2f3f4;
-  background-color: #f2f3f4;
-  border-radius: 8px;
-  font-size: 13px;
-  color: #595959;
-}
-
-.sidebar-tags .sidebar-sp {
-  margin: 5px;
-}
-
-.sidebar-tags .sidebar-sp1 {
-  margin-right: 5px;
-}
-
-.sidebar-tags .sidebar-sp2 {
-  align-items: center;
-  border: 1px solid #ffa116;
-  background-color: #ffa116;
-  font-size: 11px;
-  color: #ffffff;
-  padding: 0 3px;
-  border-radius: 13px;
-}
-
-.selected-result-title {
-  display: flex;
-  position: relative;
-  flex-wrap: wrap;
-  margin-top: 20px;
 }
 
 </style>
