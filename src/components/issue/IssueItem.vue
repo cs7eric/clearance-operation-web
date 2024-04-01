@@ -73,7 +73,7 @@ getAnswers()
         好问题
       </button>
       <button class="function-item">
-        <img class=icon src="@/assets/icon/article_comment.svg" alt="">
+        <img class=icon src="../../assets/icon/article_collect.svg" alt="">
         评论
       </button>
       <button class="function-item">

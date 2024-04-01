@@ -72,11 +72,11 @@ const toReply = () => {
         <div class="date">{{ formatRelativeTime(comment.createTime) }}</div>
         <div class="function">
           <div class="reply function-item" @click="toReply">
-            <img class="icon" src="@/assets/icon/article_comment.svg" alt="">
+            <img class="icon" src="../../assets/icon/article_collect.svg" alt="">
             回复
           </div>
           <div class="like function-item">
-            <img class="icon" src="@/assets/icon/article_comment.svg" alt="">
+            <img class="icon" src="../../assets/icon/article_collect.svg" alt="">
             喜欢
           </div>
         </div>

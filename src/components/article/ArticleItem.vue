@@ -79,6 +79,21 @@ const collectArticle = async (articleId) => {
     })
 }
 
+const handleCustomEvent = (action) => {
+  console.log(`Action ${action} triggered`);
+  if (action === 'comment') {
+    expandComment()
+  } else if (action === 'collect') {
+  } else if (action === 'share') {
+
+  } else {
+    reportArticle()
+  }
+}
+
+const handleCollectEvent = (articleId) => {
+  collectArticle(articleId)
+}
 
 </script>
 
@@ -112,30 +127,10 @@ const collectArticle = async (articleId) => {
 
     <div class="article-function">
       <div class="function-agree">
-        <agree-button :class="" @click="likeArticle(article.id)"></agree-button>
+        <agree-button @click="likeArticle(article.id)"></agree-button>
       </div>
       <div class="function-other">
-        <div class="item">
-          <img class="icon" src="@/assets/icon/article_comment.svg" alt="">
-          <button class="comment-button" @click="expandComment()">
-            {{ expandCommentKey === true ? '收起评论' : '评论' }}
-          </button>
-        </div>
-        <div class="item">
-          <img class="icon" src="@/assets/icon/article_share.svg" alt="">
-          <span>分享</span>
-        </div>
-        <div class="item" @click="collectArticle(article.id)">
-          <img class="icon" src="@/assets/icon/article_star.svg" alt="">
-          <span>收藏</span>
-        </div>
-        <div class="item" @click="reportArticle()">
-          <img class="icon" src="@/assets/icon/article_report.svg" alt="">
-          <span>举报</span>
-        </div>
-        <div class="item">
-
-        </div>
+        <function-button @customEvent="handleCustomEvent" @collect="handleCollectEvent(article.id)"></function-button>
       </div>
     </div>
     <div class="article-comment"
@@ -163,6 +158,7 @@ const collectArticle = async (articleId) => {
 
   .article-function {
     display: flex;
+    align-items: center;
     margin-top: 15px;
 
     .function-agree {
@@ -173,7 +169,7 @@ const collectArticle = async (articleId) => {
     .function-other {
 
       display: flex;
-      margin-left: 40px;
+      margin-left: 20px;
 
       .item {
         display: flex;

@@ -95,6 +95,6 @@ getArticles()
 
 .empty-item {
   width: 880px;
-  height: 100%;
+  height: 100vh;
 }
 </style>
