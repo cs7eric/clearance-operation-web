@@ -243,6 +243,7 @@ userInfo.value = userStore.userInfo
 }
 
 .user-container {
+  padding-top: 88px;
 
   .content-item {
     display: flex;

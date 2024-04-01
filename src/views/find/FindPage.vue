@@ -2,7 +2,7 @@
 import {ref} from 'vue'
 import {ElScrollbar} from 'element-plus'
 import CaseTable from '@/components/table/CaseTable.vue'
-import {getListUsingGet} from '@/api/api/labelController'
+import {getListUsingGet} from '@/openapi/api/labelController'
 
 const isExpanded = ref(false)
 const sectionList = ref()

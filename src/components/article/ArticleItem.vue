@@ -112,24 +112,7 @@ const collectArticle = async (articleId) => {
 
     <div class="article-function">
       <div class="function-agree">
-        <button :class="{'is-liked': isLiked}" class="button-agree" @click="likeArticle(article.id)">
-          <svg t="1695715744270" :class="{'liked-icon': isLiked}" class="icon" viewBox="0 0 1035 1024" version="1.1"
-               xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
-            <path
-                d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
-                fill="#056ce5" p-id="1167"></path>
-          </svg>
-          <span> 赞同  {{ article.likes }}</span>
-        </button>
-        <button class="button-disagree">
-          <svg t="1695715744270" :class="{'liked-icon': isLiked}" class="icon" viewBox="0 0 1035 1024" version="1.1"
-               xmlns="http://www.w3.org/2000/svg" p-id="1166" width="200" height="200">
-            <path
-                d="M420.229565 174.714435c46.280348-67.706435 146.16487-67.706435 192.445218 0l18.309565 26.790956a3218.67687 3218.67687 0 0 1 294.288695 532.457739l3.81774 8.793044c28.571826 65.680696-14.58087 140.265739-85.771131 148.212869a2942.820174 2942.820174 0 0 1-653.723826 0c-71.190261-7.94713-114.342957-82.532174-85.782261-148.212869l3.82887-8.793044a3218.777043 3218.777043 0 0 1 294.288695-532.457739l18.298435-26.790956z m138.607305 212.224a42.384696 42.384696 0 1 1-84.758261 0 42.384696 42.384696 0 0 1 84.758261 0zM516.452174 503.485217a31.788522 31.788522 0 0 1 31.788522 31.788522V747.186087a31.788522 31.788522 0 0 1-63.565913 0V535.262609a31.788522 31.788522 0 0 1 31.777391-31.788522z"
-                fill="#056ce5" p-id="1167"></path>
-          </svg>
-
-        </button>
+        <agree-button :class="" @click="likeArticle(article.id)"></agree-button>
       </div>
       <div class="function-other">
         <div class="item">
@@ -184,35 +167,7 @@ const collectArticle = async (articleId) => {
 
     .function-agree {
 
-      .button-disagree {
 
-        margin-left: 10px;
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
-        background: #dce6f2;
-        color: #056ce5;
-
-        .icon {
-          max-width: 12px;
-          height: auto;
-          transform: rotate(180deg);
-        }
-      }
-
-      .button-agree {
-
-        width: 100px;
-        height: 40px;
-        border-radius: 4px;
-        background: #dce6f2;
-        color: #056ce5;
-
-        .icon {
-          max-width: 12px;
-          height: auto;
-        }
-      }
     }
 
     .function-other {
@@ -304,23 +259,11 @@ const collectArticle = async (articleId) => {
   }
 }
 
-.article-card {
-  border-radius: 7px;
-  background: #ffffff;
-  box-shadow: 2px 2px 4px #e9e9e9,
-  -2px -2px 4px #ffffff;
-}
 
 
 .is-liked {
-  color: #fff !important;
-  background: #1772f6 !important;
+
 }
 
-.liked-icon {
-  & path {
-    fill: #fff !important;
-  }
-}
 
 </style>

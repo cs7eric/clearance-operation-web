@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from 'vue'
-import {pageUsingPost} from '@/api/api/fraudCaseController'
+import {pageUsingPost} from '@/openapi/api/fraudCaseController'
 import {ArrowDown, RefreshLeft, Search, Tools} from '@element-plus/icons-vue'
 
 const pageRequestDTO = ref ({
