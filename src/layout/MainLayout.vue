@@ -64,7 +64,7 @@ const searchFunc = () => {
         <div class="co-header-logo header-item">
           <img src="@/assets/logo.svg" class="logo" alt="logo">
         </div>
-        <div class="header-item index selected"
+        <div class="header-item index selected text-shadow"
              :class="{ selected: selected.value === '/home' }"
              @click="selectItem('/home')">
           <h3 class="header-title">cookies</h3>
@@ -280,6 +280,7 @@ const searchFunc = () => {
 }
 
 .index {
+  line-height: 40px !important;
   font-size: 20px;
 
   &:hover {
@@ -289,5 +290,11 @@ const searchFunc = () => {
   }
 }
 
-
+.text-shadow {
+  text-align: center;
+  color: #bfbfbf !important;
+  font-size: 2em !important;
+  text-shadow: 1px -1px #fff, -1px 1px #999,-5px  5px 2px #80808080;
+  font-family: "Luckiest Guy"
+}
 </style>

@@ -119,6 +119,16 @@ declare namespace API {
     id: string;
   };
 
+  type getLikeArticlesByIdUsingGETParams = {
+    /** userId */
+    userId: string;
+  };
+
+  type getLikeArticlesUsingGETParams = {
+    /** username */
+    username: string;
+  };
+
   type getListUsingGETParams = {
     /** type */
     type: string;
@@ -201,6 +211,13 @@ declare namespace API {
     success?: boolean;
   };
 
+  type ResultList = {
+    code?: number;
+    data?: Record<string, any>[];
+    message?: string;
+    success?: boolean;
+  };
+
   type ResultListArticle = {
     code?: number;
     data?: Article[];
@@ -278,6 +295,7 @@ declare namespace API {
     id?: number;
     userActionType?: string;
     userId?: number;
+    username?: string;
   };
 
   type UserDTO = {

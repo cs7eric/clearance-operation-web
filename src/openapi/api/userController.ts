@@ -2,6 +2,36 @@
 /* eslint-disable */
 import request from '../../util/request';
 
+/** getLikeArticles GET /user/likes */
+export async function getLikeArticlesUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getLikeArticlesUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultList>('/user/likes', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** getLikeArticlesById GET /user/likes_id */
+export async function getLikeArticlesByIdUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getLikeArticlesByIdUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultList>('/user/likes_id', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 用户登录 POST /user/logino */
 export async function loginUsingPost(body: API.UserDTO, options?: { [key: string]: any }) {
   return request<API.Result>('/user/logino', {
