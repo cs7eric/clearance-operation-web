@@ -44,6 +44,21 @@ export async function loginUsingPost(body: API.UserDTO, options?: { [key: string
   });
 }
 
+/** getRandomUser GET /user/random */
+export async function getRandomUserUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getRandomUserUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultList>('/user/random', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** update PUT /user/update */
 export async function updateUsingPut(body: API.User, options?: { [key: string]: any }) {
   return request<API.Resultstring>('/user/update', {

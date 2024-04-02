@@ -18,7 +18,7 @@
   border: 2px solid #252525;
   overflow: hidden;
   border-radius: 30px;
-  color: #333;
+  color: #333 !important;
   transition: all 0.5s ease-in-out;
   font-size: 12px;
 }
@@ -35,7 +35,7 @@
   left: 0;
   top: 0;
   transition: all 0.5s ease-in-out;
-  background-color: #333;
+  background-color: #333 !important;
   border-radius: 30px;
   visibility: hidden;
   height: 10px;

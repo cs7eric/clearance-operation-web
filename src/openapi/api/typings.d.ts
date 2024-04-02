@@ -99,6 +99,11 @@ declare namespace API {
     username: string;
   };
 
+  type getCaseListUsingGETParams = {
+    /** count */
+    count: number;
+  };
+
   type getCountByUsernameUsingGETParams = {
     /** username */
     username: string;
@@ -132,6 +137,11 @@ declare namespace API {
   type getListUsingGETParams = {
     /** type */
     type: string;
+  };
+
+  type getRandomUserUsingGETParams = {
+    /** count */
+    count?: number;
   };
 
   type getRepliesToParentCommentUsingGETParams = {

@@ -3,6 +3,9 @@ import {onMounted, ref} from 'vue'
 
 import ArticleItem from '@/components/article/ArticleItem.vue'
 import {getArticlesByPageUsingPost, getCountByUsernameUsingGet} from '@/openapi/api/articleController'
+import router from '@/router'
+import {getRandomUserUsingGet} from '@/openapi/api/userController'
+import {getCaseListUsingGet} from '@/openapi/api/fraudCaseController'
 
 
 const articleList = ref([])
@@ -13,6 +16,9 @@ const pageRequestDTO = ref ({
 })
 const total = ref()
 
+const userList = ref([])
+
+const eventList = ref([])
 
 const getCount =  async () =>{
   await getCountByUsernameUsingGet().then(res => {
@@ -38,8 +44,35 @@ const onCurrentChange = (current) => {
 getArticles()
 
 
+const toEditor = () => {
+  const routePath = router.resolve({ path: '/editor' }).href;
+  window.open(routePath, '_blank');
+}
+
+const userParam = {
+  count: 6
+}
+
+const eventParam = {
+  count: 6
+}
+const getUserList = async () => {
+  const count = ref(5)
+
+  const res = await getRandomUserUsingGet(userParam)
+  userList.value = res.data
+}
+
+const getEventList = async () => {
+  const count = ref(3)
+  const res = await getCaseListUsingGet(eventParam)
+  eventList.value = res.data
+}
+
 onMounted (async () => {
   await getArticles()
+  await getEventList()
+  await getUserList()
 })
 
 </script>
@@ -84,7 +117,7 @@ onMounted (async () => {
           </div>
           <span class="description item">Post to the community, helping ourselves</span>
           <div class="item post-button">
-            <post-button></post-button>
+              <post-button @click="toEditor"></post-button>
 
           </div>
         </div>
@@ -93,13 +126,13 @@ onMounted (async () => {
             What is Happening
           </div>
           <div class="case-list">
-            <div class="case-item item" v-for="o in 6" :key="o">
+            <div class="case-item item" v-for="event in eventList" :key="event.id">
               <div class="case-left">
                 <div class="case-region section">
-                  <span>Shanghai in Chinese</span>
+                  <span>{{ event.region }} in Chinese</span>
                 </div>
                 <div class="case-title section">
-                  <h3>上海留守老人电诈事件</h3>
+                  <h3>{{ event.title }}</h3>
                 </div>
                 <div class="view-data section">
                   11k viewed
@@ -115,17 +148,17 @@ onMounted (async () => {
         </div>
         <div class="function-item recommend-section">
           <div class="function-title item">
-            Post Something
+            Follow Them
           </div>
           <div class="user-list">
-            <div class="user-item item" v-for="o in 5" :key="o">
+            <div class="user-item item" v-for="user in userList" :key="user.id">
               <div class="user-left">
                 <div class="avatar-area">
-                  <img src="@/assets/avatar.jpg" alt="" class="avatar">
+                  <img :src="user.avatar === null ? 'https://cs7eric-image.oss-cn-hangzhou.aliyuncs.com/images/image-20240403002622229.png' : user.avatar"  alt="" class="avatar">
                 </div>
                 <div class="user-info">
-                  <span class="info username">cccs7</span>
-                  <span class="info email">@cccs7</span>
+                  <span class="info username">{{ user.nickName }}</span>
+                  <span class="info email">@{{user.nickName}}</span>
                 </div>
               </div>
               <div class="user-right">
