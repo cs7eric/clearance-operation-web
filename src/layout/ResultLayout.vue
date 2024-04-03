@@ -1,6 +1,8 @@
 <script setup>
-
 import CookieNav from '@/components/nav/CookieNav.vue'
+
+
+
 </script>
 
 <template>

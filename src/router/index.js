@@ -54,32 +54,34 @@ const router = createRouter({
         {
           // 搜索结果页路由
           path: '/search',
-          component: import('@/layout/ResultLayout.vue'),
-          redirect: '/search/user',
+          component: () => import('@/layout/ResultLayout.vue'),
+          name: 'ResultPage',
+          redirect: `/search/user`,
           children: [
             {
-              path: '/search/all',
-              component: import('@/views/search/SearchIndex.vue')
+              path: '/search/all/:key',
+              component: () => import('@/views/search/SearchIndex.vue')
             },
             {
               // 用户
-              path: '/search/user',
-              component: import('@/views/search/UserResult.vue')
+              path: `/search/user/`,
+              props: true,
+              component: () => import('@/views/search/UserResult.vue')
             },
             {
               //讨论
-              path: '/search/discuss',
-              component: import('@/views/search/DiscussItem.vue')
+              path: '/search/discuss/',
+              component: () => import('@/views/search/DiscussItem.vue')
             },
             {
               //ai
-              path: '/search/ai',
-              component: import('@/views/ai/AIPage.vue')
+              path: '/search/ai/:key',
+              component: () => import('@/views/ai/AIPage.vue')
             },
             {
               //诈骗信息库
-              path: '/search/fraud',
-              component: import('@/views/fraud/FraudCase.vue')
+              path: '/search/fraud/:key',
+              component: () => import('@/views/fraud/FraudCase.vue')
             }
           ]
         },
@@ -119,50 +121,50 @@ const router = createRouter({
     // 文章相关路由
     {
       path: '/article',
-      component: import('@/layout/MainLayout.vue'),
+      component: () => import('@/layout/MainLayout.vue'),
       children: [
         {
           // 文章首页
           path: '',
-          component: import('@/views/article/ArticlePage.vue')
+          component: () => import('@/views/article/ArticlePage.vue')
         },
       ]
     },
     //富文本编辑器 - editor
     {
       path: '/editor',
-      component: import('@/views/editor/EditorPage.vue'),
+      component: () => import('@/views/editor/EditorPage.vue'),
       children: [
         {
           path: `/editor/:issueId?`,
           props: true,
-          component: import('@/views/editor/EditorPage.vue')
+          component: () => import('@/views/editor/EditorPage.vue')
         }
       ]
     },
     {
       //引导页路由
       path: '/guide',
-      component: import('@/views/guide/GuidePage.vue')
+      component: () => import('@/views/guide/GuidePage.vue')
     },
     {
       path: '/ai',
-      component: import('@/layout/MainLayout.vue'),
+      component: () => import('@/layout/MainLayout.vue'),
       children: [
         {
           // AI 首页
           path: '',
-          component: import('@/views/ai/AIPage.vue')
+          component:  () => import('@/views/ai/AIPage.vue')
         },
       ]
     },
     {
       path: '/test',
-      component: import('@/layout/MainLayout.vue'),
+      component: () => import('@/layout/MainLayout.vue'),
       children: [
         {
           path: '',
-          component: import('@/views/test/TestPage.vue')
+          component: () => import('@/views/test/TestPage.vue')
         }
       ]
     }

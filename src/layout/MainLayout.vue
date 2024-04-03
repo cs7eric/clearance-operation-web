@@ -19,6 +19,7 @@ if (isUserExist.value) {
   avatar.value = userInfo.value.user.avatar
 }
 
+
 const route = useRoute()
 watch(() => route.path, newPath => {
   switch (newPath) {
@@ -52,6 +53,8 @@ const selectValue = ref('')
 const searchValue = ref('')
 const searchFunc = () => {
   console.log(searchValue.value)
+  router.push({ name: 'ResultPage', query: { key: searchValue.value }});
+  searchValue.value = ''
 }
 
 
@@ -75,6 +78,7 @@ const searchFunc = () => {
               style="width: 600px"
               placeholder="等你来搜"
               class="input-with-select el-input"
+              @keyup.enter="searchFunc()"
           >
             <template #prepend>
               <el-select v-model="selectValue" placeholder="全站" style="width: 85px;">

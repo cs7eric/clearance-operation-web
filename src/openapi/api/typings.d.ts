@@ -45,9 +45,11 @@ declare namespace API {
   type ArticlePageDTO = {
     beginTime?: string;
     category?: Category;
+    data?: Article[];
     endTime?: string;
     pageNum?: number;
     pageSize?: number;
+    total?: number;
     username?: string;
   };
 
@@ -207,6 +209,13 @@ declare namespace API {
     success?: boolean;
   };
 
+  type ResultArticlePageDTO = {
+    code?: number;
+    data?: ArticlePageDTO;
+    message?: string;
+    success?: boolean;
+  };
+
   type ResultComment = {
     code?: number;
     data?: Comment;
@@ -275,6 +284,24 @@ declare namespace API {
     data?: string;
     message?: string;
     success?: boolean;
+  };
+
+  type searchFuzzyUsingGETParams = {
+    /** pageNum */
+    pageNum: number;
+    /** pageSize */
+    pageSize: number;
+    /** keyword */
+    keyword: string;
+  };
+
+  type searchUsingGETParams = {
+    /** likeKey */
+    likeKey: string;
+    /** pageSize */
+    pageSize: number;
+    /** pageNum */
+    pageNum: number;
   };
 
   type sendCodeUsingPOSTParams = {

@@ -59,6 +59,21 @@ export async function getRandomUserUsingGet(
   });
 }
 
+/** searchFuzzy GET /user/search_fuzzy */
+export async function searchFuzzyUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.searchFuzzyUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultPageResult>('/user/search_fuzzy', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** update PUT /user/update */
 export async function updateUsingPut(body: API.User, options?: { [key: string]: any }) {
   return request<API.Resultstring>('/user/update', {

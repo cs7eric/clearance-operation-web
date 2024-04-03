@@ -103,6 +103,21 @@ export async function getArticlesByPageUsingPost(
   });
 }
 
+/** search GET /articles/search */
+export async function searchUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.searchUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultArticlePageDTO>('/articles/search', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** getArticlesByUsername GET /articles/user/${param0} */
 export async function getArticlesByUsernameUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
