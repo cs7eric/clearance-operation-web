@@ -59,7 +59,7 @@ const router = createRouter({
           redirect: `/search/user`,
           children: [
             {
-              path: '/search/all/:key',
+              path: '/search/all/',
               component: () => import('@/views/search/SearchIndex.vue')
             },
             {
@@ -75,7 +75,7 @@ const router = createRouter({
             },
             {
               //ai
-              path: '/search/ai/:key',
+              path: '/search/ai/',
               component: () => import('@/views/ai/AIPage.vue')
             },
             {

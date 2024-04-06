@@ -34,7 +34,7 @@ request.interceptors.response.use(
     hideLoader()
     const loaderStore = useLoaderStore()
     loaderStore.hide()
-    if (res.data.success) {
+    if (res.data.success || res.data.code === 200) {
       // 处理成功响应
       return res.data // 返回响应数据部分
     } else {

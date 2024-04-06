@@ -10,3 +10,5 @@ export default pinia
 export {useLoaderStore} from './modules/loader'
 export {useUserStore} from './modules/user'
 export {useIssueStore} from './modules/issue'
+export {useTabStore} from './modules/tab'
+export {useSearchStore} from './modules/search'

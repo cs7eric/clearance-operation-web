@@ -1,11 +1,10 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-
 import {searchFuzzyUsingGet} from '@/openapi/api/userController'
 import {useRoute} from 'vue-router'
+import {useSearchStore} from '@/stores'
 
 const dataList = ref([])
-
 
 const key = ref()
 const pageRequestDTO = ref ({
@@ -13,19 +12,23 @@ const pageRequestDTO = ref ({
 	pageSize: 7,
   keyword: key
 })
-const total = ref(7)
+const total = ref()
 
-const route = useRoute()
+// const route = useRoute()
+
+
 
 onMounted(() => {
-  key.value =  route.query.key
+  const searchStore = useSearchStore()
+  key.value = searchStore.searchKey
+  // key.value =  route.query.key
 })
-
 
 const getData = async () => {
 
   const res = await searchFuzzyUsingGet(pageRequestDTO.value)
-  dataList.value = res.data
+  dataList.value = res.data.records
+  total.value = res.total
 }
 // 文章分页
 const onSizeChange = (size) => {
@@ -41,6 +44,7 @@ const onCurrentChange = (current) => {
 onMounted(() => {
   getData()
 })
+getData()
 
 </script>
 
@@ -89,7 +93,7 @@ onMounted(() => {
 
       </div>
     </div>
-
+    <empty-item v-if="dataList.length == 0"></empty-item>
   </div>
 </template>
 

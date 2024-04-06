@@ -1,5 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import {useTabStore} from '@/stores/modules/tab'
 
 const nav = ref(null)
 const slide1 = ref(null)
@@ -35,26 +36,36 @@ function updateSlidePosition(e, slide, isHover = false) {
     slide.classList.remove('squeeze')
   }
 }
+
+const tabStore = useTabStore()
+
+const  handleClick = () => {
+  tabStore.value.setActiveTab('111')
+}
+
 </script>
 
 <template>
   <ul id="nav" ref="nav">
     <li class="slide1" ref="slide1"></li>
     <li class="slide2" ref="slide2"></li>
-    <li>
+    <li @click="tabStore.setActiveTab('all')">
       <router-link class="item" to="/search/all">全站</router-link>
     </li>
-    <li>
+    <li @click="tabStore.setActiveTab('ai')">
       <router-link class="item" to="/search/ai">AI 问答</router-link>
     </li>
-    <li>
+    <li @click="tabStore.setActiveTab('user')">
+
       <router-link class="item" to="/search/user">用户</router-link>
     </li>
-    <li>
-      <router-link class="item" to="/search/discuss">讨论</router-link>
+    <li @click="tabStore.setActiveTab('article')">
+
+    <router-link class="item" to="/search/discuss">讨论</router-link>
     </li>
-    <li>
-      <router-link class="item" to="/search/fraud">诈骗信息库</router-link>
+    <li @click="tabStore.setActiveTab('fraud')">
+
+    <router-link class="item" to="/search/fraud">诈骗信息库</router-link>
     </li>
   </ul>
 </template>
@@ -79,7 +90,7 @@ function updateSlidePosition(e, slide, isHover = false) {
   padding: 5px;
   margin: 40px 0;
 
-  & > li a,item {
+  & > li a, item {
     position: relative;
     padding: 6px 20px;
     font: 500 16px 'ZCOOL QingKe HuangYou';

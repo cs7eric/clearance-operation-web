@@ -267,7 +267,7 @@ onMounted (async () => {
 
 .empty-item {
   width: 880px;
-  height: 100vh;
+  height: 50vh;
 }
 
 .main-top {

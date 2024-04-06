@@ -1,9 +1,8 @@
 <script setup>
 import {ref} from 'vue'
 import {watch} from 'vue'
-import {useRoute} from 'vue-router'
-import {useUserStore} from '@/stores'
-import router from '@/router'
+import {useRoute, useRouter} from 'vue-router'
+import {useSearchStore, useTabStore, useUserStore} from '@/stores'
 import {Search} from '@element-plus/icons-vue'
 
 const selected = ref('首页')
@@ -19,8 +18,12 @@ if (isUserExist.value) {
   avatar.value = userInfo.value.user.avatar
 }
 
-
+const router = useRouter()
+const tabStore  = useTabStore()
 const route = useRoute()
+
+tabStore.setRouter(router)
+tabStore.setRoute(route)
 watch(() => route.path, newPath => {
   switch (newPath) {
     case '/home':
@@ -49,13 +52,15 @@ const logout = () => {
   router.push('/login')
 }
 
-const selectValue = ref('')
-const searchValue = ref('')
+const searchType = ref('all')
+const searchStore = useSearchStore()
+
 const searchFunc = () => {
-  console.log(searchValue.value)
-  router.push({ name: 'ResultPage', query: { key: searchValue.value }});
-  searchValue.value = ''
+
+  router.push({ name: 'ResultPage', query: { key: searchStore.searchKey }});
+
 }
+
 
 
 </script>
@@ -74,14 +79,14 @@ const searchFunc = () => {
         </div>
         <div class="header-item">
           <el-input
-              v-model="searchValue"
+              v-model="searchStore.searchKey"
               style="width: 600px"
               placeholder="等你来搜"
               class="input-with-select el-input"
               @keyup.enter="searchFunc()"
           >
             <template #prepend>
-              <el-select v-model="selectValue" placeholder="全站" style="width: 85px;">
+              <el-select v-model="searchType" placeholder="全站" style="width: 85px;">
                 <el-option label="文章" value="article"/>
                 <el-option label="用户" value="user"/>
                 <el-option label="诈骗案例" value="fraud"/>
