@@ -91,6 +91,21 @@ declare namespace API {
     content: string;
   };
 
+  type FraudCase = {
+    additionalInfo?: string;
+    amount?: number;
+    createTime?: string;
+    date?: string;
+    delFlag?: number;
+    description?: string;
+    id?: number;
+    region?: string;
+    title?: string;
+    type?: string;
+    updateTime?: string;
+    victimAgeRange?: string;
+  };
+
   type getArticleByIdUsingGETParams = {
     /** id */
     id: string;
@@ -186,6 +201,15 @@ declare namespace API {
     labelType?: string;
   };
 
+  type pageFuzzyUsingGETParams = {
+    /** pageNum */
+    pageNum: number;
+    /** pageSize */
+    pageSize: number;
+    /** key */
+    key: string;
+  };
+
   type PageRequestDTO = {
     beginTime?: string;
     category?: Category;
@@ -198,6 +222,14 @@ declare namespace API {
     current?: number;
     pages?: number;
     records?: Record<string, any>[];
+    size?: number;
+    total?: number;
+  };
+
+  type PageResultFraudCase = {
+    current?: number;
+    pages?: number;
+    records?: FraudCase[];
     size?: number;
     total?: number;
   };
@@ -275,6 +307,13 @@ declare namespace API {
   type ResultPageResult = {
     code?: number;
     data?: PageResult;
+    message?: string;
+    success?: boolean;
+  };
+
+  type ResultPageResultFraudCase = {
+    code?: number;
+    data?: PageResultFraudCase;
     message?: string;
     success?: boolean;
   };

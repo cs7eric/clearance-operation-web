@@ -19,7 +19,7 @@ if (isUserExist.value) {
 }
 
 const router = useRouter()
-const tabStore  = useTabStore()
+const tabStore = useTabStore()
 const route = useRoute()
 
 tabStore.setRouter(router)
@@ -52,15 +52,33 @@ const logout = () => {
   router.push('/login')
 }
 
-const searchType = ref('all')
 const searchStore = useSearchStore()
+// const type = searchStore.searchType
 
-const searchFunc = () => {
+const searchFunc = (type) => {
+  if (type === 'user') {
+    tabStore.setActiveTab('user')
+  } else if (type === 'article') {
+    tabStore.setActiveTab('article')
 
-  router.push({ name: 'ResultPage', query: { key: searchStore.searchKey }});
+  } else if (type === 'fraud') {
+    tabStore.setActiveTab('fraud')
 
+  }
 }
 
+const search = (type) => {
+  console.log(type)
+  if (type === 'user') {
+    tabStore.setActiveTab('user')
+  } else if (type === 'article') {
+    tabStore.setActiveTab('article')
+
+  } else if (type === 'fraud') {
+    tabStore.setActiveTab('fraud')
+
+  }
+}
 
 
 </script>
@@ -83,10 +101,10 @@ const searchFunc = () => {
               style="width: 600px"
               placeholder="等你来搜"
               class="input-with-select el-input"
-              @keyup.enter="searchFunc()"
+              @keyup.enter="searchFunc(new Date())"
           >
             <template #prepend>
-              <el-select v-model="searchType" placeholder="全站" style="width: 85px;">
+              <el-select v-model="searchStore.searchType" placeholder="全站" style="width: 85px;">
                 <el-option label="文章" value="article"/>
                 <el-option label="用户" value="user"/>
                 <el-option label="诈骗案例" value="fraud"/>
@@ -94,7 +112,7 @@ const searchFunc = () => {
               </el-select>
             </template>
             <template #append>
-              <el-button @click="searchFunc" :icon="Search"/>
+              <el-button @click="search(searchStore.searchType)" :icon="Search"/>
             </template>
           </el-input>
         </div>
@@ -202,14 +220,14 @@ const searchFunc = () => {
     .header-left {
       display: flex;
 
-      &>.selected {
+      & > .selected {
         font-weight: 700;
         color: #000;
         font-size: 28px;
       }
     }
-    
-    .header-center  {
+
+    .header-center {
       display: flex;
     }
 
@@ -234,8 +252,6 @@ const searchFunc = () => {
       color: #8590a6;
       margin-left: 15px; /* 减少了padding */
       margin-right: 5px; /* 新增，确保两侧padding一致 */
-
-
 
 
     }
@@ -303,7 +319,7 @@ const searchFunc = () => {
   text-align: center;
   color: #bfbfbf !important;
   font-size: 2em !important;
-  text-shadow: 1px -1px #fff, -1px 1px #999,-5px  5px 2px #80808080;
+  text-shadow: 1px -1px #fff, -1px 1px #999, -5px 5px 2px #80808080;
   font-family: "Luckiest Guy"
 }
 </style>

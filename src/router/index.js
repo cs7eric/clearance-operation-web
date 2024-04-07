@@ -56,7 +56,6 @@ const router = createRouter({
           path: '/search',
           component: () => import('@/layout/ResultLayout.vue'),
           name: 'ResultPage',
-          redirect: `/search/user`,
           children: [
             {
               path: '/search/all/',
@@ -65,12 +64,14 @@ const router = createRouter({
             {
               // 用户
               path: `/search/user/`,
+              name: 'UserResult',
               props: true,
               component: () => import('@/views/search/UserResult.vue')
             },
             {
               //讨论
               path: '/search/discuss/',
+              name: 'DiscussItem',
               component: () => import('@/views/search/DiscussItem.vue')
             },
             {
@@ -80,7 +81,8 @@ const router = createRouter({
             },
             {
               //诈骗信息库
-              path: '/search/fraud/:key',
+              path: '/search/fraud/',
+              name: 'FraudCase',
               component: () => import('@/views/fraud/FraudCase.vue')
             }
           ]

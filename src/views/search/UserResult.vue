@@ -1,7 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {searchFuzzyUsingGet} from '@/openapi/api/userController'
-import {useRoute} from 'vue-router'
 import {useSearchStore} from '@/stores'
 
 const dataList = ref([])
@@ -14,14 +13,12 @@ const pageRequestDTO = ref ({
 })
 const total = ref()
 
-// const route = useRoute()
 
 
 
 onMounted(() => {
   const searchStore = useSearchStore()
   key.value = searchStore.searchKey
-  // key.value =  route.query.key
 })
 
 const getData = async () => {
@@ -44,7 +41,6 @@ const onCurrentChange = (current) => {
 onMounted(() => {
   getData()
 })
-getData()
 
 </script>
 

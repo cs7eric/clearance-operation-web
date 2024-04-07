@@ -46,7 +46,6 @@ onMounted(() => {
   // key.value =  route.query.key
 })
 
-getData()
 
 </script>
 

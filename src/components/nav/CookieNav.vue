@@ -39,10 +39,6 @@ function updateSlidePosition(e, slide, isHover = false) {
 
 const tabStore = useTabStore()
 
-const  handleClick = () => {
-  tabStore.value.setActiveTab('111')
-}
-
 </script>
 
 <template>
@@ -61,11 +57,11 @@ const  handleClick = () => {
     </li>
     <li @click="tabStore.setActiveTab('article')">
 
-    <router-link class="item" to="/search/discuss">讨论</router-link>
+      <router-link class="item" to="/search/discuss">讨论</router-link>
     </li>
     <li @click="tabStore.setActiveTab('fraud')">
 
-    <router-link class="item" to="/search/fraud">诈骗信息库</router-link>
+      <router-link class="item" to="/search/fraud">诈骗信息库</router-link>
     </li>
   </ul>
 </template>

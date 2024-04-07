@@ -28,3 +28,18 @@ export async function pageUsingPost(body: API.PageRequestDTO, options?: { [key: 
     ...(options || {}),
   });
 }
+
+/** pageFuzzy GET /fraud/page_fuzzy */
+export async function pageFuzzyUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.pageFuzzyUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultPageResultFraudCase>('/fraud/page_fuzzy', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
