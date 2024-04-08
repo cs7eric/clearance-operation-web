@@ -93,7 +93,7 @@ export async function getArticlesByPageUsingPost(
   body: API.ArticlePageDTO,
   options?: { [key: string]: any },
 ) {
-  return request<API.ResultListArticle>('/articles/page', {
+  return request<API.ResultPageResultArticle>('/articles/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

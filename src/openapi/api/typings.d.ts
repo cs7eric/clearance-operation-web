@@ -43,6 +43,7 @@ declare namespace API {
   };
 
   type ArticlePageDTO = {
+    actionType?: string;
     beginTime?: string;
     category?: Category;
     data?: Article[];
@@ -210,6 +211,17 @@ declare namespace API {
     key: string;
   };
 
+  type pageLikesUsingGETParams = {
+    /** pageNum */
+    pageNum: number;
+    /** pageSize */
+    pageSize: number;
+    /** userId */
+    userId: string;
+    /** actionType */
+    actionType: string;
+  };
+
   type PageRequestDTO = {
     beginTime?: string;
     category?: Category;
@@ -222,6 +234,14 @@ declare namespace API {
     current?: number;
     pages?: number;
     records?: Record<string, any>[];
+    size?: number;
+    total?: number;
+  };
+
+  type PageResultArticle = {
+    current?: number;
+    pages?: number;
+    records?: Article[];
     size?: number;
     total?: number;
   };
@@ -307,6 +327,13 @@ declare namespace API {
   type ResultPageResult = {
     code?: number;
     data?: PageResult;
+    message?: string;
+    success?: boolean;
+  };
+
+  type ResultPageResultArticle = {
+    code?: number;
+    data?: PageResultArticle;
     message?: string;
     success?: boolean;
   };

@@ -19,10 +19,6 @@ const currentPage = ref()
 currentPage.value = pageRequestDTO.value.pageNum + 1
 const getData = async () => {
 
-  // const key = ref('')
-  // key.value = route.query.key
-  // pageRequestDTO.value.likeKey.value = key.value
-  // pageRequestDTO.value.pageNum -= 1
   const res = await searchUsingGet(pageRequestDTO.value)
   dataList.value = res.data.data
   total.value = res.data.total
@@ -50,7 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="discuss-container" v-if="dataList.length !== 0">
+  <div class="discuss-container" v-if="dataList.length > 0">
     <div v-for="article in dataList" :key="article.id" class="discuss-card">
       <div class="discuss-top">
         <a class="top-title" href="">
