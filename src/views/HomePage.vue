@@ -20,16 +20,12 @@ const userList = ref([])
 
 const eventList = ref([])
 
-const getCount =  async () =>{
-  await getCountByUsernameUsingGet().then(res => {
-    total.value = res.data
-  })
-}
+
 const getArticles = async () => {
 
   const res = await getArticlesByPageUsingPost(pageRequestDTO.value)
-  articleList.value = res.data
-  await getCount()
+  articleList.value = res.data.records
+  total.value = res.data.total
 }
 // 文章分页
 const onSizeChange = (size) => {
@@ -49,6 +45,11 @@ const toEditor = () => {
   window.open(routePath, '_blank');
 }
 
+const toUserDetail = (userId) => {
+  router.push(`/user/profile/${userId}`)
+}
+
+
 const userParam = {
   count: 6
 }
@@ -57,14 +58,12 @@ const eventParam = {
   count: 6
 }
 const getUserList = async () => {
-  const count = ref(5)
 
   const res = await getRandomUserUsingGet(userParam)
   userList.value = res.data
 }
 
 const getEventList = async () => {
-  const count = ref(3)
   const res = await getCaseListUsingGet(eventParam)
   eventList.value = res.data
 }
@@ -151,7 +150,7 @@ onMounted (async () => {
             Follow Them
           </div>
           <div class="user-list">
-            <div class="user-item item" v-for="user in userList" :key="user.id">
+            <div class="user-item item" v-for="user in userList" :key="user.id" @click="toUserDetail(user.id)">
               <div class="user-left">
                 <div class="avatar-area">
                   <img :src="user.avatar === null ? 'https://cs7eric-image.oss-cn-hangzhou.aliyuncs.com/images/image-20240403002622229.png' : user.avatar"  alt="" class="avatar">

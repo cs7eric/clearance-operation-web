@@ -7,6 +7,8 @@ import {useIssueStore} from '@/stores'
 
 const route = useRoute()
 const issueId = route.params.id
+console.log(issueId)
+
 const issueStore = useIssueStore()
 
 const issueData = ref()

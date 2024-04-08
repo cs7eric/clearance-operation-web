@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layout/MainLayout.vue'
 import HomePage from '@/views/HomePage.vue'
-import {useIssueStore} from '@/stores'
+import {useIssueStore, useUserStore} from '@/stores'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -104,9 +104,25 @@ const router = createRouter({
             {
               path: 'like',
               component: () => import('@/views/user/LikeCollectPage.vue')
-            }
+            },
           ]
+        },
+        {
+          path: '/user/profile/:userId?',
+          props: true,
+          component: () => import('@/views/user/UserDetail.vue'),
+          beforeEnter: async (to, from, next) => {
+            const userStore = useUserStore()
+            try {
+              await userStore.fetchUserData(to.params.id)
+              next()
+            } catch (error) {
+              console.log(error)
+            }
+          }
         }
+
+
       ]
     },
     {

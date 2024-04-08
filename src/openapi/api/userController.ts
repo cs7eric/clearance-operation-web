@@ -2,6 +2,21 @@
 /* eslint-disable */
 import request from '../../util/request';
 
+/** getUserById GET /user */
+export async function getUserByIdUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getUserByIdUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultUser>('/user', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** pageLikes GET /user/action_page */
 export async function pageLikesUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)

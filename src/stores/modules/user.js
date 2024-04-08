@@ -1,5 +1,6 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
+import {issueGetService} from '@/api/issue'
 
 export const useUserStore = defineStore('co-user', () => {
 
@@ -38,6 +39,11 @@ export const useUserStore = defineStore('co-user', () => {
       return localStorage.getItem('co-user') !== null
     }
 
+    const fetchUserData = async (id) => {
+      return await issueGetService(id)
+    }
+
+
     return {
       userInfo,
       setUser,
@@ -49,7 +55,8 @@ export const useUserStore = defineStore('co-user', () => {
       userExist,
       jwt,
       setJWT,
-      removeJWT
+      removeJWT,
+      fetchUserData
     }
   }
   , {

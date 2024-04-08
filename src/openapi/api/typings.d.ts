@@ -169,6 +169,11 @@ declare namespace API {
     commentId: string;
   };
 
+  type getUserByIdUsingGETParams = {
+    /** id */
+    id: number;
+  };
+
   type Issue = {
     authorId?: string;
     createTime?: string;
@@ -348,6 +353,13 @@ declare namespace API {
   type Resultstring = {
     code?: number;
     data?: string;
+    message?: string;
+    success?: boolean;
+  };
+
+  type ResultUser = {
+    code?: number;
+    data?: User;
     message?: string;
     success?: boolean;
   };
