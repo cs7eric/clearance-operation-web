@@ -4,8 +4,10 @@ import {onMounted, ref} from 'vue'
 import ArticleItem from '@/components/article/ArticleItem.vue'
 import {getArticlesByPageUsingPost, getCountByUsernameUsingGet} from '@/openapi/api/articleController'
 import router from '@/router'
-import {getRandomUserUsingGet} from '@/openapi/api/userController'
+import {followUsingPost, getRandomUserUsingGet} from '@/openapi/api/userController'
 import {getCaseListUsingGet} from '@/openapi/api/fraudCaseController'
+import {ElMessage} from 'element-plus'
+import {useUserStore} from '@/stores'
 
 
 const articleList = ref([])
@@ -66,6 +68,26 @@ const getUserList = async () => {
 const getEventList = async () => {
   const res = await getCaseListUsingGet(eventParam)
   eventList.value = res.data
+}
+
+
+const userInfo = ref({})
+const userStore = useUserStore()
+userInfo.value = userStore.userInfo
+
+
+const followParam = ref({
+  userId: '',
+  followId: ''
+})
+const follow = async (followId) => {
+  followParam.value.followId = followId
+  followParam.value.userId = userInfo.value.user.id
+  await followUsingPost(followParam.value)
+  ElMessage({
+    type: 'success',
+    message: '关注成功'
+  })
 }
 
 onMounted (async () => {
@@ -162,7 +184,7 @@ onMounted (async () => {
               </div>
               <div class="user-right">
                 <div class="follow-button ">
-                  <shake-button></shake-button>
+                  <shake-button @click="follow(user.id)"></shake-button>
                 </div>
               </div>
             </div>

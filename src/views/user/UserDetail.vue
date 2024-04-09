@@ -2,7 +2,9 @@
 import TabsNav from '@/components/nav/TabsNav.vue'
 import {onBeforeMount, ref} from 'vue'
 import {useRoute} from 'vue-router'
-import {getUserByIdUsingGet} from '@/openapi/api/userController'
+import {followUsingPost, getUserByIdUsingGet} from '@/openapi/api/userController'
+import {useUserStore} from '@/stores'
+import {ElMessage} from 'element-plus'
 
 const route = useRoute()
 const userId = route.params.userId
@@ -14,6 +16,26 @@ const getUserData = async () => {
   console.log(userId)
   const res = await getUserByIdUsingGet(params.value)
   user.value = res.data
+
+}
+
+const userInfo = ref({})
+const userStore = useUserStore()
+userInfo.value = userStore.userInfo
+
+
+const followParam = ref({
+  userId: '',
+  followId: ''
+})
+const follow = async (followId) => {
+  followParam.value.followId = followId
+  followParam.value.userId = userInfo.value.user.id
+  await followUsingPost(followParam.value)
+  ElMessage({
+    type: 'success',
+    message: '关注成功'
+  })
 }
 
 onBeforeMount(() => {
@@ -31,13 +53,13 @@ onBeforeMount(() => {
         </div>
         <div class="func-area">
           <button class="others-button button">···</button>
-          <button class="follow-button button">Follow</button>
+          <button class="follow-button button" @click="follow(user.id)">Follow</button>
         </div>
       </div>
       <div class="info-main">
 
         <div class="user-username">
-          <h3 class="username">{{user.username}}</h3>
+          <h3 class="username">{{user.nickName}}</h3>
           <span class="nickname">@{{user.username}}</span>
         </div>
         <div class="user-detail">

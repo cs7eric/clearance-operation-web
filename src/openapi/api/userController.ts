@@ -32,6 +32,51 @@ export async function pageLikesUsingGet(
   });
 }
 
+/** follow POST /user/follow */
+export async function followUsingPost(
+  body: API.UserFollowAction,
+  options?: { [key: string]: any },
+) {
+  return request<API.Resultstring>('/user/follow', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** getFollowers GET /user/followers */
+export async function getFollowersUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getFollowersUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultList>('/user/followers', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+/** getFollowing GET /user/following */
+export async function getFollowingUsingGet(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getFollowingUsingGETParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.ResultList>('/user/following', {
+    method: 'GET',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 /** getLikeArticles GET /user/likes */
 export async function getLikeArticlesUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
@@ -100,6 +145,21 @@ export async function searchFuzzyUsingGet(
     params: {
       ...params,
     },
+    ...(options || {}),
+  });
+}
+
+/** unfollow POST /user/unfollow */
+export async function unfollowUsingPost(
+  body: API.UserFollowAction,
+  options?: { [key: string]: any },
+) {
+  return request<API.Resultstring>('/user/unfollow', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }

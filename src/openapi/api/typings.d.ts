@@ -132,6 +132,16 @@ declare namespace API {
     articleId: string;
   };
 
+  type getFollowersUsingGETParams = {
+    /** userId */
+    userId: number;
+  };
+
+  type getFollowingUsingGETParams = {
+    /** userId */
+    userId: number;
+  };
+
   type getIssueAnswersUsingGETParams = {
     /** issueId */
     issueId: string;
@@ -170,8 +180,8 @@ declare namespace API {
   };
 
   type getUserByIdUsingGETParams = {
-    /** id */
-    id: number;
+    /** userId */
+    userId: number;
   };
 
   type Issue = {
@@ -394,6 +404,7 @@ declare namespace API {
     delFlag?: number;
     email?: string;
     id?: number;
+    introduction?: string;
     nickName?: string;
     password?: string;
     phonenumber?: string;
@@ -418,11 +429,21 @@ declare namespace API {
     code?: string;
     email?: string;
     id?: number;
+    introduction?: string;
     nickName?: string;
     password?: string;
     phonenumber?: string;
     sex?: string;
     userType?: string;
     username?: string;
+  };
+
+  type UserFollowAction = {
+    createTime?: string;
+    followId?: number;
+    id?: string;
+    isFollowed?: number;
+    updateTime?: string;
+    userId?: number;
   };
 }
