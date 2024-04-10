@@ -102,7 +102,7 @@ const search = (type) => {
               @keyup.enter="search(searchStore.searchType)"
           >
             <template #prepend>
-              <el-select v-model="searchStore.searchType" placeholder="全站" style="width: 85px;">
+              <el-select v-model="searchStore.searchType" placeholder="文章" style="width: 85px;">
                 <el-option label="文章" value="article"/>
                 <el-option label="用户" value="user"/>
                 <el-option label="诈骗案例" value="fraud"/>

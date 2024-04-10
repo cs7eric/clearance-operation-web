@@ -3,7 +3,7 @@ import {defineStore} from 'pinia'
 export const useSearchStore = defineStore('search', {
   state: () => ({
     searchKey: '',
-    searchType: '',
+    searchType: 'article',
     searchResults: []
   }),
   actions: {
@@ -12,7 +12,8 @@ export const useSearchStore = defineStore('search', {
       console.log(this.searchKey.value)
     },
     setSearchType(searchType) {
-      this.searchType.value = searchType
+      this.searchType = searchType
+      console.log(this.searchType)
     }
   }
 })

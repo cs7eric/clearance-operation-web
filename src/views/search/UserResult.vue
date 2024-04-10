@@ -1,7 +1,7 @@
 <script setup>
 import {ref, onMounted, onBeforeMount, watch} from 'vue'
 import {searchFuzzyUsingGet} from '@/openapi/api/userController'
-import {useSearchStore} from '@/stores'
+import {useSearchStore, useTabStore} from '@/stores'
 import {useRoute} from 'vue-router'
 
 const dataList = ref([])
@@ -18,16 +18,16 @@ const searchStore = useSearchStore()
 const route = useRoute()
 
 onBeforeMount(() => {
-
-})
-
-onBeforeMount(() => {
   const searchStore = useSearchStore()
   key.value = searchStore.searchKey
 
-  dataList.value  = searchStore.searchResults.records
-  total.value =searchStore.searchResults.total
+  if (searchStore.searchType === 'user') {
+    dataList.value  = searchStore.searchResults.records
+    total.value =searchStore.searchResults.total
+  }
 
+  // dataList.value = []
+  // total.value = 0
 })
 
 const getData = async () => {
@@ -48,25 +48,35 @@ const onCurrentChange = (current) => {
 }
 
 onMounted(() => {
-  // getData()
+  freshData()
 })
 
+const tabStore = useTabStore()
 const freshData = () => {
-  dataList.value  = searchStore.searchResults.records
-  total.value =searchStore.searchResults.total
+
+  if (tabStore.activeTab === 'user') {
+    dataList.value  = searchStore.searchResults.records
+    total.value =searchStore.searchResults.total
+  } else {
+    dataList.value = []
+    total.value = 0
+  }
 }
+
+watch(() => route.params, () => {
+
+  console.log("fresh")
+    freshData()
+}, { immediate: true });
+
 
 freshData()
 
-watch(() => route.params, () => {
-  // 路由参数变化时的操作，比如重新获取数据
-  freshData()
-}, { immediate: true });
 </script>
 
 <template>
   <div class="user-search-container">
-    <div class="userResult-main">
+    <div class="userResult-main" v-if="dataList.length > 0">
       <div v-for="items in dataList" :key="items.id" class="user-card item-flex">
         <div class="user-avatar">
           <img :src="items.avatar" alt="">
@@ -109,7 +119,7 @@ watch(() => route.params, () => {
 
       </div>
     </div>
-    <empty-item v-if="dataList.length == 0"></empty-item>
+    <empty-item v-if="dataList.length === 0"></empty-item>
   </div>
 </template>
 

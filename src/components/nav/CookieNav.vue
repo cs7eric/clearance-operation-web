@@ -1,6 +1,7 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, watch} from 'vue'
 import {useTabStore} from '@/stores/modules/tab'
+import {useRoute} from 'vue-router'
 
 const nav = ref(null)
 const slide1 = ref(null)

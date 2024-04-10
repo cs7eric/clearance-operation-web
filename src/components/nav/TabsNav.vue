@@ -1,9 +1,10 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, watch,onMounted} from 'vue'
 import DiscussItem from '@/views/search/DiscussItem.vue'
 import EmptyItem from '@/components/empty/EmptyItem.vue'
 import {getArticlesByPageUsingPost} from '@/openapi/api/articleController'
 import {pageLikesUsingGet} from '@/openapi/api/userController'
+import {useTabStore} from '@/stores'
 
 const activeName = ref('first')
 
@@ -51,6 +52,8 @@ const getData = async (actionType) => {
     total.value = res.data.total
   }
 }
+
+
 
 const typeKey = ref('')
 

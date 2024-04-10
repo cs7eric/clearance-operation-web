@@ -1,7 +1,14 @@
 <script setup>
 import CookieNav from '@/components/nav/CookieNav.vue'
+import {useRoute} from 'vue-router'
+import {ref, watch} from 'vue'
 
+const route =  useRoute()
+const componentKey = ref(0)
+watch(() => route.params, () => {
 
+  componentKey.value += 1
+}, {immediate: true})
 
 </script>
 
@@ -27,7 +34,7 @@ import CookieNav from '@/components/nav/CookieNav.vue'
       </div>
 
       <div class="content-main-section">
-        <router-view></router-view>
+        <router-view :key="componentKey"></router-view>
       </div>
     </div>
   </div>

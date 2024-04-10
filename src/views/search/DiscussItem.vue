@@ -1,53 +1,54 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import {parseHTMLContent} from '@/util/format'
 import {searchUsingGet} from '@/openapi/api/articleController'
 import {useSearchStore} from '@/stores'
+import {useRoute, useRouter} from 'vue-router'
 
-
-const key = ref('')
-const dataList = ref([])
+const key = ref()
+const articleList = ref([])
 const pageRequestDTO = ref({
   pageNum: 0,
   pageSize: 5,
   likeKey: key
 })
+const list = ref([])
 
 const total = ref()
-// const route = useRoute()
 const currentPage = ref()
-currentPage.value = pageRequestDTO.value.pageNum + 1
-const getData = async () => {
+const searchStore = useSearchStore()
+const route = useRoute()
 
-  const res = await searchUsingGet(pageRequestDTO.value)
-  dataList.value = res.data.data
-  total.value = res.data.total
-}
+currentPage.value = pageRequestDTO.value.pageNum + 1
 // 文章分页
 const onSizeChange = (size) => {
   pageRequestDTO.value.pageNum = 0
   pageRequestDTO.value.pageSize = size
-  getData()
+  getList()
+
 }
 const onCurrentChange = (current) => {
   pageRequestDTO.value.pageNum = current - 1
-  getData()
+  getList()
 }
 
-onMounted(() => {
-  const searchStore = useSearchStore()
-  key.value = searchStore.searchKey
-  getData()
+const getList = async () => {
+  pageRequestDTO.value.likeKey = searchStore.searchKey
+  const res = await searchUsingGet(pageRequestDTO.value)
+  list.value = res.data.records
+  total.value = res.data.total
+}
+getList()
 
-  // key.value =  route.query.key
-})
+watch(() => route.params, () => {
 
+}, {immediate: true})
 
 </script>
 
 <template>
-  <div class="discuss-container" v-if="dataList.length > 0">
-    <div v-for="article in dataList" :key="article.id" class="discuss-card">
+  <div class="discuss-container" v-if="list.length > 0">
+    <div v-for="article in list" :key="article.id" class="discuss-card">
       <div class="discuss-top">
         <a class="top-title" href="">
           {{ article.title }}
@@ -109,7 +110,7 @@ onMounted(() => {
     />
 
   </div>
-  <empty-item v-if="dataList.length === 0"/>
+  <empty-item v-if="  list.length === 0"/>
 </template>
 
 <style scoped>

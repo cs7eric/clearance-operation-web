@@ -1,7 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import MainLayout from '@/layout/MainLayout.vue'
 import HomePage from '@/views/HomePage.vue'
-import {useIssueStore, useUserStore} from '@/stores'
+import {useIssueStore, useSearchStore, useUserStore} from '@/stores'
+import {searchUsingGet} from '@/openapi/api/articleController'
+import {ref} from 'vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,7 +74,19 @@ const router = createRouter({
               //讨论
               path: '/search/discuss/',
               name: 'DiscussItem',
-              component: () => import('@/views/search/DiscussItem.vue')
+              component: () => import('@/views/search/DiscussItem.vue'),
+              beforeEnter: async (to,from, next) =>{
+                const searchStore = useSearchStore()
+                const pageRequestDTO = ref({
+                  pageNum: 0,
+                  pageSize: 5,
+                  likeKey: searchStore.searchKey
+                })
+                const res = await searchUsingGet(pageRequestDTO.value)
+                to.params.dataList = res.data.records
+                next()
+              }
+
             },
             {
               //ai
