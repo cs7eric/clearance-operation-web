@@ -1,6 +1,8 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
 import {useRouter} from 'vue-router'
+import {searchFuzzyUsingGet} from '@/openapi/api/userController'
+import {useSearchStore} from '@/stores'
 
 export const useTabStore = defineStore('co-tab', {
   state: () => ({
@@ -9,15 +11,25 @@ export const useTabStore = defineStore('co-tab', {
     route: null
   }),
   actions: {
-    setActiveTab(tabName) {
-      this.activeTab = tabName
+    async setActiveTab(tabName) {
 
+      const pageRequestDTO = ref({
+        pageNum: 1,
+        pageSize: 7,
+        keyword: ''
+      })
+
+      this.activeTab = tabName
+      console.log("-----------------")
       const key = ref('')
-      key.value =  this.route.query.key
+      const searchStore = useSearchStore()
       if (this.activeTab === 'user') {
 
-        this.router.push({path: '/search/user', query: {key: key.value}})
-          .then(res => console.log(res))
+        pageRequestDTO.value.keyword = searchStore.searchKey
+        const res = await searchFuzzyUsingGet(pageRequestDTO.value)
+        searchStore.searchResults = res.data
+
+        this.router.push({path: '/search/user', query: {key: searchStore.searchKey}})
         console.log('user')
       } else if (this.activeTab === 'article') {
         this.router.push({path: '/search/discuss', query: {key: key.value}})

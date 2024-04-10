@@ -1,24 +1,33 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount, watch} from 'vue'
 import {searchFuzzyUsingGet} from '@/openapi/api/userController'
 import {useSearchStore} from '@/stores'
+import {useRoute} from 'vue-router'
 
 const dataList = ref([])
 
 const key = ref()
-const pageRequestDTO = ref ({
-	pageNum: 1,
-	pageSize: 7,
+const pageRequestDTO = ref({
+  pageNum: 1,
+  pageSize: 7,
   keyword: key
 })
 const total = ref()
 
+const searchStore = useSearchStore()
+const route = useRoute()
 
+onBeforeMount(() => {
 
+})
 
-onMounted(() => {
+onBeforeMount(() => {
   const searchStore = useSearchStore()
   key.value = searchStore.searchKey
+
+  dataList.value  = searchStore.searchResults.records
+  total.value =searchStore.searchResults.total
+
 })
 
 const getData = async () => {
@@ -39,9 +48,20 @@ const onCurrentChange = (current) => {
 }
 
 onMounted(() => {
-  getData()
+  // getData()
 })
 
+const freshData = () => {
+  dataList.value  = searchStore.searchResults.records
+  total.value =searchStore.searchResults.total
+}
+
+freshData()
+
+watch(() => route.params, () => {
+  // 路由参数变化时的操作，比如重新获取数据
+  freshData()
+}, { immediate: true });
 </script>
 
 <template>

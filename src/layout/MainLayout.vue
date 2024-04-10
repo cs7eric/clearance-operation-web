@@ -73,10 +73,8 @@ const search = (type) => {
     tabStore.setActiveTab('user')
   } else if (type === 'article') {
     tabStore.setActiveTab('article')
-
   } else if (type === 'fraud') {
     tabStore.setActiveTab('fraud')
-
   }
 }
 
@@ -101,7 +99,7 @@ const search = (type) => {
               style="width: 600px"
               placeholder="等你来搜"
               class="input-with-select el-input"
-              @keyup.enter="searchFunc(new Date())"
+              @keyup.enter="search(searchStore.searchType)"
           >
             <template #prepend>
               <el-select v-model="searchStore.searchType" placeholder="全站" style="width: 85px;">
